@@ -1,6 +1,6 @@
 /*global kakao*/ 
 import React from 'react'
-import "./Map.css"
+import "./STYLE/Map.css"
 
 class Map extends React.Component{
 

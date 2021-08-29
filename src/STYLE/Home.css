@@ -1,0 +1,19 @@
+body{
+    margin:0;
+}
+
+.header{
+    display: flex;
+    background-color: black;
+    color:white;
+    justify-content: space-around;
+}
+
+.function ul{
+    list-style:none;
+}
+
+.element{
+    margin-left: 10px;
+    float:left;
+}

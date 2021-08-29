@@ -1,19 +1,41 @@
 import React from "react";
+import './STYLE/Home.css'
+import Map from './state/Map'
 
 
 function Home() {
+
+  const x=1;
+
   return (
-    <div className="home">
-      <div className="top">
+    <Map/>
+    <div className="header">
+      <div className="logo"> LOGO </div>
+
+      <div className="function">
         <ul>
-          <li class = "element"></li>
-          <li class = "element"></li>
-          <li class = "element"></li>
-          <li class = "element"></li>
+          <li className="element">1</li>
+          <li className="element">2</li>
+          <li className="element">3</li>
+          <li className="element">4</li>
         </ul>
       </div>
+
+      <div className="login/logout/register">
+        {x==1?(
+          <div className="login/register">
+            <a herf="">login</a>
+            </div>
+        ):(
+          <div className="logout">
+            <p>Hello User</p>
+          </div>
+        )
+      }
+      </div>
     </div>
+  
   );
 }
 
-export default Home;
+export default Home;``

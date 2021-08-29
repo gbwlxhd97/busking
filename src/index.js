@@ -1,14 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
-import Map from './state/Map';
-import Home from './routes/Home';
+
 
 ReactDOM.render(
   <React.StrictMode>
     <App />
-    <Home />
-    <Map />
   </React.StrictMode>,
   document.getElementById('root')
 );
