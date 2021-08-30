@@ -4,9 +4,11 @@ body{
 
 .header{
     display: flex;
-    background-color: black;
-    color:white;
+    background-color: rgb(129, 207, 252);
+    color:black;
+    font-weight: bold;
     justify-content: space-around;
+    align-items:center;
 }
 
 .function ul{
@@ -14,6 +16,7 @@ body{
 }
 
 .element{
-    margin-left: 10px;
+    margin-left: 100px;
+    margin-right: 100px;
     float:left;
 }

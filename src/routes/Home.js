@@ -1,16 +1,18 @@
 import React from "react";
-import './STYLE/Home.css'
-import Map from './state/Map'
-
-
+import "../style/Home.css"
+import Map from "../state/Map"
+import "../style/Map.css"
 function Home() {
 
   const x=1;
 
   return (
-    <Map/>
+    <div>    
+   
     <div className="header">
-      <div className="logo"> LOGO </div>
+      <div className="logo">
+         LOGO
+      </div>
 
       <div className="function">
         <ul>
@@ -22,20 +24,21 @@ function Home() {
       </div>
 
       <div className="login/logout/register">
-        {x==1?(
+        {x===1?(
           <div className="login/register">
-            <a herf="">login</a>
+            <a herf="">login</a>s
             </div>
         ):(
           <div className="logout">
             <p>Hello User</p>
           </div>
-        )
-      }
+        )}
       </div>
     </div>
-  
+    <div className="home-map"><Map/></div>
+    </div>
   );
 }
 
-export default Home;``
+
+export default Home;
