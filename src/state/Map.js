@@ -1,47 +1,31 @@
 import React from 'react'
-import Motion from './motion'
+
 
 /*global kakao*/ 
-var positions = [
-/*  {
-    id:1,
-    content: `<div onClick={${motion()}} class="buskers">`+
-    '           <span class="busker-name">닉네임1</span>' +
-    '           <img src="https://i1.sndcdn.com/artworks-000324021660-jgzmbq-t500x500.jpg">'+
-    '         </div>', 
-    latlng: new kakao.maps.LatLng(35.871999, 128.594241)
-  },
-  {
-    id:2,
-    content: `<div onClick={${motion()}} class="buskers">`+
-    '           <span class="busker-name">닉네임2</span>' +
-    `           <img  src="https://img.hankyung.com/photo/201910/01.20722973.1.jpg">`+
-    '         </div>', 
-    latlng: new kakao.maps.LatLng(36.995119, 127.132903)
-  },*/
-  {
-    id:3,
-    content: `<div onClick={${Motion}} class="buskers">`+
-    '           <span class="busker-name">닉네임3</span>' +
-    `           <img  src="https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/067/872/918/67872918_1616652768439_20_600x600.JPG">`+
-    '         </div>', 
-    latlng: new kakao.maps.LatLng(37.509548, 127.089970),
-
-  }
-];
-
 
 
 
 class Map extends React.Component{
+  constructor(props) {
+    super(props); // React.Component의 생성자 메소드를 먼저 실행
+    this.state = {
+      profile:{
+        nickname:"닉네임1",
+        profilImg:"https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/067/872/918/67872918_1616652768439_20_600x600.JPG",
+        latlng:new kakao.maps.LatLng(37.509548, 127.089970)
+      },
+    };
+  };
+
 
   makeMap(){
     var container = document.querySelector('.map');
     var options = {
       center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-      level: 7
+      level: 14
     };
     var map = new kakao.maps.Map(container, options);
+    
     this.markListener(map);
     this.markBusker(map);
   }
@@ -63,36 +47,40 @@ class Map extends React.Component{
   }
 
   markBusker(map){
-    
-//==> 버스킹 시작 버튼을 누르면 그 위치를 저장
-  //==>예시를 넣은것이고 할 때는 geo를 써야함 사실 아직 geo 쓰는 이해 잘 안됐음
-    //==> 버스커들의 프로필 사진 데이터 필요
-        // 버스킹 시작 버튼누름 ==> api에서 프로필 사진 가지고 오면 content에 넣음 ==> 버튼 누름과 함께 위치정보를 가지고옴 
-            //==> latlng: new kakao.maps.LatLng(latitude, longitude) 에 넣음
-    for (var i = 0; i < positions.length; i ++) {
 
-      var customOverlay = new kakao.maps.CustomOverlay({
-          position: positions[i].latlng,
-          content: positions[i].content   
+      var customOverlay=new kakao.maps.CustomOverlay({
+        position: this.state.profile.latlng
       });
+      
+      var content = document.createElement('div');
+      content.className='buskers'
+
+      var info =document.createElement('span');
+      info.className='busker-name';
+      info.appendChild(document.createTextNode(this.state.profile.nickname));
+      content.appendChild(info);
+      
+      var buskerImg=document.createElement('img');
+      buskerImg.src=this.state.profile.profilImg;
+      content.appendChild(buskerImg);
+
+      content.onclick= function(){console.log(1234)}
+
+      customOverlay.setContent(content);
       customOverlay.setMap(map);
-    }
-    kakao.maps.event.addListener(customOverlay, 'click', function() {
-      console.log("Qwerasdfzxcv");
-  });
-
-;
   }
-
+  
     componentDidMount() {
       this.makeMap();
-
   }
 
   render(){
 
     return(
-        <div className="map"></div> 
+      <>
+        <div className="map"></div>
+        <div></div>
+      </>
     )
   }
 }

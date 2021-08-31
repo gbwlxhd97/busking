@@ -1,7 +1,7 @@
 import React from "react";
 import "../style/Home.css"
-import Map from "../state/Map"
 import "../style/Map.css"
+import Map from "../state/Map"
 function Home() {
 
   const x=1;
