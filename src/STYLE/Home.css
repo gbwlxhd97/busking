@@ -9,6 +9,7 @@ body{
     font-weight: bold;
     justify-content: space-around;
     align-items:center;
+
 }
 
 .function ul{
@@ -19,4 +20,5 @@ body{
     margin-left: 100px;
     margin-right: 100px;
     float:left;
+    display: flex;
 }

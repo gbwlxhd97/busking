@@ -1,15 +1,8 @@
-.home-map{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    background-color: rgb(214,230,240);
-}
-
 .map {
     width:400px;
     height:400px;
     border-radius: 50%;
     border: 5px solid gray;
-    margin-left:100px;
     box-shadow: 0px 0px 40px 1px gray;
 }
 
@@ -27,4 +20,15 @@
     border-radius: 50%;
     border:5px solid rgb(209, 209, 209);
     display: flex;
+}
+
+.homeMap{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(214,230,240);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+
 }

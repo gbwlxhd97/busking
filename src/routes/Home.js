@@ -1,7 +1,10 @@
 import React from "react";
-import "../style/Home.css"
-import "../style/Map.css"
-import Map from "../state/Map"
+import "../style/Home.css";
+import "../style/Map.css";
+import Map from "../state/Map";
+import "../style/BuskerIntro.css";
+
+
 function Home() {
 
   const x=1;
@@ -35,7 +38,7 @@ function Home() {
         )}
       </div>
     </div>
-    <div className="home-map"><Map/></div>
+    <div className="homeMap"><Map/></div>
     </div>
   );
 }

@@ -17,12 +17,11 @@ class Map extends React.Component{
     };
   };
 
-
   makeMap(){
     var container = document.querySelector('.map');
     var options = {
       center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-      level: 14
+      level: 7
     };
     var map = new kakao.maps.Map(container, options);
     
@@ -55,16 +54,46 @@ class Map extends React.Component{
       var content = document.createElement('div');
       content.className='buskers'
 
-      var info =document.createElement('span');
-      info.className='busker-name';
-      info.appendChild(document.createTextNode(this.state.profile.nickname));
-      content.appendChild(info);
       
       var buskerImg=document.createElement('img');
       buskerImg.src=this.state.profile.profilImg;
       content.appendChild(buskerImg);
 
-      content.onclick= function(){console.log(1234)}
+      var nickname =document.createElement('span');
+      nickname.className='busker-name';
+      nickname.appendChild(document.createTextNode(this.state.profile.nickname));
+      content.appendChild(nickname);
+
+      content.addEventListener('click',motion);
+
+      function motion(){
+        var introduce=document.createElement("div")
+
+        var introProfile=document.createElement("span");
+
+        introProfile.className="introProfile";
+        introProfile.innerText="안녕하세요"
+
+        var closeBtn = document.createElement("button");
+        closeBtn.className="closeBtn";
+        closeBtn.innerText="X"
+
+        content.removeEventListener('click',motion);
+
+        var homeMap = document.querySelector(".homeMap")
+        closeBtn.addEventListener('click',()=>{
+          homeMap.removeChild(introduce);
+          content.addEventListener('click',motion);
+        })
+        
+        
+        introduce.appendChild(introProfile);
+        introduce.appendChild(closeBtn);
+        
+        homeMap.appendChild(introduce);
+      }
+
+
 
       customOverlay.setContent(content);
       customOverlay.setMap(map);
@@ -79,7 +108,6 @@ class Map extends React.Component{
     return(
       <>
         <div className="map"></div>
-        <div></div>
       </>
     )
   }
