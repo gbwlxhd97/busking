@@ -1,7 +1,7 @@
 import React from "react";
-import "../style/Home.css"
+import "../STYLE/Home.css"
 import Map from "../state/Map"
-import "../style/Map.css"
+
 function Home() {
 
   const x=1;
@@ -26,7 +26,7 @@ function Home() {
       <div className="login/logout/register">
         {x===1?(
           <div className="login/register">
-            <a herf="">login</a>s
+            {/* <a herf="">login</a>s */}
             </div>
         ):(
           <div className="logout">

@@ -1,49 +1,62 @@
 import React from 'react'
-import Motion from './motion'
-
+import "../STYLE/Home.css"
+import "../STYLE/Map.css"
+import { positions,imgData } from '../api'
 /*global kakao*/ 
-var positions = [
-/*  {
-    id:1,
-    content: `<div onClick={${motion()}} class="buskers">`+
-    '           <span class="busker-name">닉네임1</span>' +
-    '           <img src="https://i1.sndcdn.com/artworks-000324021660-jgzmbq-t500x500.jpg">'+
-    '         </div>', 
-    latlng: new kakao.maps.LatLng(35.871999, 128.594241)
-  },
-  {
-    id:2,
-    content: `<div onClick={${motion()}} class="buskers">`+
-    '           <span class="busker-name">닉네임2</span>' +
-    `           <img  src="https://img.hankyung.com/photo/201910/01.20722973.1.jpg">`+
-    '         </div>', 
-    latlng: new kakao.maps.LatLng(36.995119, 127.132903)
-  },*/
-  {
-    id:3,
-    content: `<div onClick={${Motion}} class="buskers">`+
-    '           <span class="busker-name">닉네임3</span>' +
-    `           <img  src="https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/067/872/918/67872918_1616652768439_20_600x600.JPG">`+
-    '         </div>', 
-    latlng: new kakao.maps.LatLng(37.509548, 127.089970),
+// var positions = [
+//   {
+//     id:1,
+//     content: `<div onClick={} class="buskers">`+ sql에 있는 db를 직접수정하려고한것 근데 사실 절대로안됨 작동x
+//     '           <span class="busker-name">닉네임1</span>' +
+//     '           <img src="https://i1.sndcdn.com/artworks-000324021660-jgzmbq-t500x500.jpg">'+
+//     '         </div>', 
+//     latlng: new kakao.maps.LatLng(35.871999, 128.594241)
+//   },
+  // {
+  //   id:2,
+  //   content: `<div onClick={${motion()}} class="buskers">`+
+  //   '           <span class="busker-name">닉네임2</span>' +
+  //   `           <img  src="https://img.hankyung.com/photo/201910/01.20722973.1.jpg">`+
+  //   '         </div>', 
+  //   latlng: new kakao.maps.LatLng(36.995119, 127.132903)
+  // },
+  // {
+  //   id:3,
+  //   content: `<div onClick={${Motion}} class="buskers">`+
+  //   '           <span class="busker-name">닉네임3</span>' +
+  //   `           <img  src="https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/067/872/918/67872918_1616652768439_20_600x600.JPG">`+
+  //   '         </div>', 
+  //   latlng: new kakao.maps.LatLng(37.509548, 127.089970),
 
-  }
-];
+  // }
+// ];
 
 
 
 
 class Map extends React.Component{
-
+  constructor(props) {
+    super(props); // React.Component의 생성자 메소드를 먼저 실행
+    this.state = { // 이 컴포넌트의 state 설정
+      // image: "https://picsum.photos/id/237/200/300" // number의 초기 값 설정
+      image: "클릭하면 로그출력"
+      //사용자의 이미지를 받아오기때문에 state로 처리를 해줘야함
+    };
+  };
+   motion() {
+    console.log(positions[2].name);
+    
+  }
   makeMap(){
     var container = document.querySelector('.map');
     var options = {
       center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
-      level: 7
+      level: 13
     };
     var map = new kakao.maps.Map(container, options);
     this.markListener(map);
     this.markBusker(map);
+    
   }
   
   markListener(map){
@@ -80,19 +93,19 @@ class Map extends React.Component{
     kakao.maps.event.addListener(customOverlay, 'click', function() {
       console.log("Qwerasdfzxcv");
   });
-
-;
   }
-
     componentDidMount() {
       this.makeMap();
-
   }
 
   render(){
 
     return(
-        <div className="map"></div> 
+      <>
+      <div  onClick={this.motion} className="map"> </div>
+      <div onClick={this.motion}>{this.state.image}</div> 
+      {/* <Map className="map"></Map> */}
+    </>
     )
   }
 }
