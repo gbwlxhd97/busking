@@ -1,19 +1,14 @@
 import React from "react";
-import Map from '../state/Map';
+import Map from '../Components/Map';
 
-
-function Home() {
+function Test({props}) {
+  return <h1>hi testing.. {props}</h1>
+}
+function Home(props) {
+  console.log(props);
   return (
     <div className="home">
-      <div className="top">
-        <ul>
-          <li class = "element">1첫</li>
-          <li class = "element">2둘</li>
-          <li class = "element">3</li>
-          <li class = "element">4</li>
-        </ul>
-        {/* <Map/> */}
-      </div>
+      <Test props="test" />
     </div>
   );
 }
