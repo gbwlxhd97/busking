@@ -28,8 +28,6 @@ class Login extends Component{
                     value={id}
                     onChange={this.handleChange}
                     />
-                    
-                    
                 </form>
                 
             </div>
