@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 class Login extends Component{
 
     constructor(props) {
@@ -9,15 +8,18 @@ class Login extends Component{
             pw: ""
         }
     }
-    handleChange(event) {
-        // const {target : {value,name}} = event;
+    handleChange =(event) => {
+        // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
+        console.log(event.target.value);
+        console.log(event);
         this.setState({
-            [event.target.name]: event.target.value
+            id: event.target.value
         })
-        // console.log(this.state);
+        
 
     }
     render(){
+        // console.log(this.state);
         const {id,pw} = this.state;
         return(
             <div>
@@ -28,11 +30,11 @@ class Login extends Component{
                     value={id}
                     onChange={this.handleChange}
                     />
-                </form>
-                
+                </form>     
             </div>
         )
     }
 }
 
 export default Login;
+
