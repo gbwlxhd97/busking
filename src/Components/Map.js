@@ -1,23 +1,37 @@
 import React from 'react'
 import "./style/Map.css"
 import "./style/BuskerIntro.css"
-// import "./style/BuskerIntro.css";
+import { server } from '../api';
+
+
+
 /*global kakao*/ 
-
-
-
 class Map extends React.Component{
-  constructor(props) {
-    super(props); // React.Component의 생성자 메소드를 먼저 실행
-    this.state = {
-      profile:{
-        nickname:"닉네임1",
+  
+    state = {
+        nickname: " ",
         profilImg:"https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/067/872/918/67872918_1616652768439_20_600x600.JPG",
         latlng:new kakao.maps.LatLng(37.509548, 127.089970)
-      },
+      
     };
-  };
+  
 
+  nameIU;
+  async getUser() {
+    try {
+      let data1 = await server.getAllUser();
+      let {data: {data }}= data1 
+    this.nameIU = data[0].username
+    //  console.log(data);
+      console.log(this.state);
+    this.setState({
+      nickname: data[0].username,
+      })
+      console.log(this.state);
+    } catch (error) {
+      console.log(error);
+    }
+  }
   makeMap(){
     var container = document.querySelector('.map');
     var options = {
@@ -29,7 +43,10 @@ class Map extends React.Component{
     this.markListener(map);
     this.markBusker(map);
   }
-  
+  componentDidMount() {
+    this.makeMap();
+    this.getUser();
+}
   markListener(map){
     navigator.geolocation.getCurrentPosition(function(position) {
         
@@ -45,11 +62,11 @@ class Map extends React.Component{
       map.setCenter(locPosition); 
     });
   }
-
-  markBusker(map){
+  
+  markBusker(map) {
 
       var customOverlay=new kakao.maps.CustomOverlay({
-        position: this.state.profile.latlng
+        position: this.state.latlng
       });
       
       var content = document.createElement('div');
@@ -57,12 +74,12 @@ class Map extends React.Component{
 
       
       var buskerImg=document.createElement('img');
-      buskerImg.src=this.state.profile.profilImg;
+      buskerImg.src=this.state.profilImg;
       content.appendChild(buskerImg);
-
+      
       var nickname =document.createElement('span');
       nickname.className='busker-name';
-      nickname.appendChild(document.createTextNode(this.state.profile.nickname));
+      nickname.appendChild(document.createTextNode(this.state.nickname));
       content.appendChild(nickname);
 
       content.addEventListener('click',motion);
@@ -86,29 +103,22 @@ class Map extends React.Component{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
-        
-        
         introduce.appendChild(introProfile);
         introduce.appendChild(closeBtn);
-        
         homeMap.appendChild(introduce);
       }
-
-
-
       customOverlay.setContent(content);
       customOverlay.setMap(map);
   }
   
-    componentDidMount() {
-      this.makeMap();
-  }
-
   render(){
-
+    // console.log(this.nameIU);
+    // const { nickname} = this.state;
     return(
       <>
-        <div className="map">  </div>
+        <div className="map"> 
+        </div>
+        {this.state.nickname}
       </>
     )
   }
