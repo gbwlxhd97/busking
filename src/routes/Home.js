@@ -1,9 +1,6 @@
 import React from "react";
-import "../style/Home.css";
-import "../style/Map.css";
-import Map from "../state/Map";
-import "../style/BuskerIntro.css";
-
+import Map from "../Components/Map";
+import "./style/Home.css"
 
 function Home() {
 
@@ -29,7 +26,7 @@ function Home() {
       <div className="login/logout/register">
         {x===1?(
           <div className="login/register">
-            <a herf="">login</a>s
+            
             </div>
         ):(
           <div className="logout">
