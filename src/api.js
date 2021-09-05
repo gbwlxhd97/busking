@@ -5,6 +5,6 @@ const api = axios.create({
 })
 
 export const server = {
-  createAccount: (data) => server.post("",data), //회원가입 post Method
-  loginUser: (data) => server.post("",data), //로그인 ``
+  createAccount: (data) =>api.post("",data), //회원가입 post Method
+  loginUser: (data) =>api.post("",data), //로그인 ``
 }
