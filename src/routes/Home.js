@@ -1,5 +1,6 @@
 import React from "react";
 import Map from '../Components/Map';
+import { Link } from 'react-router-dom';
 import "./style/Home.css"
 
 
@@ -27,7 +28,7 @@ function Home() {
       <div className="login/logout/register">
         {x===1?(
           <div className="login/register">
-            <a herf="">login</a>s
+            <Link to="/login" className="loginPage">login</Link>
             </div>
         ):(
           <div className="logout">
@@ -36,7 +37,9 @@ function Home() {
         )}
       </div>
     </div>
-    <div className="homeMap"><Map/></div>
+    <div className="homeMap">
+      <Map/>
+      </div>
     </div>
   );
 }

@@ -7,7 +7,7 @@ import SignUp from "../routes/SignUp";
 // eslint-disable-next-line
 export default () => (
     <Router>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={Home} /> 
         <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={SignUp} />
     </Router>
