@@ -10,7 +10,7 @@ class Map extends React.Component{
   
     state = {
         nickname: " ",
-        profilImg:"https://image.genie.co.kr/Y/IMAGE/IMG_ARTIST/067/872/918/67872918_1616652768439_20_600x600.JPG",
+        profilImg:" ",
         latlng:new kakao.maps.LatLng(37.509548, 127.089970)
       
     };
@@ -19,15 +19,18 @@ class Map extends React.Component{
   nameIU;
   async getUser() {
     try {
-      let data1 = await server.getAllUser();
-      let {data: {data }}= data1 
-    this.nameIU = data[0].username
-    //  console.log(data);
-      console.log(this.state);
+      let res = await server.getAllUser();
+      let {data: {data }}= res 
+    
+     console.log(data);
+   
+    //  console.log(this.state);
     this.setState({
-      nickname: data[0].username,
+        nickname: data[0].username,
+        profilImg: data[0].profileImgURL
       })
-      console.log(this.state);
+     // console.log(this.state);
+     
     } catch (error) {
       console.log(error);
     }
@@ -44,9 +47,14 @@ class Map extends React.Component{
     this.markBusker(map);
   }
   componentDidMount() {
-    this.makeMap();
+    
     this.getUser();
 }
+  componentDidUpdate() {
+    if(true) {
+      this.makeMap()
+    }
+  }
   markListener(map){
     navigator.geolocation.getCurrentPosition(function(position) {
         
@@ -112,13 +120,13 @@ class Map extends React.Component{
   }
   
   render(){
-    // console.log(this.nameIU);
-    // const { nickname} = this.state;
+    
+  
     return(
       <>
         <div className="map"> 
         </div>
-        {this.state.nickname}
+        
       </>
     )
   }
