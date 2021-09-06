@@ -8,20 +8,27 @@ class Login extends Component{
             pw: ""
         }
     }
-    handleChange =(event) => {
+    handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
-        // event.preventDefault()
+        
         console.log(event.target.value);
         console.log(event);
         this.setState({
-            id: event.target.value
+            // id: event.target.value,
+            
         })
-        
-
+    }
+    handlePw = (event) => {
+        this.setState({
+            pw:event.target.value
+        })
+    }
+    handleSubmit = () => {
+        console.log(this.state)
     }
     render(){
         // console.log(this.state);
-        const {id} = this.state;
+        const {id,pw} = this.state;
         return(
             <div>
                 로그인
@@ -29,9 +36,15 @@ class Login extends Component{
                     <input 
                     placeholder="id입력해주세요"
                     value={id}
-                    onChange={this.handleChange}
+                    onChange={this.handleId}
+                    />
+                    <input placeholder="비밀번호"
+                    value={pw}
+                    type="password"
+                    onChange={this.handlePw}
                     />
                 </form>     
+                <button onClick={this.handleSubmit} >로그인</button>
             </div>
         )
     }
