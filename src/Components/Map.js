@@ -26,7 +26,7 @@ class Map extends React.Component{
    
     //  console.log(this.state);
     this.setState({
-        nickname: data[0].username,
+        nickname: data[0].loginID,
         profilImg: data[0].profileImgURL
       })
      // console.log(this.state);
