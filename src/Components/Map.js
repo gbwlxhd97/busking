@@ -7,7 +7,8 @@ import { server } from '../api';
 
 /*global kakao*/ 
 class Map extends React.Component{
-  
+    
+    
     state = {
         nickname: " ",
         profilImg:" ",
@@ -94,25 +95,39 @@ class Map extends React.Component{
 
       function motion(){
         var introduce=document.createElement("div")
+        introduce.className="introduce"
 
-        var introProfile=document.createElement("span");
-
+        var introProfile=document.createElement("div");
         introProfile.className="introProfile";
-        introProfile.innerText="안녕하세요"
+        var gimori = document.createElement("span");
+        gimori.innerText="안녕하세요"
+        introProfile.appendChild(gimori)
+        // introProfile.innerText="안녕하세요"
 
         var closeBtn = document.createElement("button");
         closeBtn.className="closeBtn";
         closeBtn.innerText="X"
 
+        var example = document.createElement("div");
+        example.className="example";
+
+        var userReservation = document.createElement("button");
+        userReservation.className="userReservation";
+        userReservation.innerText="노래 예약하러가기"
+
         content.removeEventListener('click',motion);
 
         var homeMap = document.querySelector(".homeMap")
+
         closeBtn.addEventListener('click',()=>{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
+
+        introProfile.appendChild(closeBtn);
         introduce.appendChild(introProfile);
-        introduce.appendChild(closeBtn);
+        introduce.appendChild(userReservation);
+
         homeMap.appendChild(introduce);
       }
       customOverlay.setContent(content);

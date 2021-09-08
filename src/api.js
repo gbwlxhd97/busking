@@ -6,6 +6,6 @@ const api = axios.create({
 
 export const server = {
   createAccount: (data) =>api.post("",data), //회원가입 post Method
-  loginUser: (data) =>api.post("",data), //로그인 ``
+  loginUser: (data) =>api.post("user",data), //로그인 ``
   getAllUser: () => api.get("user/all") //전체 user 데이터 받아오기  
 }

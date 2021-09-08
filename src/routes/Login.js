@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { server } from '../api';
 class Login extends Component{
 
     constructor(props) {
@@ -11,10 +12,10 @@ class Login extends Component{
     handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
         
-        console.log(event.target.value);
-        console.log(event);
+        // console.log(event.target.value);
+        // console.log(event);
         this.setState({
-            // id: event.target.value,
+            id: event.target.value,
             
         })
     }
@@ -23,8 +24,36 @@ class Login extends Component{
             pw:event.target.value
         })
     }
-    handleSubmit = () => {
-        console.log(this.state)
+    handleSubmit = async(event) => {
+        try {
+             await server.loginUser({
+                loginID: this.state.id,
+                password: this.state.pw
+            })
+        } catch (error) {
+            console.log(error);
+        }
+        // try {
+        //     axios(
+        //         {
+        //             url: "/user",
+        //             method: 'post',
+        //             data: {
+        //                 loginID: this.state.id,
+        //                 password: this.state.pw
+        //             },
+        //             baseURL: "https://busking-back.herokuapp.com",
+        //         }
+        //     ).then(function (res) {
+        //         console.log(res.data);
+        //     })
+        // } catch (error) {
+        //     console.log(error);
+        // }    
+    
+    }
+    componentDidMount() {
+
     }
     render(){
         // console.log(this.state);
