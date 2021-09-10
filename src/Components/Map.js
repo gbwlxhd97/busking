@@ -12,16 +12,14 @@ class Map extends React.Component{
         profilImg:"",
         latlng:new kakao.maps.LatLng(37.509548, 127.089970)
     };
-  
 
-  nameIU;
   async getUser() {
     try {
       let data1 = await server.getAllUser();
       let {data: {data}}= data1
-      console.log(data.map((e)=>console.log(e.username)));
+      console.log(data);
     this.setState({
-      nickname: data[0].username,
+      nickname: data[0].loginID,
       profilImg: data[0].profileImgURL
       })
     } catch (error) {
@@ -89,25 +87,36 @@ class Map extends React.Component{
 
       function motion(){
         var introduce=document.createElement("div")
+        introduce.className="introduce"
 
-        var introProfile=document.createElement("span");
+        var introProfile=document.createElement("div");
 
         introProfile.className="introProfile";
-        introProfile.innerText="안녕하세요"
+        introProfile.innerText="안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
 
         var closeBtn = document.createElement("button");
         closeBtn.className="closeBtn";
         closeBtn.innerText="X"
 
-        content.removeEventListener('click',motion);
 
+        var userReservation = document.createElement("button");
+        userReservation.className="userReservation";
+        userReservation.innerText="노래 예약하러가기"
+
+        content.removeEventListener('click',motion);
         var homeMap = document.querySelector(".homeMap")
+        
         closeBtn.addEventListener('click',()=>{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
+        
+
+
+        introProfile.appendChild(closeBtn);
         introduce.appendChild(introProfile);
-        introduce.appendChild(closeBtn);
+        introduce.appendChild(userReservation);
+        
         homeMap.appendChild(introduce);
       }
       customOverlay.setContent(content);

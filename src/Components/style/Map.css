@@ -4,6 +4,7 @@
     border-radius: 50%;
     border: 5px solid gray;
     box-shadow: 0px 0px 40px 1px gray;
+
 }
 
 .busker-name{
@@ -23,12 +24,10 @@
 }
 
 .homeMap{
-    padding-top: 20px;
-    padding-bottom: 20px;
     background-color: rgb(214,230,240);
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 80vh;
-
+    padding-top: 100px;
+    padding-bottom: 250px;
 }
