@@ -90,11 +90,12 @@ class Map extends React.Component{
         introduce.className="introduce"
 
         var introProfile=document.createElement("div");
-
         introProfile.className="introProfile";
-        introProfile.innerText="안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
+        
+        var introText = document.createElement("span");
+        introText.innerText="안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
 
-        var closeBtn = document.createElement("button");
+        var closeBtn = document.createElement("p");
         closeBtn.className="closeBtn";
         closeBtn.innerText="X"
 
@@ -110,10 +111,10 @@ class Map extends React.Component{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
-        
 
-
+        introProfile.appendChild(introText);
         introProfile.appendChild(closeBtn);
+        
         introduce.appendChild(introProfile);
         introduce.appendChild(userReservation);
         

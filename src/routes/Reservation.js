@@ -18,15 +18,17 @@ const musicInfomation=[{
 
 
 class Reservation extends React.Component{
+    
 
-
-    asdf(){
+    search(){
         var searchText= document.querySelector(".search");
         var musicList=document.querySelector(".musicList");
-        
+
         for (let i =0; i< musicInfomation.length ;i++){
-            if(musicInfomation[i].singer.indexOf(searchText.value) !== -1){
-                var element = document.createElement("li");
+            if(searchText.value!=="" &&(musicInfomation[i].singer.toUpperCase().indexOf(searchText.value.toUpperCase()) !== -1 ||
+            musicInfomation[i].title.toUpperCase().indexOf(searchText.value.toUpperCase()) !== -1)){
+                var li = document.createElement("li");
+                li.className="li"
                 var button = document.createElement("button");
                 var img = document.createElement("img");
                 var span =document.createElement("span");
@@ -35,23 +37,25 @@ class Reservation extends React.Component{
                 button.innerText="reservation";
                 span.innerText=`${musicInfomation[i].title} - ${musicInfomation[i].singer}`;
 
-                element.appendChild(img);
-                element.appendChild(span);
-                element.appendChild(button);
+                li.appendChild(img);
+                li.appendChild(span);
+                li.appendChild(button);
                 
-                musicList.appendChild(element);
-            }   
+                musicList.appendChild(li);
+            }
         }
+        searchText.value=""
     }
-
 
     render(){
         return(
         <>
         <div className="searchMusic">
             <input className="search" placeholder="Music Search" ></input>
-            <button onClick={this.asdf}>Search</button>
-            <ul className="musicList"></ul>
+            <button onClick={this.search}>Search</button>
+            <ul className="musicList">
+                
+            </ul>
         </div>
 
         <div>
