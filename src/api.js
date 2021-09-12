@@ -9,3 +9,6 @@ export const server = {
   loginUser: (data) =>api.post("user",data), //로그인 ``
   getAllUser: () => api.get("user/all") //전체 user 데이터 받아오기  
 }
+
+
+

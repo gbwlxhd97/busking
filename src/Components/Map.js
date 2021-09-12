@@ -12,29 +12,30 @@ class Map extends React.Component{
     state = {
         nickname: " ",
         profilImg:" ",
-        latlng:new kakao.maps.LatLng(37.509548, 127.089970)
-      
+        latlng:new kakao.maps.LatLng(37.509548, 127.089970),
+        loading : true
     };
   
 
   nameIU;
   async getUser() {
-    try {
+    try { 
       let res = await server.getAllUser();
       let {data: {data }}= res 
     
-     console.log(data);
-   
+    console.log(data);
+    
     //  console.log(this.state);
     this.setState({
-        nickname: data[0].username,
+        nickname: data[0].loginID,
         profilImg: data[0].profileImgURL
       })
      // console.log(this.state);
      
     } catch (error) {
-      console.log(error);
+      console.log(error); 
     }
+    
   }
   makeMap(){
     var container = document.querySelector('.map');
@@ -147,5 +148,4 @@ class Map extends React.Component{
   }
 }
 
-// component= 정적, state= 동적
 export default Map;

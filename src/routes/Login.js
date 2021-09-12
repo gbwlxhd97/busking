@@ -1,14 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { server } from '../api';
-class Login extends Component{
+class Login extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: "",
+        state = {
+            id: "",  
             pw: ""
-        }
-    }
+        }    
     handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
         
@@ -24,36 +21,18 @@ class Login extends Component{
             pw:event.target.value
         })
     }
+    
     handleSubmit = async(event) => {
         try {
-             await server.loginUser({
+            await server.loginUser({
                 loginID: this.state.id,
                 password: this.state.pw
+                
             })
+            console.log('id pw 전송 완료');
         } catch (error) {
             console.log(error);
         }
-        // try {
-        //     axios(
-        //         {
-        //             url: "/user",
-        //             method: 'post',
-        //             data: {
-        //                 loginID: this.state.id,
-        //                 password: this.state.pw
-        //             },
-        //             baseURL: "https://busking-back.herokuapp.com",
-        //         }
-        //     ).then(function (res) {
-        //         console.log(res.data);
-        //     })
-        // } catch (error) {
-        //     console.log(error);
-        // }    
-    
-    }
-    componentDidMount() {
-
     }
     render(){
         // console.log(this.state);
