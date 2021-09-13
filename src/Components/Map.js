@@ -15,9 +15,7 @@ class Map extends React.Component{
         latlng:new kakao.maps.LatLng(37.509548, 127.089970),
         loading : true
     };
-  
 
-  nameIU;
   async getUser() {
     try { 
       let res = await server.getAllUser();
@@ -49,12 +47,13 @@ class Map extends React.Component{
     this.markBusker(map);
   }
   componentDidMount() {
-    
     this.getUser();
+    console.log(this.state.nickname);
 }
-  componentDidUpdate() {
-    if(true) {
-      this.makeMap()
+
+  componentDidUpdate(){
+    if(true){
+      this.makeMap();
     }
   }
   markListener(map){
@@ -89,7 +88,8 @@ class Map extends React.Component{
       
       var nickname =document.createElement('span');
       nickname.className='busker-name';
-      nickname.appendChild(document.createTextNode(this.state.nickname));
+      nickname.innerText=this.state.nickname;
+      console.log(this.nameIU);
       content.appendChild(nickname);
 
       content.addEventListener('click',motion);
@@ -99,36 +99,33 @@ class Map extends React.Component{
         introduce.className="introduce"
 
         var introProfile=document.createElement("div");
+
         introProfile.className="introProfile";
-        var gimori = document.createElement("span");
-        gimori.innerText="안녕하세요"
-        introProfile.appendChild(gimori)
-        // introProfile.innerText="안녕하세요"
+        introProfile.innerText="안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
 
         var closeBtn = document.createElement("button");
         closeBtn.className="closeBtn";
         closeBtn.innerText="X"
 
-        var example = document.createElement("div");
-        example.className="example";
 
         var userReservation = document.createElement("button");
         userReservation.className="userReservation";
         userReservation.innerText="노래 예약하러가기"
 
         content.removeEventListener('click',motion);
-
         var homeMap = document.querySelector(".homeMap")
-
+        
         closeBtn.addEventListener('click',()=>{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
+        
+
 
         introProfile.appendChild(closeBtn);
         introduce.appendChild(introProfile);
         introduce.appendChild(userReservation);
-
+        
         homeMap.appendChild(introduce);
       }
       customOverlay.setContent(content);
@@ -136,13 +133,10 @@ class Map extends React.Component{
   }
   
   render(){
-    
-  
     return(
       <>
         <div className="map"> 
         </div>
-        
       </>
     )
   }

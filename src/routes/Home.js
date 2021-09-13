@@ -21,7 +21,9 @@ function Home() {
 
       <div className="function">
         <ul>
-          <li className="element">1</li>
+          <li className="element">
+          <Link to="/reservation">Music Reservation</Link>
+            </li>
           <li className="element">2</li>
           <li className="element">3</li>
           <li className="element">4</li>
