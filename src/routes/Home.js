@@ -1,5 +1,6 @@
 import React from "react";
 import Map from '../Components/Map';
+import { Link } from 'react-router-dom';
 import "./style/Home.css"
 
 
@@ -9,7 +10,7 @@ function Home() {
 
   return (
     <div>    
-   
+      
     <div className="header">
       <div className="logo">
          LOGO
@@ -17,7 +18,9 @@ function Home() {
 
       <div className="function">
         <ul>
-          <li className="element">1</li>
+          <li className="element">
+          <Link to="/reservation">Music Reservation</Link>
+            </li>
           <li className="element">2</li>
           <li className="element">3</li>
           <li className="element">4</li>
@@ -27,7 +30,7 @@ function Home() {
       <div className="login/logout/register">
         {x===1?(
           <div className="login/register">
-            <a herf="">login</a>s
+            <Link to="/login" className="loginPage">login</Link>
             </div>
         ):(
           <div className="logout">
@@ -36,8 +39,12 @@ function Home() {
         )}
       </div>
     </div>
-    <div className="homeMap"><Map/></div>
+    <div className="homeMap">
+      <Map/>
+      </div>
+      
     </div>
+    
   );
 }
 

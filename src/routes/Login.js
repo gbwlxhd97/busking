@@ -1,49 +1,44 @@
-import React, { Component, useEffect } from "react";
-//import axios from 'axios';
-class Login extends Component{
+import React from "react";
+import { server } from '../api';
+class Login extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: "",
+        state = {
+            id: "",  
             pw: ""
-        }
-    }
-    handleId=(event) => {
+        }    
+    handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
         
-        console.log(event.target.value);
-        //console.log(event);
+        // console.log(event.target.value);
+        // console.log(event);
         this.setState({
             id: event.target.value,
             
         })
     }
-    handlePw=(event) => {
+    handlePw = (event) => {
         this.setState({
             pw:event.target.value
         })
     }
-    handleSubmit = () => {
-        console.log(this.state)
+    
+    handleSubmit = async(event) => {
+        try {
+            await server.loginUser({
+                loginID: this.state.id,
+                password: this.state.pw
+                
+            })
+            console.log('id pw 전송 완료');
+        } catch (error) {
+            console.log(error);
+        }
     }
-
- 
-   
-
     render(){
-/*
-        useEffect(() => {
-            axios.get('/api/hello')     
-            .then(response => {console.log(response)})  
-        }, [])
-*/
-        console.log(this.state);
+        // console.log(this.state);
         const {id,pw} = this.state;
         return(
-            <div style ={{
-                
-            }}>
+            <div>
                 로그인
                 <form>
                     <input 
@@ -64,3 +59,4 @@ class Login extends Component{
 }
 
 export default Login;
+
