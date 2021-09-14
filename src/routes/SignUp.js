@@ -1,10 +1,15 @@
 import React from "react";
+import "./style/SignUp.css"
 
 
 function Signup() {
     return(
-        <div>
-            회원가입
+        <div id="wrap">
+            <container>
+                <form action="#" method="post" class="">
+                </form>
+            </container>
+          
         </div>
     )
 }
