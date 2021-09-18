@@ -55,8 +55,12 @@ class Reservation extends React.Component{
             </form>
             
             <div>
-                {songList ?  songList.map(song => song.title) : null}
-            </div>
+                {songList &&
+                <Section title="음악리스트">
+                    {songList.map(song => (<div key={song.id}> {song.title}</div> )) }
+                </Section>
+                }</div>
+                
                 
             
             
