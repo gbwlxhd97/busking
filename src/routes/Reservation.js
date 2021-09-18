@@ -18,34 +18,7 @@ const musicInfomation=[{
 
 
 class Reservation extends React.Component{
-    
 
-    search(){
-        var searchText= document.querySelector(".search");
-        var musicList=document.querySelector(".musicList");
-
-        for (let i =0; i< musicInfomation.length ;i++){
-            if(searchText.value!=="" &&(musicInfomation[i].singer.toUpperCase().indexOf(searchText.value.toUpperCase()) !== -1 ||
-            musicInfomation[i].title.toUpperCase().indexOf(searchText.value.toUpperCase()) !== -1)){
-                var li = document.createElement("li");
-                li.className="li"
-                var button = document.createElement("button");
-                var img = document.createElement("img");
-                var span =document.createElement("span");
-
-                img.src= musicInfomation[i].img;
-                button.innerText="reservation";
-                span.innerText=`${musicInfomation[i].title} - ${musicInfomation[i].singer}`;
-
-                li.appendChild(img);
-                li.appendChild(span);
-                li.appendChild(button);
-                
-                musicList.appendChild(li);
-            }
-        }
-        searchText.value=""
-    }
 
     render(){
         return(

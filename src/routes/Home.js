@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 import "./style/Home.css"
 
 
+
+
+
 function Home() {
 
   const x=1;
 
   return (
     <div>    
-   
+      
     <div className="header">
       <div className="logo">
          LOGO
@@ -42,7 +45,9 @@ function Home() {
     <div className="homeMap">
       <Map/>
       </div>
+      
     </div>
+    
   );
 }
 
