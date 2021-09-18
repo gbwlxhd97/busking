@@ -1,22 +1,21 @@
 import React from "react";
 import { server } from '../api';
 import "./style/Reservation.css"
-
+import Section from '../Components/Section';
 
 
 
 
 class Reservation extends React.Component{
     state ={
-        searchTerm: "Jail",
-        loading: false
+        searchTerm: "",
+        loading: false,
+        songList: null,
     }
+    
 
-    componentDidMount() {
-        this.handleSearch()
-    }
-
-    handleSearch = () => {
+    handleSearch = (event) => {
+        event.preventDefault();
         const { searchTerm} = this.state;
         if(searchTerm !== "") {
             this.searchByTerm(searchTerm)
@@ -27,19 +26,41 @@ class Reservation extends React.Component{
         const { searchTerm} = this.state;
         try {
             const res =  await server.searchSong(searchTerm)
-            console.log(res);
-            this.setState({ loading: true})
+            // this.songList = res;
+            let {data:{data}} = res
+            
+            console.log(data);
+            this.setState({ 
+                loading: true,
+                songList: data 
+            })
         } catch (error) {
             this.setState({ error: "노래가없엉"})
         }
     }
-    
+    updateTerm = (event) => {
+    const {target:{value}} = event;
+    this.setState({
+        searchTerm: value
+    })
+    }
 
 
     render(){
+       let {songList} = this.state;
         return(
         <div>
-            hi
+            <form onSubmit={this.handleSearch}>
+                <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
+            </form>
+            
+            <div>
+                {songList ?  songList.map(song => song.title) : null}
+            </div>
+                
+            
+            
+                
         </div>
         )
             
