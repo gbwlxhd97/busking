@@ -1,41 +1,71 @@
 import React from "react";
+import { server } from '../api';
 import "./style/Reservation.css"
+import Section from '../Components/Section';
 
 
-const musicInfomation=[{
-    title:"Jail",
-    singer:"Kanye West",
-    img:"https://w.namu.la/s/3d07a08af0b3be7afeee94f2972ebc72241d2cc9f6ce06f5dc2cbff51d19f9184c69172d0e776cc70a0de6de927e86a409eb43843a4040657d0c8dcc2a59cdb9f932608fdb59d5cc041c55e0a2ec340f9ce77a9f9f4933e2250b1eedec7fdbfc"
-},{
-    title:"Jail Pt.2",
-    singer:"Kanye West",
-    img:"https://w.namu.la/s/3d07a08af0b3be7afeee94f2972ebc72241d2cc9f6ce06f5dc2cbff51d19f9184c69172d0e776cc70a0de6de927e86a409eb43843a4040657d0c8dcc2a59cdb9f932608fdb59d5cc041c55e0a2ec340f9ce77a9f9f4933e2250b1eedec7fdbfc"
-},{
-    title:"Circles",
-    singer:"Post Malone",
-    img:"http://image.yes24.com/goods/79640397/XL"
-}]
 
 
 class Reservation extends React.Component{
+    state ={
+        searchTerm: "",
+        loading: false,
+        songList: null,
+    }
+    
+
+    handleSearch = (event) => {
+        event.preventDefault();
+        const {searchTerm} = this.state;
+        if(searchTerm !== "") {
+            this.searchByTerm(searchTerm)
+        }    
+    }
+
+    searchByTerm = async () => {
+        const { searchTerm} = this.state;
+        try {
+            const res =  await server.searchSong(searchTerm)
+            // this.songList = res;
+            let {data:{data}} = res
+            
+            console.log(data);
+            this.setState({ 
+                loading: true,
+                songList: data 
+            })
+        } catch (error) {
+            this.setState({ error: "노래가없엉"})
+        }
+    }
+    
+    updateTerm = (event) => {
+        const {target:{value}} = event;
+        this.setState({
+            searchTerm: value
+        })
+    }
 
 
     render(){
+       let {songList} = this.state;
         return(
-        <>
-        <div className="searchMusic">
-            <input className="search" placeholder="Music Search" ></input>
-            <button onClick={this.search}>Search</button>
-            <ul className="musicList">
-                
-            </ul>
-        </div>
-
         <div>
-
+            <form onSubmit={this.handleSearch}>
+                <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
+            </form>
+            
+            <div>
+                {songList &&
+                <Section title="음악리스트">
+                    {songList.map(song => (
+                        <div className="musicList" key={song.id}>
+                            <img src={song.profileImgURL} alt="profile"></img>
+                             {song.title} - {song.singer}
+                        </div> )) }
+                </Section>
+            }</div>
         </div>
-
-        </>
         )
             
         

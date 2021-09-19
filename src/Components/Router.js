@@ -10,7 +10,7 @@ export default () => (
     <Router>
         <Route path="/" exact component={Home} /> 
         <Route path="/login" exact component={Login} />
-        <Route path="/signup" exact component={SignUp} /> 
+        <Route path="/signup" exact component={SignUp} />
         <Route path="/reservation" exact component={Reservation} /> 
     </Router>
 )

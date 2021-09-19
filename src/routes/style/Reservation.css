@@ -1,5 +1,6 @@
 .musicList{
-    list-style: none;
+    margin:25px;
+
 }
 
 .musicList button{
