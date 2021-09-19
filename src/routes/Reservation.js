@@ -11,6 +11,7 @@ class Reservation extends React.Component{
         searchTerm: "",
         loading: false,
         songList: null,
+        error: null
     }
     
 
@@ -36,7 +37,7 @@ class Reservation extends React.Component{
                 songList: data 
             })
         } catch (error) {
-            this.setState({ error: "에러"})
+            this.setState({ error: "아무것도없습니다"})
         } finally {
             this.setState({
                 loading: false
@@ -60,7 +61,7 @@ class Reservation extends React.Component{
             </form>
             {loading ? <Loader/> :
                 <div>    
-                {songList &&
+                {songList && 
                 <Section title="음악리스트">
                     { songList.map(song => (<div key={song.id}> {song.title}</div> ))}
                 </Section>
