@@ -2,7 +2,7 @@ import React from "react";
 import { server } from '../api';
 import "./style/Reservation.css"
 import Section from '../Components/Section';
-
+import Loader from '../Components/Loader';
 
 
 
@@ -24,18 +24,23 @@ class Reservation extends React.Component{
 
     searchByTerm = async () => {
         const { searchTerm} = this.state;
+        this.setState({
+            loading: true
+        })
         try {
             const res =  await server.searchSong(searchTerm)
-            // this.songList = res;
             let {data:{data}} = res
-            
+            this.noest = data
             console.log(data);
             this.setState({ 
-                loading: true,
                 songList: data 
             })
         } catch (error) {
-            this.setState({ error: "노래가없엉"})
+            this.setState({ error: "에러"})
+        } finally {
+            this.setState({
+                loading: false
+            })
         }
     }
     updateTerm = (event) => {
@@ -47,23 +52,21 @@ class Reservation extends React.Component{
 
 
     render(){
-       let {songList} = this.state;
+       let {songList ,loading} = this.state;
         return(
         <div>
             <form onSubmit={this.handleSearch}>
                 <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
             </form>
-            
-            <div>
+            {loading ? <Loader/> :
+                <div>    
                 {songList &&
                 <Section title="음악리스트">
-                    {songList.map(song => (<div key={song.id}> {song.title}</div> )) }
+                    { songList.map(song => (<div key={song.id}> {song.title}</div> ))}
                 </Section>
-                }</div>
-                
-                
-            
-            
+                }
+                </div>
+                }
                 
         </div>
         )
