@@ -3,8 +3,6 @@ import "./style/Map.css"
 import "./style/BuskerIntro.css"
 import { server } from '../api';
 
-
-
 /*global kakao*/ 
 class Map extends React.Component{
     
@@ -12,7 +10,7 @@ class Map extends React.Component{
     state = {
         nickname: " ",
         profilImg:" ",
-        latlng:new kakao.maps.LatLng(37.509548, 127.089970),
+        latlng:new kakao.maps.LatLng(37.509548, 127.089970),/// 유저 위치를 받오는
         loading : true
     };
 
@@ -25,7 +23,7 @@ class Map extends React.Component{
     
     //  console.log(this.state);
     this.setState({
-        nickname: data[0].loginID,
+        nickname: data[0].nickname,
         profilImg: data[0].profileImgURL
       })
      // console.log(this.state);
@@ -33,8 +31,8 @@ class Map extends React.Component{
     } catch (error) {
       console.log(error); 
     }
-    
   }
+
   makeMap(){
     var container = document.querySelector('.map');
     var options = {
@@ -46,6 +44,7 @@ class Map extends React.Component{
     this.markListener(map);
     this.markBusker(map);
   }
+
   componentDidMount() {
     this.getUser();
     console.log(this.state.nickname);
@@ -56,6 +55,7 @@ class Map extends React.Component{
       this.makeMap();
     }
   }
+
   markListener(map){
     navigator.geolocation.getCurrentPosition(function(position) {
         
@@ -81,7 +81,6 @@ class Map extends React.Component{
       var content = document.createElement('div');
       content.className='buskers'
 
-      
       var buskerImg=document.createElement('img');
       buskerImg.src=this.state.profilImg;
       content.appendChild(buskerImg);
@@ -103,7 +102,7 @@ class Map extends React.Component{
         introProfile.className="introProfile";
         introProfile.innerText="안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
 
-        var closeBtn = document.createElement("button");
+        var closeBtn = document.createElement("p");
         closeBtn.className="closeBtn";
         closeBtn.innerText="X"
 
@@ -135,7 +134,7 @@ class Map extends React.Component{
   render(){
     return(
       <>
-        <div className="map"> 
+        <div className="map">
         </div>
       </>
     )

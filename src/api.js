@@ -9,9 +9,9 @@ export const server = {
   loginUser: (data) =>api.post("/user",data), //로그인 ``
   getAllUser: () => api.get("/user/all"), //전체 user 데이터 받아오기  
   getSongList: () => api.get("/music/all"),
-  searchSong: (title) => api.get(`/music/title/${title}`, {
+  searchSong: (keyword) => api.get(`/music/keyword/${keyword}`, {
     params: {
-      query: encodeURIComponent(title)
+      query: encodeURIComponent(keyword)
     }
   })
 }

@@ -9,8 +9,8 @@ class Login extends React.Component{
     handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
         
-        // console.log(event.target.value);
-        // console.log(event);
+        console.log(event.target.value);
+         console.log(event);
         this.setState({
             id: event.target.value,
             
