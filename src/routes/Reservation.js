@@ -11,8 +11,8 @@ class Reservation extends React.Component{
     state ={
         searchTerm: "",
         loading: false,
-        songList: null,
-        error: null
+        songList: [],
+        error: null,
     }
     
 
@@ -32,13 +32,15 @@ class Reservation extends React.Component{
         try {
             const res =  await server.searchSong(searchTerm)
             let {data:{data}} = res
-            console.log(data);
             this.setState({ 
                 songList: data 
             })
-        } catch (error) {
+            if(res.data.status ===204 ) {
+                throw new Error('catch');
+            }
+        } catch (error) { 
             this.setState({ error: "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요."})
-            console.log(error);
+            // console.log(error);
         } finally {
             this.setState({
                 loading: false
@@ -62,25 +64,21 @@ class Reservation extends React.Component{
                 <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
             </form>
             {loading ? <Loader/> :
-                   <>
-                {songList && 
+                <>
+                {songList.length > 0 && songList   &&
                 <Section title="음악리스트">
                     {songList.map(song => (
                         <div className="musicList" key={song.id}>
                             <img src={song.profileImgURL} alt="profile"></img>
                             {song.title} - {song.singer}
-                        </div> )) }
+                        </div> )) }  
                 </Section>
-            } 
+            }
+            {songList.length ===0 && <Message text={error}/>}
             </>            
         }
-        <div>
-            {error && <Message text={error} />}
-                </div>
         </div>
         )
-            
-        
     }
 }
 
