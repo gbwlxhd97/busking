@@ -20,10 +20,15 @@ class Map extends React.Component{
   async getUser() {
     try {
       let res = await server.getAllUser();
-      const IU = res.data.data[0].username;
+      //const IU = res.data.data[0].loginID;
       
-      const {data : {data}} = res
-      console.log(data[1].username);
+      const {data} = res.data
+
+      console.log(data[1].loginID);
+      
+
+      //const {data : {data}} = res
+      //console.log(data[1].username);
 
 
     //  console.log(this.state);

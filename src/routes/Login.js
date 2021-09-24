@@ -13,9 +13,9 @@ class Login extends Component{
         
         //console.log(event.target.value);
         console.log(value);
+        
         this.setState({
-             id: event.target.value,
-            
+             id: event.target.value,  
         })
     }
     handlePw = (event) => {
