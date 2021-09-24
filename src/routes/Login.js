@@ -25,7 +25,7 @@ class Login extends React.Component{
     handleSubmit = async(event) => {
         try {
             await server.loginUser({
-                loginID: this.state.id,
+                loginEmail: this.state.id,
                 password: this.state.pw
                 
             })
