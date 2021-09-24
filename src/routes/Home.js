@@ -4,13 +4,16 @@ import { Link } from 'react-router-dom';
 import "./style/Home.css"
 
 
+
+
+
 function Home() {
 
   const x=1;
 
   return (
     <div>    
-   
+      
     <div className="header">
       <div className="logo">
          LOGO
@@ -18,7 +21,9 @@ function Home() {
 
       <div className="function">
         <ul>
-          <li className="element">1</li>
+          <li className="element">
+          <Link to="/reservation">Music Reservation</Link>
+            </li>
           <li className="element">2</li>
           <li className="element">3</li>
           <li className="element">4</li>
@@ -40,7 +45,9 @@ function Home() {
     <div className="homeMap">
       <Map/>
       </div>
+      
     </div>
+    
   );
 }
 

@@ -1,20 +1,18 @@
-import React, { Component } from "react";
-class Login extends Component{
+import React from "react";
+import { server } from '../api';
+class Login extends React.Component{
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            id: "",
+        state = {
+            id: "",  
             pw: ""
-        }
-    }
+        }    
     handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
         
         console.log(event.target.value);
-        console.log(event);
+         console.log(event);
         this.setState({
-            // id: event.target.value,
+            id: event.target.value,
             
         })
     }
@@ -23,8 +21,19 @@ class Login extends Component{
             pw:event.target.value
         })
     }
-    handleSubmit = () => {
-        console.log(this.state)
+    
+    handleSubmit = async(event) => {
+        try {
+            await server.loginUser({
+                loginID: this.state.id,
+                password: this.state.pw
+                
+            })
+            console.log('로그인됏니?');
+        } catch (error) {
+            console.log(error);
+            console.log('안됏어');
+        }
     }
     render(){
         // console.log(this.state);
