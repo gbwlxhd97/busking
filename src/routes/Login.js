@@ -29,9 +29,10 @@ class Login extends React.Component{
                 password: this.state.pw
                 
             })
-            console.log('id pw 전송 완료');
+            console.log('로그인됏니?');
         } catch (error) {
             console.log(error);
+            console.log('안됏어');
         }
     }
     render(){
