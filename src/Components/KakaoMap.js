@@ -12,7 +12,7 @@ export default function KakaoMap(props) {
   useEffect(() => {
     const script = document.createElement("script");
     script.src =
-      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=326e38503f420e1f0088dab1f46dc0c7&autoload=false";
+      "https://dapi.kakao.com/v2/maps/sdk.js?appkey=80dd35b6db7006b48da92ec003b3f1c4&autoload=false";
     document.head.appendChild(script);
 
     script.onload = () => {
@@ -33,7 +33,7 @@ export default function KakaoMap(props) {
     if (kakaoMap === null) {
       return;
     }
-    
+
     // save center position
     const center = kakaoMap.getCenter();
 

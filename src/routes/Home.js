@@ -1,8 +1,7 @@
 import React from "react";
 import Map from '../Components/Map';
 import { Link } from 'react-router-dom';
-import "./style/Home.css"
-
+import Header from "../Components/Header";
 
 
 
@@ -12,42 +11,11 @@ function Home() {
   const x=1;
 
   return (
-    <div>    
-      
-    <div className="header">
-      <div className="logo">
-         LOGO
+    <>
+      <div className="homeMap">
+        <Map/>
       </div>
-
-      <div className="function">
-        <ul>
-          <li className="element">
-          <Link to="/reservation">Music Reservation</Link>
-            </li>
-          <li className="element">2</li>
-          <li className="element">3</li>
-          <li className="element">4</li>
-        </ul>
-      </div>
-
-      <div className="login/logout/register">
-        {x===1?(
-          <div className="login/register">
-            <Link to="/login" className="loginPage">login</Link>
-            </div>
-        ):(
-          <div className="logout">
-            <p>Hello User</p>
-          </div>
-        )}
-      </div>
-    </div>
-    <div className="homeMap">
-      <Map/>
-      </div>
-      
-    </div>
-    
+    </>
   );
 }
 
