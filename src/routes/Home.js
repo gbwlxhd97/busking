@@ -1,16 +1,17 @@
 import React from "react";
 import Map from '../Components/Map';
-import { Link } from 'react-router-dom';
+import { Link,useHistory } from 'react-router-dom';
 import "./style/Home.css"
 
-
-
-
-
 function Home() {
-
-  const x=1;
-
+  const saveToken = localStorage.getItem('token');
+  const history = useHistory()
+  function logout() {
+    localStorage.clear(saveToken);
+    history.push('/')
+  }
+  
+  
   return (
     <div>    
       
@@ -31,13 +32,14 @@ function Home() {
       </div>
 
       <div className="login/logout/register">
-        {x===1?(
+        {!saveToken?(
           <div className="login/register">
             <Link to="/login" className="loginPage">login</Link>
             </div>
         ):(
           <div className="logout">
             <p>Hello User</p>
+            <button onClick={logout}>Logout</button>
           </div>
         )}
       </div>
