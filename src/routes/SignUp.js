@@ -15,9 +15,12 @@ margin: 20px;
 const Input = styled.input `
 margin: 2px;
 `
+const InputAge = styled.input `
+width: 100px;
+`
 
-const Gender = styled.div `
-
+const InputGender = styled.input `
+width: 14px;
 `
 
 class Signup extends React.Component{
@@ -28,8 +31,8 @@ class Signup extends React.Component{
             id: "",
             pw: "",
             name: "",
-            age: Number,
-            gender: Boolean,
+            age: "",
+            gender: "",
         }
     }
 
@@ -61,6 +64,13 @@ class Signup extends React.Component{
         })
     }
 
+    handleGender = (event) => {
+        const {target : {value}} = event
+        this.setState({
+            gender: value,
+        })
+    }
+
     handleSubmit = async(event) => {
         event.preventDefault()
         try {
@@ -69,8 +79,9 @@ class Signup extends React.Component{
                 password: this.state.pw,
                 nickName: this.state.name,
                 age: this.state.age,
+                gender: this.state.gender,
             })
-            console.log('id, pw, name, age 전송 완료');
+            console.log('id, pw, name, age, gender 전송 완료');
         } catch (error) {
             console.log(error);
             console.log("오류발생!!!!!!");
@@ -78,7 +89,7 @@ class Signup extends React.Component{
     }
     
     render() {
-        const {id, pw, name} = this.state;
+        const {id, pw, name, age, gender} = this.state;
         return(
             <Form>
                 회원가입
@@ -97,13 +108,18 @@ class Signup extends React.Component{
                         value={name}
                         onChange={this.handleName}
                         />
-                        <Input type="date" min="1900-01-01" max="2021-09-24"/>
-                        <Gender>
-                            <input type="radio" name="gender" value="male"/>
-                            <label for="male">남성</label>
-                            <input type="radio" name="gender" value="female"/>
-                            <label for="female">여성</label>
-                        </Gender>
+                        <div>
+                            <InputAge
+                            value={age}
+                            onChange={this.handleAge} 
+                            />
+                            -
+                            <InputGender
+                            value={gender}
+                            onChange={this.handleGender} 
+                            />
+                            ******
+                        </div>
                     </InputDiv>
                 </form>
                 <button onClick={this.handleSubmit} >회원가입</button>
