@@ -15,13 +15,6 @@ margin: 20px;
 const Input = styled.input `
 margin: 2px;
 `
-const InputAge = styled.input `
-width: 100px;
-`
-
-const InputGender = styled.input `
-width: 14px;
-`
 
 class Signup extends React.Component{
 
@@ -33,6 +26,7 @@ class Signup extends React.Component{
             name: "",
             age: "",
             gender: "",
+            role: "USER",
         }
     }
 
@@ -71,6 +65,13 @@ class Signup extends React.Component{
         })
     }
 
+    handleRole = (event) => {
+        const {target : {value}} = event
+        this.setState({
+            role: value,
+        })
+    }
+
     handleSubmit = async(event) => {
         event.preventDefault()
         try {
@@ -80,6 +81,7 @@ class Signup extends React.Component{
                 nickName: this.state.name,
                 age: this.state.age,
                 gender: this.state.gender,
+                role: this.state.role,
             })
             console.log('id, pw, name, age, gender 전송 완료');
         } catch (error) {
@@ -89,7 +91,7 @@ class Signup extends React.Component{
     }
     
     render() {
-        const {id, pw, name, age, gender} = this.state;
+        const {id, pw, name, age, gender, role} = this.state;
         return(
             <Form>
                 회원가입
@@ -108,17 +110,17 @@ class Signup extends React.Component{
                         value={name}
                         onChange={this.handleName}
                         />
+                        <Input placeholder="출생연도을 입력해주세요"
+                        value={age}
+                        onChange={this.handleAge}
+                        />
+                        <Input placeholder="유저를 입력해주세요"
+                        value={role}
+                        onChange={this.handleRole}
+                        />
                         <div>
-                            <InputAge
-                            value={age}
-                            onChange={this.handleAge} 
-                            />
-                            -
-                            <InputGender
-                            value={gender}
-                            onChange={this.handleGender} 
-                            />
-                            ******
+                            <Input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={this.handleGender}/>여성
+                            <Input type="radio" value="MALE" name="gender" id="MAEL" onChange={this.handleGender}/>남성
                         </div>
                     </InputDiv>
                 </form>
