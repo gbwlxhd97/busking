@@ -75,7 +75,7 @@ class Signup extends React.Component{
         event.preventDefault()
         try {
             await server.createAccount({
-                loginEmail: this.state.id, 
+                username: this.state.id, 
                 password: this.state.pw,
                 nickName: this.state.name,
                 age: this.state.age,
