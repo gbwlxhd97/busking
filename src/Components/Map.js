@@ -5,28 +5,29 @@ import { server } from '../api';
 
 /*global kakao*/ 
 class Map extends React.Component{
-    
-    
     state = {
-        nickname: " ",
-        profilImg:" ",
-        latlng:new kakao.maps.LatLng(37.509548, 127.089970),/// 유저 위치를 받오는
+        nickname:[],
+        profilImg:[],
+        latlng:[new kakao.maps.LatLng(37.509548, 127.089970),new kakao.maps.LatLng(37.497966, 127.095584),new kakao.maps.LatLng(37.509085, 127.072866)],/// 유저 위치를 받오는
         loading : true
     };
 
   async getUser() {
     try { 
       let res = await server.getAllUser();
-      let {data: {data }}= res 
-    
-    console.log(data);
-    
-    //  console.log(this.state);
+      let {data: {data }}= res ;
+      let nickNameArray = [];
+      let profilImgArray = [];
+      
+      data.map(data => {
+        nickNameArray.push(data.nickName);
+        profilImgArray.push(data.profileImgURL);
+      });
+      
     this.setState({
-        nickname: data[0].nickname,
-        profilImg: data[0].profileImgURL
+        nickname: nickNameArray,
+        profilImg: profilImgArray
       })
-     // console.log(this.state);
      
     } catch (error) {
       console.log(error); 
@@ -47,7 +48,6 @@ class Map extends React.Component{
 
   componentDidMount() {
     this.getUser();
-    console.log(this.state.nickname);
 }
 
   componentDidUpdate(){
@@ -63,7 +63,7 @@ class Map extends React.Component{
           lon = position.coords.longitude; // 경도
       
       var locPosition = new kakao.maps.LatLng(lat, lon)
-      // eslint-disable-next-line
+
       var marker = new kakao.maps.Marker({  
           map: map, 
           position: locPosition
@@ -73,22 +73,22 @@ class Map extends React.Component{
   }
   
   markBusker(map) {
-
+    let num =0;
+    this.state.latlng.map(latlng=> {
       var customOverlay=new kakao.maps.CustomOverlay({
-        position: this.state.latlng
+        position: latlng
       });
       
       var content = document.createElement('div');
       content.className='buskers'
 
       var buskerImg=document.createElement('img');
-      buskerImg.src=this.state.profilImg;
+      buskerImg.src=this.state.profilImg[num];
       content.appendChild(buskerImg);
       
       var nickname =document.createElement('span');
       nickname.className='busker-name';
-      nickname.innerText=this.state.nickname;
-      console.log(this.nameIU);
+      nickname.innerText=this.state.nickname[num];
       content.appendChild(nickname);
 
       content.addEventListener('click',motion);
@@ -118,8 +118,6 @@ class Map extends React.Component{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
-        
-
 
         introProfile.appendChild(closeBtn);
         introduce.appendChild(introProfile);
@@ -129,6 +127,10 @@ class Map extends React.Component{
       }
       customOverlay.setContent(content);
       customOverlay.setMap(map);
+      num=num+1;
+    }
+      )
+      
   }
   
   render(){

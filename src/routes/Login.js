@@ -20,7 +20,9 @@ function Login() {
                 password: values.pw
             })
             // console.log(res);
-            localStorage.setItem('token',res.data)
+            const {data:{token,username}} = res
+            localStorage.setItem('token',token)
+            localStorage.setItem('username',username)
             console.log('로그인성공');
             history.push('/')
         } catch (error) {

@@ -4,8 +4,8 @@ import styled from "styled-components";
 
 const Form = styled.div `
 text-align: center;
-margin-top: 50px
-`
+margin-top: 50px;
+`;
 const InputDiv = styled.div `
 display: flex;
 flex-direction: column;

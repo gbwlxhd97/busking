@@ -1,14 +1,21 @@
 import React from "react";
 import "./style/Loader.css"
+import ScaleLoader from "react-spinners/ScaleLoader"
+import styled from 'styled-components';
+
+
+const Flex = styled.div`
+    display: flex;
+    justify-content: center;
+    align-self: center;
+`
 
 
 const Loader = () => {
     return(
-        <div className="loading-conatiner">
-            <span>
-            로딩중..(그거 막 로딩하는 사진 넣을예정)
-            </span>
-        </div>
+        <Flex>
+            <ScaleLoader height="15" width="5" radius="2" margin="2" color="red"/>
+        </Flex>
     )
 }
 
