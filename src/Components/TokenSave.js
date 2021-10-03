@@ -6,6 +6,7 @@ export default function HaveToken() {
 export function Logout() {
   
   localStorage.clear();
+
   window.location.reload()
 
 }

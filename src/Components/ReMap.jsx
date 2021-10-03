@@ -3,8 +3,9 @@ import { server } from '../api';
 
 
 function ReMap() {
+    
+    
     //useEffect 부분
-
     useEffect(() => {
         getUser();
     },[])
