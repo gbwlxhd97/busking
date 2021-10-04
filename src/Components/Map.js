@@ -11,14 +11,14 @@ class Map extends React.Component{
         latlng:[new kakao.maps.LatLng(37.509548, 127.089970),new kakao.maps.LatLng(37.497966, 127.095584),new kakao.maps.LatLng(37.509085, 127.072866)],/// 유저 위치를 받오는
         loading : true
     };
-
+    
   async getUser() {
     try { 
       let res = await server.getAllUser();
-      let {data: {data }}= res ;
+      let {data: {data}}= res;
       let nickNameArray = [];
       let profilImgArray = [];
-      
+
       data.map(data => {
         nickNameArray.push(data.nickName);
         profilImgArray.push(data.profileImgURL);
@@ -48,7 +48,6 @@ class Map extends React.Component{
 
   componentDidMount() {
     this.getUser();
-    console.log(this.state.nickname);
 }
 
   componentDidUpdate(){
@@ -63,7 +62,7 @@ class Map extends React.Component{
       var lat = position.coords.latitude, // 위도
           lon = position.coords.longitude; // 경도
       
-      var locPosition = new kakao.maps.LatLng(lat, lon)
+      var locPosition = new kakao.maps.LatLng(lat, lon);
 
       var marker = new kakao.maps.Marker({  
           map: map, 
@@ -130,12 +129,10 @@ class Map extends React.Component{
       customOverlay.setMap(map);
       num=num+1;
     }
-      )
-      
+  )
   }
   
   render(){
-    console.log(server)
     return(
       <>
         <div className="map">

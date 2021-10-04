@@ -2,8 +2,8 @@ import React from "react";
 import Styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 
-
 const Header = Styled.div`
+    margin:0px;
     background-color:black;
 `;
 
@@ -17,7 +17,6 @@ const List = Styled.ul`
 
 const Item = Styled.li`
     text-align:center;
-    
 `;
 
 const SLink = Styled(Link)`
@@ -42,8 +41,7 @@ export default withRouter =>(
             
             <Item>
                 <SLink to="/signup">signup</SLink>
-            </Item>        
-
+            </Item>      
         </List>
     </Header>
 );
