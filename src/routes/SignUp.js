@@ -24,7 +24,7 @@ function Sign() {
     id: "",
     pw: "",
     name: "",
-    birthDay: "",
+    birthday: "",
     gender: "",
     });
     
@@ -39,8 +39,8 @@ function Sign() {
             await server.createAccount({
                 username: values.id, 
                 password: values.pw,
-                nickName: values.name,
-                birthDay: values.birthDay,
+                nickname: values.name,
+                birthday: values.birthday,
                 gender: values.gender,
             })
             alert('회원가입 완료 로그인페이지로 이동합니다.')
@@ -71,8 +71,8 @@ function Sign() {
                     onChange={change}
                     />
                     <Input placeholder="출생연도을 입력해주세요"
-                    value={values.birthDay || ''}
-                    name="birthDay"
+                    value={values.birthday || ''}
+                    name="birthday"
                     onChange={change}
                     />
                     <div>
@@ -95,7 +95,7 @@ function Sign() {
 //             id: "",
 //             pw: "",
 //             name: "",
-//             birthDay: "",
+//             birthday: "",
 //             gender: "",
         
 //         }
@@ -126,7 +126,7 @@ function Sign() {
 //         const {target : {value}} = event
 //         console.log(value);
 //         this.setState({
-//             birthDay: value,
+//             birthday: value,
 //         })
 //     }
 
@@ -145,7 +145,7 @@ function Sign() {
 //                 username: this.state.id, 
 //                 password: this.state.pw,
 //                 nickName: this.state.name,
-//                 birthDay: this.state.birthDay,
+//                 birthday: this.state.birthday,
 //                 gender: this.state.gender,
                 
 //             })
@@ -159,7 +159,7 @@ function Sign() {
 //     }
     
 //     render() {
-//         // const {id, pw, name, birthDay,} = this.state;
+//         // const {id, pw, name, birthday,} = this.state;
 //         return(
 //             <Form>
 //                 회원가입
@@ -182,8 +182,8 @@ function Sign() {
 //                         onChange={this.handleName}
 //                         />
 //                         <Input placeholder="출생연도을 입력해주세요"
-//                         value={values.birthDay || ''}
-//                         name="birthDay"
+//                         value={values.birthday || ''}
+//                         name="birthday"
 //                         onChange={this.handleBirthday}
 //                         />
 //                         <div>

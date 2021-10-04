@@ -8,17 +8,31 @@ function Home() {
   
   return (
       <div className="homeMap">
-        <Map/>
+        {/* <Map/> */}
         <ReMap/>
         {localStorage.getItem('username') && (
           <div>
-            {localStorage.getItem('username')}
+            닉네임 : {localStorage.getItem('username')}
             <button onClick={Logout}>logout</button>
+            <button onClick={start}>버스킹 방송시작하기!</button>
           </div>
         )}
       </div>
   );
 }
+
+function start() {
+  navigator.geolocation.getCurrentPosition((position) => {
+    let pos = [];
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;      
+      pos.push(`new kakao.maps.LatLng(${lat},${lon})`)
+      console.log(pos);
+      // console.log(lat,lon);
+    })
+  
+}
+
 
 
 export default Home;

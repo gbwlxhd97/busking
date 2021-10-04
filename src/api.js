@@ -13,7 +13,9 @@ export const server = {
     params: {
       query: encodeURIComponent(keyword)
     }
-  })
+  }),
+  getTeam: () => api.get("/team/all"),
+  postOnAir: (data) => api.post("/team/onAir",data)
 }
 
 
