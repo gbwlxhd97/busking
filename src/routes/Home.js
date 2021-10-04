@@ -1,21 +1,22 @@
 import React from "react";
 import Map from '../Components/Map';
-import { Link } from 'react-router-dom';
-import "./style/Home.css";
-
-
+import ReMap from '../Components/ReMap';
+import { Logout } from '../Components/TokenSave';
 
 
 function Home() {
-
-  const x=1;
-
+  
   return (
-    <>
       <div className="homeMap">
         <Map/>
+        <ReMap/>
+        {localStorage.getItem('username') && (
+          <div>
+            {localStorage.getItem('username')}
+            <button onClick={Logout}>logout</button>
+          </div>
+        )}
       </div>
-    </>
   );
 }
 

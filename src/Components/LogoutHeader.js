@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { Link, withRouter } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 const Header = Styled.div`
     margin:0px;
@@ -34,7 +34,7 @@ export default withRouter =>(
             <Item>
                 <SLink to="/reservation">reservation</SLink>
             </Item>
-
+            
             <Item>
                 <SLink to="/login">login</SLink>
             </Item>

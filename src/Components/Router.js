@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route} from "react-router-dom";
 import Home from '../routes/Home';
 import Login from "../routes/Login";
 import SignUp from "../routes/SignUp";
@@ -10,7 +10,8 @@ import LoginHeader from "../Components/LoginHeader"
 // eslint-disable-next-line
 export default () => (
     <Router>
-        <LogoutHeader/>
+
+        <Header/>
         <>
             <Route path="/" exact component={Home} /> 
             <Route path="/login" exact component={Login} />
