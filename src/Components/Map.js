@@ -23,12 +23,11 @@ class Map extends React.Component{
         nickNameArray.push(data.nickName);
         profilImgArray.push(data.profileImgURL);
       });
-      
     this.setState({
         nickname: nickNameArray,
         profilImg: profilImgArray
       })
-     
+    
     } catch (error) {
       console.log(error); 
     }

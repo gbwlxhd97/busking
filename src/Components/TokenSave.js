@@ -1,12 +1,21 @@
+const TOKEN = 'token'
 
-export default function HaveToken() {
-    const getToken = localStorage.getItem('token');
-    const getUsername = localStorage.getItem('username');
-  }
 export function Logout() {
   
   localStorage.clear();
-
   window.location.reload()
+}
 
+export default class TokenSave {
+  saveToken(token) {
+    localStorage.setItem(TOKEN,token)
+  }
+  getToken() {
+    return localStorage.getItem(TOKEN)
+  }
+  Logout() {
+    localStorage.clear();
+    window.location.reload();
+    return;
+  }
 }
