@@ -1,11 +1,14 @@
 import React from "react";
 import Styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
-
+import { Logout } from '../Components/TokenSave';
 
 const Header = Styled.div`
+    display:flex;
     margin:0px;
-    background-color:black;
+    background-color:#233323;
+    justify-content: space-around;
+    align-items:center;
 `;
 
 const List = Styled.ul`
@@ -14,20 +17,42 @@ const List = Styled.ul`
     display:flex;
     justify-content: space-around;
     align-items:center;
+    padding: 10px;
 `;
 
 const Item = Styled.li`
+    list-style:none;
     text-align:center;
-    
+    padding-left:2px;
+    padding-right:2px;
+    &:hover {
+        border-bottom:3px solid #446844;
+        transition:border-bottom 0.3s ease-in-out;
+      }
 `;
 
 const SLink = Styled(Link)`
-    color:white;
+    color:#356735;
     text-decoration: none;
+`;
+
+const LogoutBtn = Styled.button`
+    background-color:#233323;
+    color:#356735;
+    border:none;
+    font-size:16px;
+`;
+
+const Logo = Styled.div`
+    color:#356735;
 `;
 
 export default withRouter =>(
     <Header>
+        <>
+        <SLink to="/">
+            BUSKiNG hELPER
+        </SLink>
         <List>
             <Item>
                 <SLink to="/">Home</SLink>
@@ -36,12 +61,13 @@ export default withRouter =>(
             <Item>
                 <SLink to="/reservation">reservation</SLink>
             </Item>
-
-            <Item>
-                <SLink to="">logout</SLink>
-            </Item>
-                 
-
         </List>
+        <div>
+            <LogoutBtn onClick={Logout}>
+                logout
+            </LogoutBtn>
+        </div>
+        
+        </>
     </Header>
 );

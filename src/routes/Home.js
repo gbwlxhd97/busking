@@ -2,7 +2,7 @@ import React from "react";
 import Map from '../Components/Map';
 import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
-
+import "./style/Home.css"
 
 function Home() {
   

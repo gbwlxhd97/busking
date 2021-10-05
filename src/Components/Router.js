@@ -10,8 +10,8 @@ import LoginHeader from "../Components/LoginHeader"
 // eslint-disable-next-line
 export default () => (
     <Router>
-
-        <Header/>
+        {localStorage.getItem("username") ?
+            <LoginHeader/> : <LogoutHeader/>}
         <>
             <Route path="/" exact component={Home} /> 
             <Route path="/login" exact component={Login} />
