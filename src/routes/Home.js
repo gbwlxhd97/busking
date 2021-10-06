@@ -10,13 +10,7 @@ function Home() {
       <div className="homeMap">
         {/* <Map/> */}
         <ReMap/>
-        {localStorage.getItem('username') && (
-          <div>
-            닉네임 : {localStorage.getItem('username')}
-            <button onClick={Logout}>logout</button>
-            <button onClick={start}>버스킹 방송시작하기!</button>
-          </div>
-        )}
+
       </div>
   );
 }

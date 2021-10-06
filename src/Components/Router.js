@@ -4,6 +4,7 @@ import Home from '../routes/Home';
 import Login from "../routes/Login";
 import SignUp from "../routes/SignUp";
 import Reservation from "../routes/Reservation"
+import UserDetail from "../routes/UserDetail"
 import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
 
@@ -17,6 +18,7 @@ export default () => (
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/reservation" exact component={Reservation} /> 
+            <Route path={`/userdetail/${localStorage.getItem("username")}`} exact component={UserDetail}/>
         </>
     </Router>
 )

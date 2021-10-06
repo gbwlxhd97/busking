@@ -21,7 +21,7 @@ class Reservation extends React.Component{
         const {searchTerm} = this.state;
         if(searchTerm !== "") {
             this.searchByTerm(searchTerm)
-        }    
+        }
     }
 
     searchByTerm = async () => {
@@ -55,10 +55,6 @@ class Reservation extends React.Component{
         })
     }
 
-    fuck = (song)=>{
-        let musicInfo=[song.title,song.singer]
-        this.MusicList(musicInfo)
-    }
 
     MusicList = (musicInfo) => {
             console.log(musicInfo[0],musicInfo[1])
@@ -85,7 +81,6 @@ class Reservation extends React.Component{
                                 <div className="musicList" key={song.id}>
                                     <img src={song.profileImgURL} alt="profile"></img>
                                     {song.title} - {song.singer}
-                                    <button onClick={this.fuck(song)}>Reservation Music</button>
                                 </div> )) }
                         </Section>
                         </>

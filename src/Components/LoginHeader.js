@@ -43,10 +43,6 @@ const LogoutBtn = Styled.button`
     font-size:16px;
 `;
 
-const Logo = Styled.div`
-    color:#356735;
-`;
-
 export default withRouter =>(
     <Header>
         <>
@@ -62,12 +58,17 @@ export default withRouter =>(
                 <SLink to="/reservation">reservation</SLink>
             </Item>
         </List>
-        <div>
-            <LogoutBtn onClick={Logout}>
-                logout
-            </LogoutBtn>
-        </div>
-        
+
+        <List>
+            <SLink to={`/userdetail/${localStorage.getItem("username")}`}>
+                {localStorage.getItem("username")}
+            </SLink>
+            <List>
+                <LogoutBtn onClick={Logout}>
+                    logout
+                </LogoutBtn>
+            </List>
+        </List>
         </>
     </Header>
 );
