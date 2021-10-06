@@ -24,6 +24,8 @@ class Reservation extends React.Component{
         }
     }
 
+
+
     searchByTerm = async () => {
         const {searchTerm} = this.state;
         this.setState({

@@ -2,6 +2,7 @@ import React from "react";
 import Styled from "styled-components";
 import { Link, withRouter } from "react-router-dom";
 import { Logout } from '../Components/TokenSave';
+import PropTypes from "prop-types";
 
 const Header = Styled.div`
     display:flex;
@@ -43,7 +44,7 @@ const LogoutBtn = Styled.button`
     font-size:16px;
 `;
 
-export default withRouter =>(
+const WithRouter = ({ nickname }) =>(
     <Header>
         <>
         <SLink to="/">
@@ -60,8 +61,8 @@ export default withRouter =>(
         </List>
 
         <List>
-            <SLink to={`/userdetail/`}>
-                {localStorage.getItem("username")} 저거 하면 아이유 나옴굳굳
+            <SLink to={`/userdetail${nickname}`}>
+                {localStorage.getItem("username")}
             </SLink>
             <List>
                 <LogoutBtn onClick={Logout}>
@@ -72,3 +73,9 @@ export default withRouter =>(
         </>
     </Header>
 );
+
+WithRouter.propTypes = {
+    nickname:PropTypes.string
+};
+
+export default WithRouter;
