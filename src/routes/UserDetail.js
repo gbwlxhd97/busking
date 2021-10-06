@@ -11,11 +11,11 @@ class UserDetail extends React.Component{
         list:""
     }
 
-    getUserDetail = async () => {
+    /*getUserDetail = async () => {
 
         const {list}=this.state;
         try{
-            const UserDetail = await server.getUserDetail(localStorage.getItem("username"))
+            const UserDetail = await server.getUserDetail()
             //let {data:{data:{userDetail}}}=UserDetail
             console.log(UserDetail);
         }catch(error){
@@ -32,7 +32,7 @@ class UserDetail extends React.Component{
         return(
             <div>qwer</div>
         )
-    }
+    }*/
 }
 
 export default UserDetail;

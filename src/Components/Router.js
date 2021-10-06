@@ -18,7 +18,7 @@ export default () => (
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/reservation" exact component={Reservation} /> 
-            <Route path={`/userdetail/${localStorage.getItem("username")}`} exact component={UserDetail}/>
+            <Route path="/userdetail/:nickname" exact component={UserDetail}/>
         </>
     </Router>
 )

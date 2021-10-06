@@ -60,8 +60,8 @@ export default withRouter =>(
         </List>
 
         <List>
-            <SLink to={`/userdetail/${localStorage.getItem("username")}`}>
-                {localStorage.getItem("username")}
+            <SLink to={`/userdetail/`}>
+                {localStorage.getItem("username")} 저거 하면 아이유 나옴굳굳
             </SLink>
             <List>
                 <LogoutBtn onClick={Logout}>
