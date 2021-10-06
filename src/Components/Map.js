@@ -1,7 +1,7 @@
 import React from 'react'
 import "./style/Map.css"
 import "./style/BuskerIntro.css"
-import { server } from '../api';
+import { server } from '../api'; //api 받아오기
 
 
 
@@ -9,14 +9,14 @@ import { server } from '../api';
 class Map extends React.Component{
     
     
-    state = {
-        nickname: " ",
-        profilImg:" ",
-        latlng:new kakao.maps.LatLng(37.509548, 127.089970),
-        loading : true
-    };
+  state = {
+      nickname: " ",
+      profilImg:" ",
+      latlng:new kakao.maps.LatLng(37.509548, 127.089970),
+      loading : true
+  };
 
-  async getUser() {
+  async getUser() {     //유저정보 가져오기
     try { 
       let res = await server.getAllUser();
       let {data: {data }}= res 
@@ -35,7 +35,7 @@ class Map extends React.Component{
     }
     
   }
-  makeMap(){
+  makeMap(){      //맵자체
     var container = document.querySelector('.map');
     var options = {
       center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
@@ -43,8 +43,8 @@ class Map extends React.Component{
     };
     var map = new kakao.maps.Map(container, options);
     
-    this.markListener(map);
-    this.markBusker(map);
+    this.markListener(map);      //파란 화살표
+    this.markBusker(map);            //아이유
   }
   componentDidMount() {
     this.getUser();

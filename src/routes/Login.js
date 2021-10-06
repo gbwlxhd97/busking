@@ -2,15 +2,15 @@ import React from "react";
 import { server } from '../api';
 class Login extends React.Component{
 
-        state = {
-            id: "",  
-            pw: ""
-        }    
+    state = {
+        id: "",  
+        pw: "",
+    }    
     handleId =(event) => {
         // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
         
-        // console.log(event.target.value);
-        // console.log(event);
+        console.log(event.target.value);
+        //console.log(event);
         this.setState({
             id: event.target.value,
             
@@ -21,12 +21,12 @@ class Login extends React.Component{
             pw:event.target.value
         })
     }
-    
+
     handleSubmit = async(event) => {
         try {
             await server.loginUser({
-                loginID: this.state.id,
-                password: this.state.pw
+                id: this.state.id,
+                pw: this.state.pw
                 
             })
             console.log('id pw 전송 완료');
@@ -36,6 +36,7 @@ class Login extends React.Component{
     }
     render(){
         // console.log(this.state);
+        
         const {id,pw} = this.state;
         return(
             <div>

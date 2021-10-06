@@ -5,15 +5,13 @@ const api = axios.create({
 })
 
 export const server = {
-  createAccount: (data) =>api.post("",data), //회원가입 post Method
+  createAccount: (data) =>api.post("/user",data), //회원가입 post Method
   loginUser: (data) =>api.post("/user",data), //로그인 ``
   getAllUser: () => api.get("/user/all"), //전체 user 데이터 받아오기  
-  searchSong: (title) => api.get(`/music/title/${title}`, {
+  getSongList: () => api.get("/music/all"),
+  searchSong: (keyword) => api.get(`/music/keyword/${keyword}`, {
     params: {
-      query: encodeURIComponent(title)
+      query: encodeURIComponent(keyword)
     }
   })
 }
-
-
-
