@@ -1,62 +1,57 @@
-import React from "react";
+import React,{useState} from "react";
+import { useHistory } from 'react-router-dom';
 import { server } from '../api';
-class Login extends React.Component{
+function Login() {
+    const [values, setValues] = useState({id: "", pw: ""});
+    const history = useHistory();
 
-    state = {
-        id: "",  
-        pw: "",
-    }    
-    handleId =(event) => {
-        // const  {target : {value}} = event value으로 변수명바꾸고 뽑아내주기.
+    const handleChange = (event) => {
         
-        console.log(event.target.value);
-        //console.log(event);
-        this.setState({
-            id: event.target.value,
-            
-        })
+        const {name, value} = event.target;
+        setValues({...values, [name]: value})
+        console.log(value);
     }
-    handlePw = (event) => {
-        this.setState({
-            pw:event.target.value
-        })
-    }
-
-    handleSubmit = async(event) => {
+    
+    const  handleSubmit = async(event) => {
+    event.preventDefault();
         try {
-            await server.loginUser({
-                id: this.state.id,
-                pw: this.state.pw
-                
+        const res = await server.loginUser({
+                username: values.id,
+                password: values.pw
             })
-            console.log('id pw 전송 완료');
+            // console.log(res);
+            const {data:{token,username}} = res
+            localStorage.setItem('token',token)
+            localStorage.setItem('username',username)
+            console.log('로그인성공');
+            history.push('/')
         } catch (error) {
+            alert('아이디 비밀번호가 맞지않음')
             console.log(error);
         }
     }
-    render(){
-        // console.log(this.state);
-        
-        const {id,pw} = this.state;
+    
         return(
             <div>
                 로그인
                 <form>
-                    <input 
-                    placeholder="id입력해주세요"
-                    value={id}
-                    onChange={this.handleId}
+                    <input placeholder="id입력해주세요"
+                    value={values.id || ''}
+                    type="text"
+                    name="id"
+                    onChange={handleChange}
                     />
                     <input placeholder="비밀번호"
-                    value={pw}
+                    value={values.pw || '' }
                     type="password"
-                    onChange={this.handlePw}
+                    name="pw"
+                    onChange={handleChange}
                     />
                 </form>     
-                <button onClick={this.handleSubmit} >로그인</button>
+                <button onClick={handleSubmit} >로그인</button>
             </div>
         )
-    }
+    
 }
 
 export default Login;

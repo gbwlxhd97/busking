@@ -3,39 +3,37 @@ import "./style/Map.css"
 import "./style/BuskerIntro.css"
 import { server } from '../api'; //api 받아오기
 
-
-
 /*global kakao*/ 
 class Map extends React.Component{
-    
-    
-  state = {
-      nickname: " ",
-      profilImg:" ",
-      latlng:new kakao.maps.LatLng(37.509548, 127.089970),
-      loading : true
-  };
+    state = {
+        nickname:[],
+        profilImg:[],
+        latlng:[new kakao.maps.LatLng(37.509548, 127.089970),new kakao.maps.LatLng(37.497966, 127.095584),new kakao.maps.LatLng(37.509085, 127.072866)],/// 유저 위치를 받오는
+        loading : true
+    };
 
-  async getUser() {     //유저정보 가져오기
+  async getUser() {
     try { 
       let res = await server.getAllUser();
-      let {data: {data }}= res 
-    
-    console.log(data);
-    
-    //  console.log(this.state);
+      let {data: {data }}= res ;
+      let nickNameArray = [];
+      let profilImgArray = [];
+      
+      data.map(data => {
+        nickNameArray.push(data.nickName);
+        profilImgArray.push(data.profileImgURL);
+      });
     this.setState({
-        nickname: data[0].loginID,
-        profilImg: data[0].profileImgURL
+        nickname: nickNameArray,
+        profilImg: profilImgArray
       })
-     // console.log(this.state);
-     
+    
     } catch (error) {
       console.log(error); 
     }
-    
   }
-  makeMap(){      //맵자체
+
+  makeMap(){
     var container = document.querySelector('.map');
     var options = {
       center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
@@ -46,9 +44,9 @@ class Map extends React.Component{
     this.markListener(map);      //파란 화살표
     this.markBusker(map);            //아이유
   }
+
   componentDidMount() {
     this.getUser();
-    console.log(this.state.nickname);
 }
 
   componentDidUpdate(){
@@ -56,6 +54,7 @@ class Map extends React.Component{
       this.makeMap();
     }
   }
+
   markListener(map){
     navigator.geolocation.getCurrentPosition(function(position) {
         
@@ -63,7 +62,7 @@ class Map extends React.Component{
           lon = position.coords.longitude; // 경도
       
       var locPosition = new kakao.maps.LatLng(lat, lon)
-      // eslint-disable-next-line
+
       var marker = new kakao.maps.Marker({  
           map: map, 
           position: locPosition
@@ -73,23 +72,22 @@ class Map extends React.Component{
   }
   
   markBusker(map) {
-
+    let num =0;
+    this.state.latlng.map(latlng=> {
       var customOverlay=new kakao.maps.CustomOverlay({
-        position: this.state.latlng
+        position: latlng
       });
       
       var content = document.createElement('div');
       content.className='buskers'
 
-      
       var buskerImg=document.createElement('img');
-      buskerImg.src=this.state.profilImg;
+      buskerImg.src=this.state.profilImg[num];
       content.appendChild(buskerImg);
       
       var nickname =document.createElement('span');
       nickname.className='busker-name';
-      nickname.innerText=this.state.nickname;
-      console.log(this.nameIU);
+      nickname.innerText=this.state.nickname[num];
       content.appendChild(nickname);
 
       content.addEventListener('click',motion);
@@ -103,7 +101,7 @@ class Map extends React.Component{
         introProfile.className="introProfile";
         introProfile.innerText="안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요"
 
-        var closeBtn = document.createElement("button");
+        var closeBtn = document.createElement("p");
         closeBtn.className="closeBtn";
         closeBtn.innerText="X"
 
@@ -119,8 +117,6 @@ class Map extends React.Component{
           homeMap.removeChild(introduce);
           content.addEventListener('click',motion);
         })
-        
-
 
         introProfile.appendChild(closeBtn);
         introduce.appendChild(introProfile);
@@ -130,12 +126,16 @@ class Map extends React.Component{
       }
       customOverlay.setContent(content);
       customOverlay.setMap(map);
+      num=num+1;
+    }
+      )
+      
   }
   
   render(){
     return(
       <>
-        <div className="map"> 
+        <div className="map">
         </div>
       </>
     )
