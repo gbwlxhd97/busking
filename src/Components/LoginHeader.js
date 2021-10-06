@@ -61,8 +61,8 @@ const WithRouter = ({ nickname }) =>(
         </List>
 
         <List>
-            <SLink to={`/userdetail${nickname}`}>
-                {localStorage.getItem("username")}
+            <SLink to={`/userdetail/${nickname}`}>
+                {nickname}
             </SLink>
             <List>
                 <LogoutBtn onClick={Logout}>

@@ -7,6 +7,7 @@ import "./style/Home.css"
 function Home() {
   
   return (
+    
       <div className="homeMap">
         {/* <Map/> */}
         <ReMap/>

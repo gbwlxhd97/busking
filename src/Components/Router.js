@@ -12,7 +12,9 @@ import LoginHeader from "../Components/LoginHeader"
 export default () => (
     <Router>
         {localStorage.getItem("username") ?
-            <LoginHeader/> : <LogoutHeader/>}
+            <LoginHeader
+                nickname="아이유"
+            /> : <LogoutHeader/>}
         <>
             <Route path="/" exact component={Home} /> 
             <Route path="/login" exact component={Login} />
