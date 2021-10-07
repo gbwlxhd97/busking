@@ -10,6 +10,7 @@ const Header = Styled.div`
     background-color:#233323;
     justify-content: space-around;
     align-items:center;
+    border-bottom:3px solid rgba(255,0,0,0.1);
 `;
 
 const List = Styled.ul`

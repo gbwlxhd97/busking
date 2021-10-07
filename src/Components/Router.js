@@ -13,14 +13,14 @@ export default () => (
     <Router>
         {localStorage.getItem("username") ?
             <LoginHeader
-                nickname="아이유"
+                nickname={localStorage.getItem("username")}
             /> : <LogoutHeader/>}
         <>
             <Route path="/" exact component={Home} /> 
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={SignUp} />
             <Route path="/reservation" exact component={Reservation} /> 
-            <Route path="/userdetail/:nickname" exact component={Detail}/>
+            <Route path="/userdetail/:nickName" exact component={Detail}/>
         </>
     </Router>
 )
