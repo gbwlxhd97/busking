@@ -1,6 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { Link} from "react-router-dom";
+import { Link,WithRouter} from "react-router-dom";
 
 
 const Header = Styled.div`
@@ -9,6 +9,7 @@ const Header = Styled.div`
     background-color:#233323;
     justify-content: space-around;
     align-items:center;
+    border-bottom:3px solid rgba(255,0,0,0.1);
 `;
 
 const List = Styled.ul`
@@ -23,27 +24,20 @@ const List = Styled.ul`
 const Item = Styled.li`
     list-style:none;
     text-align:center;
-    padding-left:20px;
+    padding-left:2px;
     padding-right:2px;
+`;
+
+const SLink = Styled(Link)`
+    color:gray;
+    text-decoration: none;
     &:hover {
         border-bottom:3px solid #446844;
         transition:border-bottom 0.3s ease-in-out;
       }
 `;
 
-const SLink = Styled(Link)`
-    color:#356735;
-    text-decoration: none;
-`;
-
-const Logo = Styled.div`
-    color:#356735;
-`;
-
-
-
-
-export default withRouter =>(
+export default WithRouter =>(
     <Header>
     <>
     <SLink to="/">
@@ -71,4 +65,3 @@ export default withRouter =>(
     </>
     </Header>
 );
-

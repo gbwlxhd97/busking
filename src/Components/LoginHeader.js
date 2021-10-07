@@ -27,21 +27,23 @@ const Item = Styled.li`
     text-align:center;
     padding-left:2px;
     padding-right:2px;
+`;
+
+const SLink = Styled(Link)`
+    color:gray;
+    text-decoration: none;
     &:hover {
         border-bottom:3px solid #446844;
         transition:border-bottom 0.3s ease-in-out;
       }
 `;
 
-const SLink = Styled(Link)`
-    color:#356735;
-    text-decoration: none;
-`;
-
 const LogoutBtn = Styled.button`
     background-color:#233323;
-    color:#356735;
+    color:gray;
     border:none;
+    padding:0px;
+    font-family:'Malgun Gothic';
     font-size:16px;
 `;
 
@@ -62,14 +64,17 @@ const WithRouter = ({ nickname }) =>(
         </List>
 
         <List>
-            <SLink to={`/userdetail/${nickname}`}>
-                {nickname}
-            </SLink>
-            <List>
+            <Item>
+                <SLink to={`/userdetail/${nickname}`}>
+                    {nickname}
+                </SLink>
+            </Item>
+
+            <Item>
                 <LogoutBtn onClick={Logout}>
-                    logout
+                    <SLink to="/">Logout</SLink>
                 </LogoutBtn>
-            </List>
+            </Item>
         </List>
         </>
     </Header>

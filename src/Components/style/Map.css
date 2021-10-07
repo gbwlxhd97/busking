@@ -24,10 +24,10 @@
 }
 
 .homeMap{
+    height:100vh;
     background-color: #1C1F1C;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-top: 100px;
-    padding-bottom: 250px;
+    
 }

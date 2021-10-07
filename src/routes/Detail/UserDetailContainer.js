@@ -7,6 +7,7 @@ export default class extends React.Component{
         nickname:"",
         birthday:"",
         gender:"",
+        userImgUrl:"",
         loading: false,
         error: null
     };
@@ -19,9 +20,13 @@ export default class extends React.Component{
           } = this.props;
         try{
             const asdf = await server.getUserDetail(nickName);
-            let {data:{data:{userDetail}}} = asdf;
+            let {data:{data}} = asdf;
+            console.log(data)
             this.setState({
-                userInfo:userDetail
+                userNickname:data.nickname,
+                birthday:data.birthday,
+                gender:data.gender,
+                userImgUrl:data.userDetail.profileImgURL
             })
         }catch {
             this.setState({
@@ -34,8 +39,13 @@ export default class extends React.Component{
         }
     }
     render(){
+        const {userNickname,birthday,gender,userImgUrl} = this.state;
+        return(
         <UserDetailPresenter
-
-        />
+            userNickname={userNickname}
+            birthday={birthday}
+            gender={gender}
+            userImgUrl={userImgUrl}
+        />)
     }
 }
