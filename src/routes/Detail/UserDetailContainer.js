@@ -4,7 +4,9 @@ import { server } from "../../api";
 
 export default class extends React.Component{
     state={
-        userInfo:[],
+        nickname:"",
+        birthday:"",
+        gender:"",
         loading: false,
         error: null
     };
@@ -17,11 +19,10 @@ export default class extends React.Component{
           } = this.props;
         try{
             const asdf = await server.getUserDetail(nickName);
-            /*let {data:{data:{userDetail}}} = asdf;
+            let {data:{data:{userDetail}}} = asdf;
             this.setState({
                 userInfo:userDetail
-            })*/
-            console.log(asdf);
+            })
         }catch {
             this.setState({
                 error: "Can't find movie information."
@@ -33,9 +34,8 @@ export default class extends React.Component{
         }
     }
     render(){
-        console.log(this.state.userInfo.nickname)
-        return(
-            <div>asdf</div>
-        )
+        <UserDetailPresenter
+
+        />
     }
 }
