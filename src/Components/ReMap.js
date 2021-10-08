@@ -3,14 +3,20 @@ import { server } from '../api';
 
 const {kakao} = window;
 let imgBox=[];
-function ReMap() {
+function ReMap(props) {
+    console.log(props);
     // eslint-disable-next-line
     const [kakaoMap,setKakaoMap] = useState(null)
+    const [pospos,setPosPos] = useState(props.pos2)
     useEffect(() => {
         getUser();
         getTeam();
-        
-    },[])
+    },[]);
+    useEffect(() => {
+        setTimeout(() => {
+            console.log(props);
+        },5000)
+    })
     useEffect(() => {
         const container = document.getElementById('myMap');
         if(navigator.geolocation) {
@@ -32,7 +38,7 @@ function ReMap() {
         };
         const map = new kakao.maps.Map(container, options);
         setKakaoMap(map)
-    },[])
+    },[pospos])
     return (
         <div id="myMap" style={{
             width: '300px',
@@ -59,8 +65,7 @@ const getTeam = async () => {
         const res =await server.getTeam()
         const {data: {data}} =res;
         const on = data.filter(e => e.onAir ===true)
-        imgBox = on.map(e => e.leader).map(e => e.userDetail).map(e => e.profileImgURL)
-        console.log(imgBox);
+        console.log(on.map(e => e.leader));
     } catch (error) {
         console.log(error);
     }
