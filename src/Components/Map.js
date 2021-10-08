@@ -12,26 +12,26 @@ class Map extends React.Component{
         loading : true
     };
 
-  async getUser() {
-    try { 
-      let res = await server.getAllUser();
-      let {data: {data }}= res ;
-      let nickNameArray = [];
-      let profilImgArray = [];
+    async getUser() {
+      try { 
+        let res = await server.getAllUser();
+        let {data: {data }}= res ;
+        let nickNameArray = [];
+        let profilImgArray = [];
+        
+        data.map(data => {
+          nickNameArray.push(data.nickName);
+          profilImgArray.push(data.profileImgURL);
+        });
+      this.setState({
+          nickname: nickNameArray,
+          profilImg: profilImgArray
+        })
       
-      data.map(data => {
-        nickNameArray.push(data.nickName);
-        profilImgArray.push(data.profileImgURL);
-      });
-    this.setState({
-        nickname: nickNameArray,
-        profilImg: profilImgArray
-      })
-    
-    } catch (error) {
-      console.log(error); 
+      } catch (error) {
+        console.log(error); 
+      }
     }
-  }
 
   makeMap(){
     var container = document.querySelector('.map');
@@ -72,7 +72,7 @@ class Map extends React.Component{
   }
   
   markBusker(map) {
-    let num =0;
+    let num = 0;
     this.state.latlng.map(latlng=> {
       var customOverlay=new kakao.maps.CustomOverlay({
         position: latlng

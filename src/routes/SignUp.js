@@ -56,7 +56,7 @@ function Sign() {
                 password: values.pw,
                 nickname: values.name,
                 birthday: values.birthday,
-                gender: values.gender,
+                gender: values.gender
             })
             Swal.fire({
                 position: 'center',
