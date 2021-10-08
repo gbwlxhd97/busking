@@ -34,8 +34,12 @@ border:none;
 outline:none;
 `
 const GenderDiv = styled.div `
-text-aline: center;
+display: flex;
 margin: 15px;
+`
+const Gender = styled.div `
+margin: 0 5px;
+font-size: 1rem;
 `
 const Button = styled.button `
 padding: 8px 30px;
@@ -114,10 +118,8 @@ function Sign() {
                         />
                     </InputDiv>
                     <GenderDiv>
-                        <div>
-                            <input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={change}/>여성
-                            <input type="radio" value="MALE" name="gender" id="MAEL" onChange={change}/>남성
-                        </div>
+                        <Gender><input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={change}/>여성</Gender>
+                        <Gender><input type="radio" value="MALE" name="gender" id="MAEL" onChange={change}/>남성</Gender>
                     </GenderDiv>
                 </FormDiv>
             </form>
