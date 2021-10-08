@@ -4,7 +4,7 @@ import Home from '../routes/Home';
 import Login from "../routes/Login";
 import SignUp from "../routes/SignUp";
 import Reservation from "../routes/Reservation"
-import Detail from "../routes/Detail/UserDetailContainer"
+import Detail from "../routes/Detail"
 import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
 

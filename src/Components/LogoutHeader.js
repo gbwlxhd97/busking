@@ -5,11 +5,11 @@ import { Link,WithRouter} from "react-router-dom";
 
 const Header = Styled.div`
     display:flex;
-    margin:0px;
-    background-color:#233323;
+    padding: 10px;
+    background: linear-gradient( to bottom, black, rgba(125,125,125,0.001) );
     justify-content: space-around;
     align-items:center;
-    border-bottom:3px solid rgba(255,0,0,0.1);
+
 `;
 
 const List = Styled.ul`
@@ -29,10 +29,10 @@ const Item = Styled.li`
 `;
 
 const SLink = Styled(Link)`
-    color:gray;
+    color:white;
     text-decoration: none;
     &:hover {
-        border-bottom:3px solid #446844;
+        border-bottom:3px solid black;
         transition:border-bottom 0.3s ease-in-out;
       }
 `;
@@ -45,20 +45,16 @@ export default WithRouter =>(
     </SLink>
     <List>
         <Item>
-            <SLink to="/">Home</SLink>
-        </Item>
-        
-        <Item>
-            <SLink to="/reservation">reservation</SLink>
+            <SLink to="/reservation">Reservation</SLink>
         </Item>
     </List>
     <List>
         <Item>
-            <SLink to="/login">login</SLink>
+            <SLink to="/login">Login</SLink>
         </Item>
         
         <Item>
-            <SLink to="/signup">signup</SLink>
+            <SLink to="/signup">Signup</SLink>
         </Item> 
     </List>
 
