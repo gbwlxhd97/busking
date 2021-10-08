@@ -10,12 +10,25 @@ margin-top: 50px;
 `;
 const InputDiv = styled.div `
 display: flex;
+margin: 20px;
+width: 700px;
+height: 600px;
+
+margin-left:600px;
 flex-direction: column;
 align-items: center;
-margin: 20px;
 `
+//border: 1px solid;
 const Input = styled.input `
-margin: 2px;
+margin: 5px;
+
+
+`
+const InputInner = styled.input `
+margin: 15px;
+width:420px;
+height:50px;
+
 `
 
 function Sign() {
@@ -67,23 +80,23 @@ function Sign() {
             회원가입
             <form>
                 <InputDiv>
-                    <Input placeholder="ID를 입력해주세요"
+                   <InputInner placeholder="ID를 입력해주세요."
                     value={values.id || ''}
                     name="id"
                     onChange={change}
                     />
-                    <Input placeholder="PW를 입력해주세요"
+                    <InputInner placeholder="PW를 입력해주세요."
                     value={values.pw || ''}
                     type="password"
                     name="pw"
                     onChange={change}
                     />
-                    <Input placeholder="닉네임을 입력해주세요"
+                    <InputInner placeholder="닉네임을 입력해주세요."
                     value={values.name || ''}
                     name="name"
                     onChange={change}
                     />
-                    <Input placeholder="출생연도을 입력해주세요"
+                    <InputInner placeholder="출생연도을 입력해주세요."
                     value={values.birthday || ''}
                     name="birthday"
                     onChange={change}

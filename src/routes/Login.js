@@ -49,7 +49,7 @@ function Login() {
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: '아이디 비밀번호가 맞지 않음.',
+                title: '아이디 또는 비밀번호가 잘못 입력 되었습니다.',
                 confirmButtonText: '확인',
                 showConfirmButton: true
                 //timer: 1500
