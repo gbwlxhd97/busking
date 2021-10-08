@@ -1,6 +1,7 @@
 import React,{useState} from "react";
 import { useHistory } from 'react-router-dom';
 import { server } from '../api';
+import Swal from 'sweetalert2'
 function Login() {
     const [values, setValues] = useState({id: "", pw: ""});
     const history = useHistory();
@@ -23,10 +24,36 @@ function Login() {
             const {data:{token,username}} = res
             localStorage.setItem('token',token)
             localStorage.setItem('username',username)
+
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true,
+                /*
+                didOpen: (toast) => {
+                  toast.addEventListener('mouseenter', Swal.stopTimer)
+                  toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+                */
+              })
+              Toast.fire({
+                icon: 'success',
+                title: '로그인 성공!'
+              })
+
             console.log('로그인성공');
             history.push('/')
         } catch (error) {
-            alert('아이디 비밀번호가 맞지않음')
+            Swal.fire({
+                position: 'center',
+                icon: 'warning',
+                title: '아이디 비밀번호가 맞지 않음.',
+                confirmButtonText: '확인',
+                showConfirmButton: true
+                //timer: 1500
+              })
             console.log(error);
         }
     }

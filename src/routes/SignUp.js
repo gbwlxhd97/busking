@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import { server } from '../api';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 const Form = styled.div `
 text-align: center;
@@ -32,6 +33,7 @@ function Sign() {
         const {name,value} = event.target;
         setValues({...values,[name]:value}) 
     }
+    
 
     const submit = async(event) => {
         event.preventDefault()
@@ -43,14 +45,25 @@ function Sign() {
                 birthday: values.birthday,
                 gender: values.gender,
             })
-            alert('회원가입 완료 로그인페이지로 이동합니다.')
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '회원가입 완료\n로그인페이지로 이동합니다.',
+                showConfirmButton: false,
+                confirmButtonText: '확인',
+                timer: 1500
+            })
             history.push('/login')
         } catch (error) {
             console.log(error);
         }
+        
     }
+
+    
     return(
         <Form>
+            
             회원가입
             <form>
                 <InputDiv>
