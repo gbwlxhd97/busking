@@ -34,7 +34,7 @@ border:none;
 outline:none;
 `
 const Button = styled.button `
-margin-top: 5px;
+margin-top: 10nppx;
 padding: 8px 30px;
 border-radius: 10px;
 background-color: white;
