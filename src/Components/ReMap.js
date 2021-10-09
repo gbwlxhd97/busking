@@ -3,6 +3,7 @@ import { server } from '../api';
 
 const {kakao} = window;
 let imgBox=[];
+let testBox = [];
 let test;
 let t1;
 let t2;
@@ -11,6 +12,7 @@ function ReMap(props) {
     const [kakaoMap,setKakaoMap] = useState(null)
     // eslint-disable-next-line
     const [pospos,setPosPos] = useState('아무것도아니야')
+    const [tes1,setTes1] = useState(testBox)
     useEffect(() => {
         getUser();
         getTeam();
@@ -31,7 +33,22 @@ function ReMap(props) {
         // console.log(pospos === a);
         
     })
+
+    const getTeam = async () => {
+        try {
+            const res =await server.getTeam()
+            const {data: {data}} =res;
+            const on = data.filter(e => e.onAir ===true)
+            testBox = [...on.map(e => e.leader.userDetail.profileImgURL)]
+            console.log(testBox);
+            setTes1(testBox)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     useEffect(() => {
+        console.log(tes1);
         const container = document.getElementById('myMap');
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -70,6 +87,54 @@ function ReMap(props) {
         };
         const map = new kakao.maps.Map(container, options);
         setKakaoMap(map)
+
+
+        // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
+function createMarkerImage(src, size, options) {
+    var markerImage = new kakao.maps.MarkerImage(src, size, options);
+    return markerImage;            
+}
+
+// 좌표와 마커이미지를 받아 마커를 생성하여 리턴하는 함수입니다
+function createMarker(position, image) {
+    var marker = new kakao.maps.Marker({
+        position: position,
+        image: image
+    });
+    
+    return marker;  
+}   
+
+var storePositions = [
+    new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
+    new kakao.maps.LatLng(38.49671536281186, 127.03020491448352)
+];
+var markerImageSrc = tes1[0];  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+let storeMarkers = []
+
+createStoreMarkers()
+function createStoreMarkers() {
+    for(let i=0; i <storePositions.length; i++) {
+        var imageSize = new kakao.maps.Size(22, 26),
+            imageOptions = {   
+                spriteOrigin: new kakao.maps.Point(10, 36),    
+                spriteSize: new kakao.maps.Size(36, 98)  
+            };       
+    
+        // 마커이미지와 마커를 생성합니다
+        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+            marker = createMarker(storePositions[i], markerImage);
+            console.log(markerImageSrc);
+            storeMarkers.push(marker)
+    }
+}
+
+function setStoreMarkers(map) {
+    for(let i=0; i<storeMarkers.length; i++) {
+        storeMarkers[i].setMap(map)
+    }
+}
+setStoreMarkers(map)
     },[pospos])
     return (
         <div id="myMap" style={{
@@ -92,15 +157,9 @@ const getUser = async() => {
     }
 }
 
-const getTeam = async () => {
-    try {
-        const res =await server.getTeam()
-        const {data: {data}} =res;
-        const on = data.filter(e => e.onAir ===true)
-        console.log(on.map(e => e.leader));
-    } catch (error) {
-        console.log(error);
-    }
-}
+
+
+
+
 
 export default ReMap;
