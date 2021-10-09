@@ -42,6 +42,7 @@ function ReMap(props) {
             testBox = [...on.map(e => e.leader.userDetail.profileImgURL)]
             console.log(testBox);
             setTes1(testBox)
+            console.log(tes1);
         } catch (error) {
             console.log(error);
         }
@@ -135,7 +136,7 @@ function setStoreMarkers(map) {
     }
 }
 setStoreMarkers(map)
-    },[pospos])
+    },[tes1])
     return (
         <div id="myMap" style={{
             width: '300px',
