@@ -45,10 +45,7 @@ function ReMap(props) {
         
                     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
                     markerPosition = new kakao.maps.LatLng(t1,t2); // 마커가 표시될 위치입니다
-                    console.log(pospos);
-                    console.log(t1);
-                    console.log(t2);
-                    
+
                     let marker = new kakao.maps.Marker({  
                         position: pos
                     });
