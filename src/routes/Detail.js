@@ -94,7 +94,7 @@ export default class extends React.Component{
         }
         
     }
-    change(){
+    change=()=>{
         this.setState({ a: !this.state.a })
     }
     render(){
