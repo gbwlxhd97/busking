@@ -46,7 +46,7 @@ const FixBtn = styled.button`
     border-bottom:1px solid black;
     border-top:1px solid black;
     background-color: white;
-    &:hover {
+    &:active {
         background-color: gray;
         color:white;
         letter-spacing: 5px;
@@ -63,7 +63,8 @@ export default class extends React.Component{
         userImgUrl:"",
         introduce:"",
         loading: false,
-        error: null
+        error: null,
+        a:true
     };
 
     async componentDidMount() {
@@ -73,9 +74,8 @@ export default class extends React.Component{
             }
           } = this.props;
         try{
-            const asdf = await server.getUserDetail(nickName);
-            let {data:{data}} = asdf;
-            console.log(data)
+            const info = await server.getUserDetail(nickName);
+            let {data:{data}} = info;
             this.setState({
                 userNickname:data.nickname,
                 birthday:data.birthday,
@@ -92,9 +92,13 @@ export default class extends React.Component{
                 loading: false
             });
         }
+        
+    }
+    change(){
+        this.setState({ a: !this.state.a })
     }
     render(){
-        const {userNickname,birthday,gender,userImgUrl,introduce} = this.state;
+        const {a,userNickname,birthday,gender,userImgUrl,introduce} = this.state;
         return(
             <Container>
                 <ImgSection>
@@ -118,7 +122,10 @@ export default class extends React.Component{
                         <span>gender:<br/></span>
                         <Span>{gender}</Span>
                     </Details>
-                    <FixBtn>FixDetail</FixBtn>
+                    {a ===true ? 
+                        <FixBtn onClick={this.change}>FixDetail</FixBtn>
+                        :<FixBtn onClick={this.change}>Complete</FixBtn>}
+                    
                 </DetailSectionList>
             </Container>)
     }
