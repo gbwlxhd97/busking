@@ -3,16 +3,17 @@ import { server } from '../api';
 
 const {kakao} = window;
 let imgBox=[];
-let testBox = [];
+let burkerImgSave = [];
 let test;
 let t1;
 let t2;
+let intro = []
 function ReMap(props) {
     // eslint-disable-next-line
     const [kakaoMap,setKakaoMap] = useState(null)
     // eslint-disable-next-line
     const [pospos,setPosPos] = useState('아무것도아니야')
-    const [tes1,setTes1] = useState(testBox)
+    const [tes1,setTes1] = useState(burkerImgSave)
     useEffect(() => {
         getUser();
         getTeam();
@@ -26,7 +27,7 @@ function ReMap(props) {
         t2 =parseFloat(test[1])
         // console.log(t1);
         // console.log(t2);
-        setPosPos(props.pos3.join(' '))
+        // setPosPos(props.pos3.join(' '))
         
         // setPosPos(Object.assign({}, a))
         // console.log(typeof a);
@@ -39,9 +40,12 @@ function ReMap(props) {
             const res =await server.getTeam()
             const {data: {data}} =res;
             const on = data.filter(e => e.onAir ===true)
-            testBox = [...on.map(e => e.leader.userDetail.profileImgURL)]
-            console.log(testBox);
-            setTes1(testBox)
+            console.log(on);
+            // console.log(on.map(e=> e.introduce));
+            intro = on
+            burkerImgSave = [...on.map(e => e.leader.userDetail.profileImgURL)]
+            console.log(burkerImgSave);
+            setTes1(burkerImgSave)
             console.log(tes1);
         } catch (error) {
             console.log(error);
@@ -57,26 +61,26 @@ function ReMap(props) {
                 let lon = position.coords.longitude;
                 let pos = new kakao.maps.LatLng(lat,lon);
         
-                const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
-                    imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
-                    imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
+                // const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
+                //     imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
+                //     imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
         
-                    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
-                    markerPosition = new kakao.maps.LatLng(t1,t2); // 마커가 표시될 위치입니다
+                //     var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imageOption),
+                //     markerPosition = new kakao.maps.LatLng(t1,t2); // 마커가 표시될 위치입니다
 
                     let marker = new kakao.maps.Marker({  
                         position: pos
                     });
-                    let marker2 = new kakao.maps.Marker({
-                        position: markerPosition,
-                        image: markerImage
-                    })
+                    // let marker2 = new kakao.maps.Marker({
+                    //     position: markerPosition,
+                    //     image: markerImage
+                    // })
                     map.setCenter(pos); //이동
                     marker.setMap(map) //마크찍기
-                    setTimeout(() => {
-                        console.log('hi');
-                        marker2.setMap(map)
-                    },5000)
+                    // setTimeout(() => {
+                    //     console.log('hi');
+                    //     marker2.setMap(map)
+                    // },5000)
                     // marker2.setMap(map)
             })
         }
@@ -90,7 +94,7 @@ function ReMap(props) {
         setKakaoMap(map)
 
 
-        // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
+// 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
 function createMarkerImage(src, size, options) {
     var markerImage = new kakao.maps.MarkerImage(src, size, options);
     return markerImage;            
@@ -100,13 +104,30 @@ function createMarkerImage(src, size, options) {
 function createMarker(position, image) {
     var marker = new kakao.maps.Marker({
         position: position,
-        image: image
+        image: image,
+        clickable: true
     });
     
+    // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+var iwContent = `<div style="padding:5px;">${intro.map(e => e.id)}</div>` //api introduce 연결해주면됨
+var iwRemoveable = true;
+
+// 인포윈도우를 생성합니다
+var infowindow = new kakao.maps.InfoWindow({
+    content : iwContent,
+    removable : iwRemoveable
+});
+
+kakao.maps.event.addListener(marker, 'click', function() {
+    // 마커 위에 인포윈도우를 표시합니다
+    infowindow.open(map, marker);  
+});
+
     return marker;  
 }   
 
-var storePositions = [
+
+var buskerPositions = [
     new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
     new kakao.maps.LatLng(38.49671536281186, 127.03020491448352)
 ];
@@ -115,7 +136,7 @@ let storeMarkers = []
 
 createStoreMarkers()
 function createStoreMarkers() {
-    for(let i=0; i <storePositions.length; i++) {
+    for(let i=0; i <buskerPositions.length; i++) {
         var imageSize = new kakao.maps.Size(22, 26),
             imageOptions = {   
                 spriteOrigin: new kakao.maps.Point(10, 36),    
@@ -124,7 +145,7 @@ function createStoreMarkers() {
     
         // 마커이미지와 마커를 생성합니다
         var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
-            marker = createMarker(storePositions[i], markerImage);
+            marker = createMarker(buskerPositions[i], markerImage);
             console.log(markerImageSrc);
             storeMarkers.push(marker)
     }
@@ -135,7 +156,7 @@ function setStoreMarkers(map) {
         storeMarkers[i].setMap(map)
     }
 }
-setStoreMarkers(map)
+setStoreMarkers(map) //최종적으로 지도에 이미지를 뿌려줌
     },[tes1])
     return (
         <div id="myMap" style={{
