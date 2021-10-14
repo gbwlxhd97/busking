@@ -11,7 +11,6 @@ function Home() {
       <div className="homeMap">
         {/* <Map/> */}
         <ReMap/>
-
       </div>
   );
 }

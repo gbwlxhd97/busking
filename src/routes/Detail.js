@@ -73,28 +73,23 @@ export default class extends React.Component{
         change:false,
         count:0
     };
-    onClick=(event)=>{
+    onClick=()=>{
         this.setState({
-            btnClick: !this.state.btnClick,
-            count:1
+            btnClick: !this.state.btnClick, 
         })
-        console.log(this.state.value)
-        const {
-            duplicateCheck,
-            count
-        }=this.state
+        
+    }
 
-        if(duplicateCheck===true){
-            this.sendFix()
-            this.setState({
-                duplicateCheck:false,
-                count:0
-            })
-        }else if(duplicateCheck===false&&count!==0){//처음 눌렀다는것을 알 수 있는 state 중복체크 안하고 첫 클릭이 아닐때
+    offClick=()=>{
+        if(this.state.duplicateCheck===false){
             alert("중복 체크를 해주세요")
+        }else{
             this.setState({
-                count:0
+                btnClick: !this.state.btnClick,
+                duplicateCheck:false
             })
+            this.sendFix()
+            window.location.reload()
         }
     }
 
@@ -134,23 +129,16 @@ export default class extends React.Component{
             change
         }=this.state;
         
-        while (1){
-            if(duplicateCheck===true&&change===true){// 닉변 함
-                console.log("send data to db1")
-                this.setState({
-                    value:""
-                })
-                break;
-            }else if(duplicateCheck===true&&change===false){// 닉변 안함
-                console.log("send data to db2")
-                this.setState({
-                    value:""
-                })
-                break
-            }else{
-                alert("plz duplicate check")
-                continue
-            }
+        if(change===true){// 닉변 함
+            console.log("send data to db1")
+            this.setState({
+                value:""
+            })
+        }else if(change===false){// 닉변 안함
+            console.log("send data to db2")
+            this.setState({
+                value:""
+            })
         }
     }
 
@@ -179,7 +167,6 @@ export default class extends React.Component{
                 loading: false
             });
         }
-        
     }
 
     render(){
@@ -238,7 +225,7 @@ export default class extends React.Component{
 
                     {btnClick ===true ?
                         <Btn onClick={this.onClick}>정보 수정하기</Btn>
-                        :<Btn onClick={this.onClick}>수정 완료</Btn>}
+                        :<Btn onClick={this.offClick}>수정 완료</Btn>}
                     
                 </DetailSectionList>
             </Container>)
