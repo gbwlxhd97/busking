@@ -73,17 +73,17 @@ export default class extends React.Component{
         change:false,
         count:0
     };
-
-    onClick=()=>{
+    onClick=(event)=>{
         this.setState({
             btnClick: !this.state.btnClick,
             count:1
         })
-        
+        console.log(this.state.value)
         const {
             duplicateCheck,
             count
         }=this.state
+
         if(duplicateCheck===true){
             this.sendFix()
             this.setState({
@@ -110,13 +110,14 @@ export default class extends React.Component{
             userNickname,
             value
         }=this.state
+        
         if(value!==""){
             if(userNickname===value){
                 this.setState({
                     duplicateCheck:true,
                     change:false
                 })
-            }else {//닉변 했으면 db에 같은 닉 있는지 판단하는 조건문 자리
+            }else{//닉변 했으면 db에 같은 닉 있는지 판단하는 조건문 자리
                 this.setState({
                     duplicateCheck:true,
                     change:true
@@ -134,13 +135,13 @@ export default class extends React.Component{
         }=this.state;
         
         while (1){
-            if(duplicateCheck===true&&change===true){
+            if(duplicateCheck===true&&change===true){// 닉변 함
                 console.log("send data to db1")
                 this.setState({
                     value:""
                 })
                 break;
-            }else if(duplicateCheck===true&&change===false){
+            }else if(duplicateCheck===true&&change===false){// 닉변 안함
                 console.log("send data to db2")
                 this.setState({
                     value:""
@@ -208,7 +209,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             nickname:<br/>
-                            <input type="text" name="name" onChange={this.valueChange} placeholder={userNickname} />
+                            <input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
                             <Btn onClick={this.onClickCheckNickname}>중복 체크</Btn>
                         </form>
                     </Details>)}
