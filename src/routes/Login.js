@@ -65,9 +65,10 @@ function Login() {
                 password: values.pw
             })
             // console.log(res);
-            const {data:{token,username}} = res
+            const {data:{token,userNickname}} = res
             localStorage.setItem('token',token)
-            localStorage.setItem('username',username)
+            localStorage.setItem('username',userNickname)
+
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
@@ -82,7 +83,8 @@ function Login() {
                 title: '로그인 성공'
             })
             console.log('로그인성공');
-            history.push('/')
+            //history.push('/')
+            window.location.href="/"
         } catch (error) {
             Swal.fire({
                 position: 'center',

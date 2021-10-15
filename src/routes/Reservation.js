@@ -4,8 +4,43 @@ import "./style/Reservation.css"
 import Section from '../Components/Section';
 import Loader from '../Components/Loader';
 import Message from '../Components/Message';
+import styled from "styled-components";
 
-
+const Form = styled.form `
+display: flex;
+justify-content: center;
+margin: 15px 0;
+width: 100%;
+`
+const Input = styled.input `
+padding: 0 5px;
+border-radius: 7px;
+width: 60%;
+`
+const Button = styled.button `
+margin-left: 10px;
+padding: 5px 10px;
+border-radius: 10px;
+background-color: white;
+&:hover {
+    background-color: black;
+    color: white;
+}
+`
+const Div = styled.div `
+margin: 0 5px;
+`
+const ReserveBtn = styled.button `
+float: right;
+margin-top: 12px;
+padding: 3px 5px;
+border-radius: 10px;
+background-color: white;
+&:hover {
+    background-color: black;
+    color: white;
+}
+`
 
 class Reservation extends React.Component{
     state ={
@@ -21,11 +56,13 @@ class Reservation extends React.Component{
         const {searchTerm} = this.state;
         if(searchTerm !== "") {
             this.searchByTerm(searchTerm)
-        }    
+        }
     }
 
+
+
     searchByTerm = async () => {
-        const { searchTerm} = this.state;
+        const {searchTerm} = this.state;
         this.setState({
             loading: true
         })
@@ -56,26 +93,46 @@ class Reservation extends React.Component{
     }
 
 
+    MusicList = (musicInfo) => {
+            console.log(musicInfo[0],musicInfo[1])
+            return(
+                <div>
+                    {musicInfo[0]}-{musicInfo[1]}
+                </div>
+            )
+    }
+
+    reservationBtn = () => {
+        localStorage.getItem('username') ? console.log("예약 성공") : alert('이용할 수 없는 사용자입니다.')
+    }
+    
+    
     render(){
        let {songList ,loading,error} = this.state;
         return(
         <div>
-            <form onSubmit={this.handleSearch}>
-                <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
-            </form>
-            {loading ? <Loader/> :
-                <>
-                {songList.length > 0 && songList   &&
-                <Section title="음악리스트">
-                    {songList.map(song => (
-                        <div className="musicList" key={song.id}>
-                            <img src={song.profileImgURL} alt="profile"></img>
-                            {song.title} - {song.singer}
-                        </div> )) }  
-                </Section>
-            }
-            {songList.length ===0 && <Message text={error}/>}
-            </>            
+            <Form onSubmit={this.handleSearch}>
+                <Input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
+                <Button onChange={this.updateTerm}>검색</Button>
+            </Form>
+                {loading ? <Loader/> :
+                    <>
+                    {songList.length > 0 && songList   &&
+                        <>
+                        <Div>
+                            <Section title="음악리스트">
+                                {songList.map(song => (
+                                    <div className="musicList" key={song.id}>
+                                        <img src={song.profileImgURL} alt="profile"></img>
+                                        {song.title} - {song.singer}
+                                        <ReserveBtn onClick={this.reservationBtn}>예약하기</ReserveBtn>
+                                    </div> )) }
+                            </Section>
+                        </Div>
+                        </>
+                    }
+                {songList.length ===0 && <Message text={error}/>}
+            </>
         }
         </div>
         )

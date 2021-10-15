@@ -29,11 +29,7 @@ margin: 10px 0;
 border-bottom: 2px solid #adadad;
 width: 80%
 `
-const Input = styled.input.attrs({
-    
-    type: "number"
-})
-`
+const Input = styled.input `
 padding: 8px 10px;
 width: 100%;
 border:none;
@@ -105,8 +101,6 @@ function Sign() {
     return(
         <Form>
             <H3>회원가입</H3>
-            <Input placeholder="ㅎ"/>
-            
             <form>
                 <FormDiv>
                     <InputDiv>
@@ -123,7 +117,6 @@ function Sign() {
                         name="pw"
                         onChange={change}
                         />
-                        
                     </InputDiv>
                     <InputDiv>
                         <Input placeholder="닉네임을 입력해주세요"
@@ -134,15 +127,13 @@ function Sign() {
                     </InputDiv>
                     <InputDiv>
                         <Input placeholder="출생연도을 입력해주세요"
-                    
                         value={values.birthday || ''}
                         name="birthday"
-                        
                         onChange={change}
                         />
                     </InputDiv>
                     <GenderDiv>
-                        <Gender><input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={change} />여성</Gender>
+                        <Gender><input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={change}/>여성</Gender>
                         <Gender><input type="radio" value="MALE" name="gender" id="MAEL" onChange={change}/>남성</Gender>
                     </GenderDiv>
                 </FormDiv>
