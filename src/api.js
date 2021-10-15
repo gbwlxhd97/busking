@@ -15,7 +15,8 @@ export const server = {
     }
   }),
   getTeam: () => api.get("/team/all"),
-  postOnAir: (data) => api.post("/team/onAir",data)
+  postOnAir: (data) => api.post("/team/onAir",data),
+  getUserDetail:(nickname)=>api.get(`/user/${nickname}`)
 }
 
 

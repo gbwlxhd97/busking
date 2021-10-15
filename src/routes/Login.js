@@ -68,7 +68,8 @@ function Login() {
             localStorage.setItem('token',token)
             localStorage.setItem('username',username)
             console.log('로그인성공');
-            history.push('/')
+            //history.push('/')
+            window.location.href="/"
         } catch (error) {
             alert('아이디 비밀번호가 맞지않음')
             console.log(error);
