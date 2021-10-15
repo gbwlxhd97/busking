@@ -1,3 +1,4 @@
+
 import React,{useState} from "react";
 import { server } from '../api';
 import styled from "styled-components";
@@ -5,31 +6,56 @@ import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
 
 const Form = styled.div `
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
 text-align: center;
-margin-top: 50px;
-`;
-const InputDiv = styled.div `
+width: 80%
+`
+const H3 = styled.h3 `
+font-size: 1.5rem;
+font-weight: 600;
+margin-bottom: 50px;
+`
+const FormDiv = styled.div `
+margin: 20px 0;
 display: flex;
-margin: 20px;
-width: 700px;
-height: 600px;
-
-margin-left:600px;
 flex-direction: column;
 align-items: center;
 `
-//border: 1px solid;
-const Input = styled.input `
-margin: 5px;
-
-
+const InputDiv = styled.div `
+margin: 10px 0;
+border-bottom: 2px solid #adadad;
+width: 80%
 `
-const InputInner = styled.input `
+const Input = styled.input.attrs({
+    
+    type: "number"
+})
+`
+padding: 8px 10px;
+width: 100%;
+border:none;
+outline:none;
+`
+const GenderDiv = styled.div `
+display: flex;
 margin: 15px;
-width:420px;
-height:50px;
-
 `
+const Gender = styled.div `
+margin: 0 5px;
+font-size: 1rem;
+`
+const Button = styled.button `
+padding: 8px 30px;
+border-radius: 10px;
+background-color: white;
+&:hover {
+    background-color: black;
+    color: white;
+}
+` 
 
 function Sign() {
     const history = useHistory();
@@ -41,78 +67,105 @@ function Sign() {
     birthday: "",
     gender: "",
     });
+
     
     const change = (event) => {
         const {name,value} = event.target;
         setValues({...values,[name]:value}) 
     }
-    
 
+
+  
     const submit = async(event) => {
+        
         event.preventDefault()
+        
         try {
             await server.createAccount({
                 username: values.id, 
                 password: values.pw,
-                nickname: values.name,
+                nickname: values.name, 
                 birthday: values.birthday,
-                gender: values.gender
+                gender: values.gender,
             })
+
             Swal.fire({
                 position: 'center',
                 icon: 'success',
-                title: '회원가입 완료\n로그인페이지로 이동합니다.',
-                showConfirmButton: false,
-                confirmButtonText: '확인',
-                timer: 1500
+                title: '회원가입 완료 \n로그인 페이지로 이동합니다.',
+                showConfirmButton: true
             })
+
             history.push('/login')
         } catch (error) {
+                  
             console.log(error);
         }
-        
     }
-
-    
     return(
         <Form>
+            <H3>회원가입</H3>
+            <Input placeholder="ㅎ"/>
             
-            회원가입
             <form>
-                <InputDiv>
-                   <InputInner placeholder="ID를 입력해주세요."
-                    value={values.id || ''}
-                    name="id"
-                    onChange={change}
-                    />
-                    <InputInner placeholder="PW를 입력해주세요."
-                    value={values.pw || ''}
-                    type="password"
-                    name="pw"
-                    onChange={change}
-                    />
-                    <InputInner placeholder="닉네임을 입력해주세요."
-                    value={values.name || ''}
-                    name="name"
-                    onChange={change}
-                    />
-                    <InputInner placeholder="출생연도을 입력해주세요."
-                    value={values.birthday || ''}
-                    name="birthday"
-                    onChange={change}
-                    />
-                    <div>
-                        <Input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={change}/>여성
-                        <Input type="radio" value="MALE" name="gender" id="MAEL" onChange={change}/>남성
-                    </div>
-                </InputDiv>
+                <FormDiv>
+                    <InputDiv>
+                        <Input placeholder="ID를 입력해주세요"
+                        value={values.id || ''}
+                        name="id"
+                        onChange={change}
+                        />
+                    </InputDiv>
+                    <InputDiv>
+                        <Input placeholder="PW를 입력해주세요"
+                        value={values.pw || ''}
+                        type="password"
+                        name="pw"
+                        onChange={change}
+                        />
+                        
+                    </InputDiv>
+                    <InputDiv>
+                        <Input placeholder="닉네임을 입력해주세요"
+                        value={values.name || ''}
+                        name="name"
+                        onChange={change}
+                        />
+                    </InputDiv>
+                    <InputDiv>
+                        <Input placeholder="출생연도을 입력해주세요"
+                    
+                        value={values.birthday || ''}
+                        name="birthday"
+                        
+                        onChange={change}
+                        />
+                    </InputDiv>
+                    <GenderDiv>
+                        <Gender><input type="radio" value="FEMALE" name="gender" id="FEMAEL" onChange={change} />여성</Gender>
+                        <Gender><input type="radio" value="MALE" name="gender" id="MAEL" onChange={change}/>남성</Gender>
+                    </GenderDiv>
+                </FormDiv>
             </form>
-            <button onClick={submit} >회원가입</button>
+            <Button onClick={submit} >회원가입</Button>
         </Form>
     )
 }
 
 
+
+//////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+/*
+Sign.propTypes = {
+    id: PropTypes.string.isRequired,
+   // pw: PropTypes.string.isRequired,
+    
+    //year: PropTypes.number.isRequired,
+    
+}
+*/
 // class Signup extends React.Component{
 
 //     constructor(props) {

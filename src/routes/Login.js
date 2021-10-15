@@ -1,7 +1,51 @@
 import React,{useState} from "react";
 import { useHistory } from 'react-router-dom';
+import styled from "styled-components";
 import { server } from '../api';
 import Swal from 'sweetalert2'
+
+const Form = styled.div `
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+text-align: center;
+width: 80%
+`
+const H3 = styled.h3 `
+font-size: 1.5rem;
+font-weight: 600;
+margin-bottom: 40px;
+`
+const FormDiv = styled.div `
+margin: 20px 0;
+display: flex;
+flex-direction: column;
+align-items: center;
+`
+const InputDiv = styled.div `
+margin: 8px 0;
+border-bottom: 2px solid #adadad;
+width: 80%
+`
+const Input = styled.input `
+padding: 8px 10px;
+width: 100%;
+border:none;
+outline:none;
+`
+const Button = styled.button `
+margin-top: 10nppx;
+padding: 8px 30px;
+border-radius: 10px;
+background-color: white;
+&:hover {
+    background-color: black;
+    color: white;
+}
+` 
+
+
 function Login() {
     const [values, setValues] = useState({id: "", pw: ""});
     const history = useHistory();
@@ -24,62 +68,60 @@ function Login() {
             const {data:{token,username}} = res
             localStorage.setItem('token',token)
             localStorage.setItem('username',username)
-
             const Toast = Swal.mixin({
                 toast: true,
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000,
                 timerProgressBar: true,
-                /*
-                didOpen: (toast) => {
-                  toast.addEventListener('mouseenter', Swal.stopTimer)
-                  toast.addEventListener('mouseleave', Swal.resumeTimer)
-                }
-                */
+                
               })
+              
               Toast.fire({
                 icon: 'success',
-                title: '로그인 성공!'
-              })
-
+                title: '로그인 성공'
+            })
             console.log('로그인성공');
             history.push('/')
         } catch (error) {
             Swal.fire({
                 position: 'center',
                 icon: 'warning',
-                title: '아이디 또는 비밀번호가 잘못 입력 되었습니다.',
-                confirmButtonText: '확인',
-                showConfirmButton: true
-                //timer: 1500
-              })
+                title: '아이디 비밀번호가 맞지않음',
+                showConfirmButton: false,
+                timer: 1500
+            })
             console.log(error);
         }
     }
     
         return(
-            <div>
-                로그인
+            <Form>
+                <H3>로그인</H3>
                 <form>
-                    <input placeholder="id입력해주세요"
-                    value={values.id || ''}
-                    type="text"
-                    name="id"
-                    onChange={handleChange}
-                    />
-                    <input placeholder="비밀번호"
-                    value={values.pw || '' }
-                    type="password"
-                    name="pw"
-                    onChange={handleChange}
-                    />
+                    <FormDiv>
+                        <InputDiv>
+                            <Input placeholder="id입력해주세요"
+                            value={values.id || ''}
+                            type="text"
+                            name="id"
+                            onChange={handleChange}
+                            />
+                        </InputDiv>
+                        <InputDiv>
+                            <Input placeholder="비밀번호"
+                            value={values.pw || '' }
+                            type="password"
+                            name="pw"
+                            onChange={handleChange}
+                            />
+                        </InputDiv>
+                    </FormDiv>
                 </form>     
-                <button onClick={handleSubmit} >로그인</button>
-            </div>
+                <Button onClick={handleSubmit} >로그인</Button>
+            </Form>
         )
     
 }
 
 export default Login;
-
