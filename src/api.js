@@ -17,5 +17,5 @@ export const server = {
   getTeam: () => api.get("/team/all"),
   postOnAir: (data) => api.post("/team/onAir",data),
   getUserDetail:(nickname)=>api.get(`/user/${nickname}`),
-  putUserDetail:(oldNickname)=>api.put(`/user/${oldNickname}/detail`)
+  putUserDetail:(data)=>api.put(`/user/detail/${data.nickname}`,data)// 아이유 oldNickname 바뀐 닉 , 바뀐 사진, 바뀐 소개
 }

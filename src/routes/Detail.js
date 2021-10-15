@@ -89,7 +89,6 @@ export default class extends React.Component{
                 duplicateCheck:false
             })
             this.sendFix()
-            window.location.reload()
         }
     }
 
@@ -123,6 +122,26 @@ export default class extends React.Component{
         }
     }
     
+    handleFix = async() =>{
+        console.log("dmddo")
+        try{
+            const fixData = await server.putUserDetail({
+                    nickname:"",
+                    profileImgURL:"",
+                    introduce:""
+            });
+        }catch (error){
+            console.log(error)
+            this.setState({
+                error: "Can't find movie information."
+            });
+        }finally {
+            this.setState({
+                loading: false
+            });
+        }
+    }
+
     sendFix=()=>{
         const {
             duplicateCheck,
@@ -158,11 +177,11 @@ export default class extends React.Component{
                 userImgUrl:data.userDetail.profileImgURL,
                 introduce:data.userDetail.introduce
             })
-        }catch {
+        }catch (error){
             this.setState({
                 error: "Can't find movie information."
             });
-        }finally {
+        }finally{
             this.setState({
                 loading: false
             });
@@ -224,8 +243,8 @@ export default class extends React.Component{
                     </Details>
 
                     {btnClick ===true ?
-                        <Btn onClick={this.onClick}>정보 수정하기</Btn>
-                        :<Btn onClick={this.offClick}>수정 완료</Btn>}
+                        <Btn onClick={this.onClick}>정보 수정기</Btn>
+                        :<Btn onClick={this.offClick} onClick={this.handleFix}>수정 완료</Btn>}
                     
                 </DetailSectionList>
             </Container>)
