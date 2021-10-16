@@ -33,7 +33,7 @@ class Reservation extends React.Component{
         })
         try {
             const res =  await server.searchSong(searchTerm)
-            let {data:{data}} = res
+            let {data:{data}} = res;
             this.setState({ 
                 songList: data 
             })
@@ -72,7 +72,10 @@ class Reservation extends React.Component{
         return(
         <div>
             <form onSubmit={this.handleSearch}>
-                <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
+                <input 
+                    placeholder="검색할 음악제목"  
+                    onChange={this.updateTerm} 
+                    value={this.state.searchTerm}/>
             </form>
                 {loading ? <Loader/> :
                     <>

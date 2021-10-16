@@ -48,12 +48,15 @@ const Btn = styled.button`
     border-top:1px solid black;
     border-radius:5px;
     background-color: white;
-    &:active {
+    &:active{
+        background-color: gray;
+    }
+    /*&:active {
         background-color: gray;
         color:white;
         letter-spacing: 5px;
         transition: all ease 0.3s 0s;
-      }
+      }*/
 `;
 
 
@@ -77,7 +80,6 @@ export default class extends React.Component{
         this.setState({
             btnClick: !this.state.btnClick, 
         })
-        
     }
 
     offClick=()=>{
@@ -98,7 +100,7 @@ export default class extends React.Component{
         })
     }
 
-    onClickCheckNickname=(event)=>{
+    dupleicateClick=(event)=>{
         event.preventDefault();
         const {
             userNickname,
@@ -216,7 +218,7 @@ export default class extends React.Component{
                         <form>
                             nickname:<br/>
                             <input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
-                            <Btn onClick={this.onClickCheckNickname}>중복 체크</Btn>
+                            <Btn onClick={this.dupleicateClick}>중복 체크</Btn>
                         </form>
                     </Details>)}
 
@@ -244,7 +246,7 @@ export default class extends React.Component{
 
                     {btnClick ===true ?
                         <Btn onClick={this.onClick}>정보 수정기</Btn>
-                        :<Btn onClick={this.offClick} onClick={this.handleFix}>수정 완료</Btn>}
+                        :<Btn onClick={this.offClick} >수정 완료</Btn>}
                     
                 </DetailSectionList>
             </Container>)

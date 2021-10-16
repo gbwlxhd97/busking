@@ -16,6 +16,12 @@ export const server = {
   }),
   getTeam: () => api.get("/team/all"),
   postOnAir: (data) => api.post("/team/onAir",data),
+  
   getUserDetail:(nickname)=>api.get(`/user/${nickname}`),
-  putUserDetail:(data)=>api.put(`/user/detail/${data.nickname}`,data)// 아이유 oldNickname 바뀐 닉 , 바뀐 사진, 바뀐 소개
+  putUserDetail:(data)=>api.put(`/user/detail/${data.nickname}`,data),// 아이유 oldNickname 바뀐 닉 , 바뀐 사진, 바뀐 소개
+  searchUser:(nickname)=>api.get(`/user/${nickname}`, {
+    params: {
+      query: encodeURIComponent(nickname)
+    }
+  })
 }

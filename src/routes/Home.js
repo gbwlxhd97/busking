@@ -4,14 +4,16 @@ import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
 import "./style/Home.css"
 
+//porps로 넘겨 줘야함
+
 function Home() {
-  
   return (
-    
+    <>
       <div className="homeMap">
         {/* <Map/> */}
         <ReMap/>
       </div>
+    </>
   );
 }
 
@@ -24,9 +26,6 @@ function start() {
       console.log(pos);
       // console.log(lat,lon);
     })
-  
 }
-
-
 
 export default Home;
