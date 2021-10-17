@@ -4,27 +4,11 @@ import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
 import "./style/Home.css"
 
-
-let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
+//porps로 넘겨 줘야함
 
 function Home() {
-  
-  navigator.geolocation.getCurrentPosition((position) => {
-    let pos = [];
-    let lat = position.coords.latitude;
-    let lon = position.coords.longitude;      
-    pos.push(`${lat},${lon}`);
-    pos2 = [...pos];
-    // console.log(pos2);
-  })
-  const [pos20,setPos2] = useState([])
-  const startBus = () => {
-    setPos2(pos2);
-    console.log(pos20);
-  }
-
   return (
-    
+    <>
       <div className="homeMap">
         {/* <Map/> */}
         {
@@ -40,8 +24,19 @@ function Home() {
         )}
         <ReMap/>
       </div>
+    </>
   );
 }
 
+function start() {
+  navigator.geolocation.getCurrentPosition((position) => {
+    let pos = [];
+      let lat = position.coords.latitude;
+      let lon = position.coords.longitude;      
+      pos.push(`new kakao.maps.LatLng(${lat},${lon})`)
+      console.log(pos);
+      // console.log(lat,lon);
+    })
+}
 
 export default Home;

@@ -45,7 +45,7 @@ export default WithRouter =>(
     </SLink>
     <List>
         <Item>
-            <SLink to="/reservation">Reservation</SLink>
+            <SLink to="/searchuser">버스커 검색</SLink>
         </Item>
     </List>
     <List>
