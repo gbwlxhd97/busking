@@ -8,6 +8,7 @@ import Reservation from "../routes/Reservation"
 import Detail from "../routes/Detail"
 import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
+import UserRoom from "../routes/UserRoom"
 
 // eslint-disable-next-line
 export default () => (
@@ -23,6 +24,7 @@ export default () => (
             <Route path="/reservation" exact component={Reservation} /> 
             <Route path="/userdetail/:nickName" exact component={Detail}/>
             <Route path="/searchuser" exact component={SearchUser}/>
+            <Route path="/userroom/:nickName" exact component={UserRoom}/>
         </>
     </Router>
 )

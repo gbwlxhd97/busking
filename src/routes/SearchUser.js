@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Loader from "../Components/Loader"
 import Message from "../Components/Message"
 import {server} from "../api";
+import { Link } from "react-router-dom";
 
 const Search = styled.input`
     margin-left:25%;
@@ -35,6 +36,11 @@ const GoToRoom = styled.button`
     &:active{
         background-color: gray;
     }
+`;
+
+const SLink =styled(Link)`
+    text-decoration: none;
+    color:black;
 `;
 
 class SearchUser extends React.Component{
@@ -104,7 +110,9 @@ class SearchUser extends React.Component{
                 (<Result>
                     <Img src={this.state.userImg}/>
                     <span>{this.state.nickname}</span>
-                    <GoToRoom>버스킹 들어가기</GoToRoom>
+                    <GoToRoom>
+                        <SLink to={`/userroom/${this.state.nickname}`}>방 들어가기</SLink>
+                    </GoToRoom>
                 </Result>):
                 (<Result></Result>)}
             </form>

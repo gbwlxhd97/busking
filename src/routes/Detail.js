@@ -51,14 +51,7 @@ const Btn = styled.button`
     &:active{
         background-color: gray;
     }
-    /*&:active {
-        background-color: gray;
-        color:white;
-        letter-spacing: 5px;
-        transition: all ease 0.3s 0s;
-      }*/
 `;
-
 
 
 export default class extends React.Component{
@@ -125,7 +118,6 @@ export default class extends React.Component{
     }
     
     handleFix = async() =>{
-        console.log("dmddo")
         try{
             const fixData = await server.putUserDetail({
                     nickname:"",
