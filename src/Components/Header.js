@@ -42,8 +42,9 @@ export default withRouter =>(
             
             <Item>
                 <SLink to="/signup">signup</SLink>
-            </Item>        
-
+            </Item>   
+            
+           
         </List>
     </Header>
 );
