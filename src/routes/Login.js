@@ -74,9 +74,8 @@ function Login() {
                 position: 'top-end',
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true,
-                
-              })
+                timerProgressBar: true
+            })
               
               Toast.fire({
                 icon: 'success',

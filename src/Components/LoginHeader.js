@@ -1,16 +1,15 @@
 import React from "react";
 import Styled from "styled-components";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Logout } from '../Components/TokenSave';
 import PropTypes from "prop-types";
 
 const Header = Styled.div`
     display:flex;
-    margin:0px;
-    background-color:#233323;
+    padding: 10px;
+    background: linear-gradient( to bottom, black, rgba(125,125,125,0.001) );
     justify-content: space-around;
     align-items:center;
-    border-bottom:3px solid rgba(255,0,0,0.1);
 `;
 
 const List = Styled.ul`
@@ -30,17 +29,17 @@ const Item = Styled.li`
 `;
 
 const SLink = Styled(Link)`
-    color:gray;
+    color:white;
     text-decoration: none;
     &:hover {
-        border-bottom:3px solid #446844;
+        border-bottom:3px solid black;
         transition:border-bottom 0.3s ease-in-out;
       }
 `;
 
 const LogoutBtn = Styled.button`
-    background-color:#233323;
-    color:gray;
+    background-color:rgba(0,0,0,0);
+    color:white;
     border:none;
     padding:0px;
     font-family:'Malgun Gothic';
@@ -54,10 +53,6 @@ const WithRouter = ({ nickname }) =>(
             BUSKiNG hELPER
         </SLink>
         <List>
-            <Item>
-                <SLink to="/">Home</SLink>
-            </Item>
-            
             <Item>
                 <SLink to="/reservation">reservation</SLink>
             </Item>
