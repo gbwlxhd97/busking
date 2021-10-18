@@ -20,11 +20,12 @@ function Login() {
                 password: values.pw
             })
             // console.log(res);
-            const {data:{token,username}} = res
+            const {data:{token,userNickname}} = res
             localStorage.setItem('token',token)
-            localStorage.setItem('username',username)
+            localStorage.setItem('username',userNickname)
             console.log('로그인성공');
-            history.push('/')
+            //history.push('/')
+            window.location.href="/"
         } catch (error) {
             alert('아이디 비밀번호가 맞지않음')
             console.log(error);

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Map from '../Components/Map';
 import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
-
+import "./style/Home.css"
 
 
 let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
@@ -24,6 +24,7 @@ function Home() {
   }
 
   return (
+    
       <div className="homeMap">
         {/* <Map/> */}
         {

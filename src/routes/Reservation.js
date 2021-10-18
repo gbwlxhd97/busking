@@ -21,11 +21,13 @@ class Reservation extends React.Component{
         const {searchTerm} = this.state;
         if(searchTerm !== "") {
             this.searchByTerm(searchTerm)
-        }    
+        }
     }
 
+
+
     searchByTerm = async () => {
-        const { searchTerm} = this.state;
+        const {searchTerm} = this.state;
         this.setState({
             loading: true
         })
@@ -56,6 +58,15 @@ class Reservation extends React.Component{
     }
 
 
+    MusicList = (musicInfo) => {
+            console.log(musicInfo[0],musicInfo[1])
+            return(
+                <div>
+                    {musicInfo[0]}-{musicInfo[1]}
+                </div>
+            )
+    }
+
     render(){
        let {songList ,loading,error} = this.state;
         return(
@@ -63,19 +74,21 @@ class Reservation extends React.Component{
             <form onSubmit={this.handleSearch}>
                 <input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
             </form>
-            {loading ? <Loader/> :
-                <>
-                {songList.length > 0 && songList   &&
-                <Section title="음악리스트">
-                    {songList.map(song => (
-                        <div className="musicList" key={song.id}>
-                            <img src={song.profileImgURL} alt="profile"></img>
-                            {song.title} - {song.singer}
-                        </div> )) }  
-                </Section>
-            }
-            {songList.length ===0 && <Message text={error}/>}
-            </>            
+                {loading ? <Loader/> :
+                    <>
+                    {songList.length > 0 && songList   &&
+                        <>
+                        <Section title="음악리스트">
+                            {songList.map(song => (
+                                <div className="musicList" key={song.id}>
+                                    <img src={song.profileImgURL} alt="profile"></img>
+                                    {song.title} - {song.singer}
+                                </div> )) }
+                        </Section>
+                        </>
+                    }
+                {songList.length ===0 && <Message text={error}/>}
+            </>
         }
         </div>
         )

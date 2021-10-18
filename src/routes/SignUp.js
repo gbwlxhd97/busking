@@ -15,7 +15,7 @@ margin: 20px;
 `
 const Input = styled.input `
 margin: 2px;
-`
+`;
 
 function Sign() {
     const history = useHistory();

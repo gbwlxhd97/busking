@@ -43,17 +43,16 @@ function ReMap(props) {
             console.log(on);
             // console.log(on.map(e=> e.introduce));
             intro = on
-            burkerImgSave = [...on.map(e => e.leader.userDetail.profileImgURL)]
+            burkerImgSave = [...on.map(e => e.leader.userDetail)]
             console.log(burkerImgSave);
             setTes1(burkerImgSave)
-            console.log(tes1);
         } catch (error) {
             console.log(error);
         }
     }
 
     useEffect(() => {
-        console.log(tes1);
+        
         const container = document.getElementById('myMap');
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -109,7 +108,7 @@ function createMarker(position, image) {
     });
     
     // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-var iwContent = `<div style="padding:5px;">${intro.map(e => e.id)}</div>` //api introduce 연결해주면됨
+var iwContent = `<div style="padding:5px;">${intro.map(e => e.id)}입니다.</div>` //api introduce 연결해주면됨
 var iwRemoveable = true;
 
 // 인포윈도우를 생성합니다
@@ -131,7 +130,7 @@ var buskerPositions = [
     new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
     new kakao.maps.LatLng(38.49671536281186, 127.03020491448352)
 ];
-var markerImageSrc = tes1[0];  // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+var markerImageSrc = tes1 // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
 let storeMarkers = []
 
 createStoreMarkers()
@@ -144,9 +143,8 @@ function createStoreMarkers() {
             };       
     
         // 마커이미지와 마커를 생성합니다
-        var markerImage = createMarkerImage(markerImageSrc, imageSize, imageOptions),    
+        var markerImage = createMarkerImage(markerImageSrc.map(e => e.profileImgURL), imageSize, imageOptions),    
             marker = createMarker(buskerPositions[i], markerImage);
-            console.log(markerImageSrc);
             storeMarkers.push(marker)
     }
 }
@@ -154,7 +152,7 @@ function createStoreMarkers() {
 function setStoreMarkers(map) {
     for(let i=0; i<storeMarkers.length; i++) {
         storeMarkers[i].setMap(map)
-    }
+    }   
 }
 setStoreMarkers(map) //최종적으로 지도에 이미지를 뿌려줌
     },[tes1])
