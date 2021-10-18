@@ -89,10 +89,15 @@ export default class extends React.Component{
 
     valueChange=(event)=>{
         this.setState({
-            value:event.target.value
+            userNickname:event.target.value
         })
     }
-
+    
+    introChange=(event)=>{
+        this.setState({
+            introduce:event.target.value
+        })
+    }
     dupleicateClick=(event)=>{
         event.preventDefault();
         const {
@@ -116,19 +121,26 @@ export default class extends React.Component{
             alert("칸이 비어있습니다.")
         }
     }
-    
+     
     handleFix = async() =>{
+        const {
+            match: {
+              params: { nickName }
+            }
+        } = this.props;
+    
         try{
             const fixData = await server.putUserDetail({
-                    nickname:"",
-                    profileImgURL:"",
-                    introduce:""
+                    oldNickname: nickName,
+                    nickname: this.state.userNickname,
+                    profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+                    introduce: this.state.introduce
             });
+            console.log('어떻게갓나?')
+            
         }catch (error){
             console.log(error)
-            this.setState({
-                error: "Can't find movie information."
-            });
+            
         }finally {
             this.setState({
                 loading: false
@@ -222,7 +234,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             introduce:<br/>
-                            <input type="text" name="name" onChange={this.valueChange}  placeholder={introduce} />
+                            <input type="text" name="name" onChange={this.introChange}  placeholder={introduce} />
                         </form>
                     </Details>)}
 
@@ -238,7 +250,7 @@ export default class extends React.Component{
 
                     {btnClick ===true ?
                         <Btn onClick={this.onClick}>정보 수정기</Btn>
-                        :<Btn onClick={this.offClick} >수정 완료</Btn>}
+                        :<Btn onClick={this.offClick} onClick={this.handleFix} >수정 완료</Btn>}
                     
                 </DetailSectionList>
             </Container>)

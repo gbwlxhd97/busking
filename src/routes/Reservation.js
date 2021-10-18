@@ -40,6 +40,7 @@ class Reservation extends React.Component{
             if(res.data.status ===204 ) {
                 throw new Error('catch');
             }
+            
         } catch (error) { 
             this.setState({ error: "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요."})
             // console.log(error);

@@ -49,7 +49,6 @@ const LogoutBtn = Styled.button`
 
 const WithRouter = ({ nickname }) =>(
     <Header>
-        <>
         <SLink to="/">
             BUSKiNG hELPER
         </SLink>
@@ -72,7 +71,6 @@ const WithRouter = ({ nickname }) =>(
                 </LogoutBtn>
             </Item>
         </List>
-        </>
     </Header>
 );
 
