@@ -48,14 +48,10 @@ const Btn = styled.button`
     border-top:1px solid black;
     border-radius:5px;
     background-color: white;
-    &:active {
+    &:active{
         background-color: gray;
-        color:white;
-        letter-spacing: 5px;
-        transition: all ease 0.3s 0s;
-      }
+    }
 `;
-
 
 
 export default class extends React.Component{
@@ -73,40 +69,36 @@ export default class extends React.Component{
         change:false,
         count:0
     };
-    onClick=(event)=>{
+    onClick=()=>{
         this.setState({
-            btnClick: !this.state.btnClick, //false로 줘야 정보수정하기가 수정완료로바뀜
-            count:1
+            btnClick: !this.state.btnClick, 
         })
-        console.log(this.state.value)
-        const {
-            duplicateCheck,
-            count
-        }=this.state
+    }
 
-        if(duplicateCheck===true){
-            this.sendFix()
-            this.setState({
-                duplicateCheck:false,
-                count:0
-            })
-        }else if(duplicateCheck===false&&count!==0){//처음 눌렀다는것을 알 수 있는 state 중복체크 안하고 첫 클릭이 아닐때
+    offClick=()=>{
+        if(this.state.duplicateCheck===false){
             alert("중복 체크를 해주세요")
+        }else{
             this.setState({
-                count:0,
-                btnClick: !this.state.btnClick
+                btnClick: !this.state.btnClick,
+                duplicateCheck:false
             })
-            console.log(this.btnClick);
+            this.sendFix()
         }
     }
 
     valueChange=(event)=>{
         this.setState({
-            value:event.target.value
+            userNickname:event.target.value
         })
     }
-
-    onClickCheckNickname=(event)=>{
+    
+    introChange=(event)=>{
+        this.setState({
+            introduce:event.target.value
+        })
+    }
+    dupleicateClick=(event)=>{
         event.preventDefault();
         const {
             userNickname,
@@ -129,30 +121,51 @@ export default class extends React.Component{
             alert("칸이 비어있습니다.")
         }
     }
+     
+    handleFix = async() =>{
+        const {
+            match: {
+              params: { nickName }
+            }
+        } = this.props;
     
+        try{
+            const fixData = await server.putUserDetail({
+                    oldNickname: nickName,
+                    nickname: this.state.userNickname,
+                    profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+                    introduce: this.state.introduce
+            });
+            console.log('어떻게갓나?')
+            window.location.href="/"
+            localStorage.setItem('username',this.state.userNickname)
+            
+        }catch (error){
+            console.log(error)
+            
+        }finally {
+            this.setState({
+                loading: false
+            });
+        }
+    }
+
     sendFix=()=>{
         const {
             duplicateCheck,
             change
         }=this.state;
         
-        while (1){
-            if(duplicateCheck===true&&change===true){// 닉변 함
-                console.log("send data to db1")
-                this.setState({
-                    value:""
-                })
-                break;
-            }else if(duplicateCheck===true&&change===false){// 닉변 안함
-                console.log("send data to db2")
-                this.setState({
-                    value:""
-                })
-                break
-            }else{
-                alert("plz duplicate check")
-                continue
-            }
+        if(change===true){// 닉변 함
+            console.log("send data to db1")
+            this.setState({
+                value:""
+            })
+        }else if(change===false){// 닉변 안함
+            console.log("send data to db2")
+            this.setState({
+                value:""
+            })
         }
     }
 
@@ -172,16 +185,15 @@ export default class extends React.Component{
                 userImgUrl:data.userDetail.profileImgURL,
                 introduce:data.userDetail.introduce
             })
-        }catch {
+        }catch (error){
             this.setState({
                 error: "Can't find movie information."
             });
-        }finally {
+        }finally{
             this.setState({
                 loading: false
             });
         }
-        
     }
 
     render(){
@@ -195,7 +207,7 @@ export default class extends React.Component{
             userImgUrl,
             introduce
         } = this.state;
-
+        console.log(this.props)
         return(
             <Container>
                 <ImgSection>
@@ -212,7 +224,7 @@ export default class extends React.Component{
                         <form>
                             nickname:<br/>
                             <input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
-                            <Btn onClick={this.onClickCheckNickname}>중복 체크</Btn>
+                            <Btn onClick={this.dupleicateClick}>중복 체크</Btn>
                         </form>
                     </Details>)}
 
@@ -224,7 +236,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             introduce:<br/>
-                            <input type="text" name="name" onChange={this.valueChange}  placeholder={introduce} />
+                            <input type="text" name="name" onChange={this.introChange}  placeholder={introduce} />
                         </form>
                     </Details>)}
 
@@ -239,8 +251,8 @@ export default class extends React.Component{
                     </Details>
 
                     {btnClick ===true ?
-                        <Btn onClick={this.onClick}>정보 수정하기</Btn>
-                        :<Btn onClick={this.onClick}>수정 완료</Btn>}
+                        <Btn onClick={this.onClick}>정보 수정기</Btn>
+                        :<Btn onClick={this.offClick} onClick={this.handleFix} >수정 완료</Btn>}
                     
                 </DetailSectionList>
             </Container>)

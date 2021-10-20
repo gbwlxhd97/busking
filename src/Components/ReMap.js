@@ -8,6 +8,18 @@ let test;
 let t1;
 let t2;
 let intro = []
+
+var data = [
+    {
+        imgSrc : "https://i.pinimg.com/originals/c0/da/57/c0da57e76bde0ccc9fc503bb3f77d217.jpg",
+        latlng: new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
+    },
+    {
+        imgSrc : "https://ssl.pstatic.net/tveta/libs/1349/1349760/bdcd665caf6ebdd5faf1_20211015141108350.jpg",
+        latlng: new kakao.maps.LatLng(38.49671536281186, 127.03020491448352),
+    }
+]
+
 function ReMap(props) {
     // eslint-disable-next-line
     const [kakaoMap,setKakaoMap] = useState(null)
@@ -40,19 +52,16 @@ function ReMap(props) {
             const res =await server.getTeam()
             const {data: {data}} =res;
             const on = data.filter(e => e.onAir ===true)
-            console.log(on);
-            // console.log(on.map(e=> e.introduce));
             intro = on
             burkerImgSave = [...on.map(e => e.leader.userDetail)]
-            console.log(burkerImgSave);
             setTes1(burkerImgSave)
+            console.log(tes1);
         } catch (error) {
             console.log(error);
         }
     }
 
     useEffect(() => {
-        
         const container = document.getElementById('myMap');
         if(navigator.geolocation) {
             navigator.geolocation.getCurrentPosition((position) => {
@@ -107,8 +116,10 @@ function createMarker(position, image) {
         clickable: true
     });
     
-    // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
-var iwContent = `<div style="padding:5px;">${intro.map(e => e.id)}입니다.</div>` //api introduce 연결해주면됨
+
+        // 마커를 클릭했을 때 마커 위에 표시할 인포윈도우를 생성합니다
+    
+var iwContent = `<div style="padding:5px;">${tes1.map(e => e.introduce)} 입니다.</div>` //api introduce 연결해주면됨
 var iwRemoveable = true;
 
 // 인포윈도우를 생성합니다
@@ -130,22 +141,27 @@ var buskerPositions = [
     new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
     new kakao.maps.LatLng(38.49671536281186, 127.03020491448352)
 ];
-var markerImageSrc = tes1 // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+
+
+var markerImageSrc = data // 마커이미지의 주소입니다. 스프라이트 이미지 입니다
+// console.log(markerImageSrc.map(item => item.leader.userDetail.profileImgURL));
+console.log(data.map(e => e.imgSrc));
 let storeMarkers = []
 
 createStoreMarkers()
 function createStoreMarkers() {
-    for(let i=0; i <buskerPositions.length; i++) {
+    for(let i=0; i <tes1.length; i++) {
         var imageSize = new kakao.maps.Size(22, 26),
             imageOptions = {   
                 spriteOrigin: new kakao.maps.Point(10, 36),    
                 spriteSize: new kakao.maps.Size(36, 98)  
             };       
     
-        // 마커이미지와 마커를 생성합니다
-        var markerImage = createMarkerImage(markerImageSrc.map(e => e.profileImgURL), imageSize, imageOptions),    
-            marker = createMarker(buskerPositions[i], markerImage);
+        // 마커이미지와 마커를 생성합니다0
+        var markerImage = createMarkerImage(tes1[i].profileImgURL, imageSize, imageOptions)    
+        var    marker = createMarker(data[i].latlng, markerImage);
             storeMarkers.push(marker)
+            console.log(tes1[i]);
     }
 }
 
@@ -159,7 +175,13 @@ setStoreMarkers(map) //최종적으로 지도에 이미지를 뿌려줌
     return (
         <div id="myMap" style={{
             width: '300px',
-            height: '300px'
+            height: '300px',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            position: 'absolute',
+            overflow: 'hidden',
+    
         }}></div>
     )
 }

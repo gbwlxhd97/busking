@@ -5,6 +5,7 @@ import { Logout } from '../Components/TokenSave';
 import PropTypes from "prop-types";
 
 const Header = Styled.div`
+    font-size:15px;
     display:flex;
     padding: 10px;
     background: linear-gradient( to bottom, black, rgba(125,125,125,0.001) );
@@ -48,13 +49,12 @@ const LogoutBtn = Styled.button`
 
 const WithRouter = ({ nickname }) =>(
     <Header>
-        <>
         <SLink to="/">
             BUSKiNG hELPER
         </SLink>
         <List>
             <Item>
-                <SLink to="/reservation">reservation</SLink>
+                <SLink to="/searchuser">버스커 찾기</SLink>
             </Item>
         </List>
 
@@ -71,7 +71,6 @@ const WithRouter = ({ nickname }) =>(
                 </LogoutBtn>
             </Item>
         </List>
-        </>
     </Header>
 );
 

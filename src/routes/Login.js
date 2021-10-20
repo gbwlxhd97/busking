@@ -21,6 +21,7 @@ function Login() {
             })
             // console.log(res);
             const {data:{token,userNickname}} = res
+            console.log(res);
             localStorage.setItem('token',token)
             localStorage.setItem('username',userNickname)
             console.log('로그인성공');
