@@ -1,5 +1,5 @@
 import React from "react";
-import { server } from '../api';
+import { _musicServer } from '../service/music';
 import Section from '../Components/Section';
 import Loader from '../Components/Loader';
 import Message from '../Components/Message';
@@ -66,7 +66,7 @@ class Reservation extends React.Component{
             loading: true
         })
         try {
-            const res =  await server.searchSong(searchTerm)
+            const res =  await _musicServer.searchSong(searchTerm)
             let {data:{data}} = res;
             this.setState({ 
                 songList: data 
@@ -108,7 +108,7 @@ class Reservation extends React.Component{
     
     
     render(){
-       let {songList ,loading,error} = this.state;
+    let {songList ,loading,error} = this.state;
         return(
         <div>
             <Form onSubmit={this.handleSearch}>

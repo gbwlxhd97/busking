@@ -1,7 +1,7 @@
 import React,{useState} from "react";
 import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
-import { server } from '../api';
+import { _authServer } from '../service/auth';
 
 const Form = styled.div `
 position: absolute;
@@ -59,7 +59,7 @@ function Login() {
     const  handleSubmit = async(event) => {
     event.preventDefault();
         try {
-        const res = await server.loginUser({
+        const res = await _authServer.loginUser({
                 username: values.id,
                 password: values.pw
             })

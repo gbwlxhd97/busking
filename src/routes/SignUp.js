@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import { server } from '../api';
+import { _authServer } from '../service/auth';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 
@@ -71,7 +71,7 @@ function Sign() {
     const submit = async(event) => {
         event.preventDefault()
         try {
-            await server.createAccount({
+            await _authServer.createAccount({
                 username: values.id, 
                 password: values.pw,
                 nickname: values.name,

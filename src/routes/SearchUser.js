@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Loader from "../Components/Loader"
 import Message from "../Components/Message"
-import {server} from "../api";
+import { _userServer } from '../service/user';
 import { Link } from "react-router-dom";
 
 const Search = styled.input`
@@ -72,7 +72,7 @@ class SearchUser extends React.Component{
         const {searchTerm} = this.state;
 
         try {
-            const res =  await server.searchUser(searchTerm)
+            const res =  await _userServer.searchUser(searchTerm)
             let {data:{data:{userDetail}}}=res;
             this.setState({
                 nickname:userDetail.nickname,
@@ -138,7 +138,7 @@ export default SearchUser;
 
     userAll = async ()=>{
         try{
-            const res = await server.getAllUser();
+            const res = await _userServer.getAllUser();
             const {data:{data}} =res
             this.setState({
                 userArray:data

@@ -1,6 +1,6 @@
 import React,{useEffect,useState} from "react";
-import { server } from '../api';
-
+import {_teamServer} from "../service/team";
+import {_userServer} from "../service/user";
 const {kakao} = window;
 let imgBox=[];
 let burkerImgSave = [];
@@ -51,10 +51,11 @@ function ReMap(props) {
         // console.log(pospos === a);
         
     })
-
+    
+    // team api
     const getTeam = async () => {
         try {
-            const res =await server.getTeam()
+            const res =await _teamServer.getTeam()
             const {data: {data}} =res;
             const on = data.filter(e => e.onAir ===true)
             intro = on
@@ -66,6 +67,7 @@ function ReMap(props) {
         }
     }
 
+    //지도를 관리하는 Hooks
     useEffect(() => {
         const container = document.getElementById('myMap');
         if(navigator.geolocation) {
@@ -134,17 +136,17 @@ function createBuskerData() {
     let iwRemoveable = true; //x버튼
     
     for(let i=0; i <tes1.length; i++) {
-        let imageSize = new kakao.maps.Size(22, 26),
+        let imageSize = new kakao.maps.Size(30, 36),
             imageOptions = {   
                 spriteOrigin: new kakao.maps.Point(10, 36),    
-                spriteSize: new kakao.maps.Size(36, 98)  
+                spriteSize: new kakao.maps.Size(50, 98)  
             };       
     
         let infowindow = new kakao.maps.InfoWindow({
-            content: tes1[i].introduce, // 인포윈도우에 표시할 내용
+            content: `<div style="font-size: 12px;">${tes1[i].introduce}</div>` , // 인포윈도우에 표시할 내용 
             removable : iwRemoveable,
         });
-        let markerImage = createMarkerImage(tes1[i].profileImgURL, imageSize, imageOptions)    
+        let markerImage = createMarkerImage(tes1[i].profileImgURL ? tes1[i].profileImgURL : require("../assets/logo192.png").default, imageSize, imageOptions)    
         let data = createMarker(buskerPositions[i].latlng, markerImage,infowindow);
             buskerDataBox.push(data)
         }
@@ -177,7 +179,7 @@ setBuskerMarker(map)
 //userApi
 const getUser = async() => {
     try {
-        const res = await server.getAllUser();
+        const res = await _userServer.getAllUser();
         const {data: {data}} =res;
         console.log(data);
     } catch (error) {

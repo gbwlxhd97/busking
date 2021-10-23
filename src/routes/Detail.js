@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { server } from "../api";
-
+import { _userServer } from '../service/user';
 const Container = styled.div`
     margin-left:15%;
     background-color:white;
@@ -121,16 +120,16 @@ export default class extends React.Component{
             alert("칸이 비어있습니다.")
         }
     }
-     
+    
     handleFix = async() =>{
         const {
             match: {
-              params: { nickName }
+                params: { nickName }
             }
         } = this.props;
     
         try{
-            const fixData = await server.putUserDetail({
+            const fixData = await _userServer.putUserDetail({
                     oldNickname: nickName,
                     nickname: this.state.userNickname,
                     profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
@@ -176,7 +175,7 @@ export default class extends React.Component{
             }
         } = this.props;
         try{
-            const info = await server.getUserDetail(nickName);
+            const info = await _userServer.getUserDetail(nickName);
             let {data:{data}} = info;
             this.setState({
                 userNickname:data.nickname,
@@ -244,7 +243,7 @@ export default class extends React.Component{
                         <span>Age:<br/></span>
                         <Span>{year-birthday}</Span>
                     </Details>
-                  
+                
                     <Details>
                         <span>gender:<br/></span>
                         <Span>{gender}</Span>

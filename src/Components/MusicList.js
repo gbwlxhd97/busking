@@ -1,5 +1,5 @@
 import React from "react";
-import { server } from '../api';
+
 
 const Music = styled.div``;
 
