@@ -36,12 +36,12 @@ function ReMap(props) {
         getTeam();
     },[]);
     useEffect(() => {
-        let a = props.pos3.join(' ').split(',')
-        console.log(Object.assign({}, a));
-        let tt = Object.assign({}, a)
-        test =tt;
-        t1 =parseFloat(test[0])
-        t2 =parseFloat(test[1])
+    //    let a = props.pos3.join(' ').split(',')
+    //    console.log(Object.assign({}, a));
+    //    let tt = Object.assign({}, a)
+     //   test =tt;
+    //    t1 =parseFloat(test[0])
+    //    t2 =parseFloat(test[1])
         // console.log(t1);
         // console.log(t2);
         // setPosPos(props.pos3.join(' '))

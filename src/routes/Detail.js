@@ -136,8 +136,8 @@ export default class extends React.Component{
                     profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
                     introduce: this.state.introduce
             });
-            console.log('어떻게갓나?')
-            window.location.href="/"
+            alert('정보 수정 완료')
+            window.location.href = "/"
             localStorage.setItem('username',this.state.userNickname)
             
         }catch (error){
@@ -172,9 +172,9 @@ export default class extends React.Component{
     async componentDidMount() {
         const {
             match: {
-              params: { nickName }
+                params: { nickName }
             }
-          } = this.props;
+        } = this.props;
         try{
             const info = await server.getUserDetail(nickName);
             let {data:{data}} = info;
