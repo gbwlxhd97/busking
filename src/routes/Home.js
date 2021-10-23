@@ -20,10 +20,10 @@ function Home() {
     setPos2(pos2);
     console.log(pos20);
   }
-
+  
   return (
     <>
-      <div className="homeMap">
+      <div>
         
         {
           
