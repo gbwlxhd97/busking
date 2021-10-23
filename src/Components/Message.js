@@ -1,14 +1,23 @@
 import React from "react";
-import "./style/Message.css"
+import styled from 'styled-components';
 
+const Div = styled.div`
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+`;
 
+const Msg = styled.span`
+  font-weight: 600;
+  color: #e74c3c;
+`;
 
 const Message = ({ text }) => (
   
-  <div className="msg-container">
-      <span className="msg"> {text} </span>
-  </div>
   
+  <Div>
+    <Msg>{text}</Msg>
+  </Div>
 );
 
 

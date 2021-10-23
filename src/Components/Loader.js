@@ -1,5 +1,4 @@
 import React from "react";
-import "./style/Loader.css"
 import ScaleLoader from "react-spinners/ScaleLoader"
 import styled from 'styled-components';
 
