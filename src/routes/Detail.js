@@ -88,7 +88,7 @@ export default class extends React.Component{
 
     valueChange=(event)=>{
         this.setState({
-            userNickname:event.target.value
+            value:event.target.value
         })
     }
     
@@ -97,6 +97,7 @@ export default class extends React.Component{
             introduce:event.target.value
         })
     }
+
     dupleicateClick=(event)=>{
         event.preventDefault();
         const {
@@ -127,26 +128,30 @@ export default class extends React.Component{
                 params: { nickName }
             }
         } = this.props;
-    
-        try{
-            const fixData = await _userServer.putUserDetail({
-                    oldNickname: nickName,
-                    nickname: this.state.userNickname,
-                    profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
-                    introduce: this.state.introduce
-            });
-            alert('정보 수정 완료')
-            window.location.href = "/"
-            localStorage.setItem('username',this.state.userNickname)
-            
-        }catch (error){
-            console.log(error)
-            
-        }finally {
-            this.setState({
-                loading: false
-            });
+        if(this.state.duplicateCheck===true){
+            try{
+                const fixData = await _userServer.putUserDetail({
+                        oldNickname: nickName,
+                        nickname: this.state.userNickname,
+                        profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+                        introduce: this.state.introduce
+                });
+                alert('정보 수정 완료')
+                window.location.href = "/"
+                localStorage.setItem('username',this.state.userNickname)
+                
+            }catch (error){
+                console.log(error)
+                
+            }finally {
+                this.setState({
+                    loading: false
+                });
+            }
+        }else{
+            alert("닉네임 중복체크 해주세요")
         }
+       
     }
 
     sendFix=()=>{
