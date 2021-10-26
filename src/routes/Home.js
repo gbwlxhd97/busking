@@ -26,7 +26,6 @@ function Home() {
       <div>
         
         {
-          
         <ReMap pos3={pos20}/> 
         }
         {localStorage.getItem('username') && (

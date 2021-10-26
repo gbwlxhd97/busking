@@ -26,7 +26,7 @@ const Span = styled.span`
 `;
 
 const Lyrics = ({lyrics,singer,img,title}) =>(
-    <Container>
+    <Container >
         <Span>현재 노래 정보</Span>
         <MusicInfo>
             <NowImg src={img}/>
@@ -34,7 +34,7 @@ const Lyrics = ({lyrics,singer,img,title}) =>(
         </MusicInfo>
         <Span>가사:</Span>
         <NowLyrics>
-            {lyrics.split('~').map(word=>(<div>{word}</div>))}
+            {lyrics.split('~').map((word , index)=>(<div key={index}>{word}</div>))}
         </NowLyrics>
     </Container>
 )
@@ -43,7 +43,7 @@ Lyrics.propTypes={
     lyrics:PropTypes.string,
     singer:PropTypes.string,
     img:PropTypes.string,
-    title:PropTypes.string
+    title:PropTypes.string,
 }
 
 export default Lyrics
