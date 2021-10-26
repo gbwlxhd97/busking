@@ -177,6 +177,7 @@ export default class extends React.Component{
         try{
             const info = await _userServer.getUserDetail(nickName);
             let {data:{data}} = info;
+            
             this.setState({
                 userNickname:data.nickname,
                 birthday:data.birthday,
@@ -206,7 +207,6 @@ export default class extends React.Component{
             userImgUrl,
             introduce
         } = this.state;
-        console.log(this.props)
         return(
             <Container>
                 <ImgSection>
