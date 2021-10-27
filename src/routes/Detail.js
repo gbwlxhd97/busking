@@ -4,13 +4,24 @@ import { _userServer } from '../service/user';
 const Container = styled.div`
     margin-left:15%;
     background-color:white;
+    color:white;
     display: flex;
     flex-direction: column;
+    background-color:#282828;
 `;
 
 const ImgSection = styled.div`
     margin-top:10px;
     margin-left:8px;
+`;
+
+const Input = styled.input`
+    background-color:#282828;
+    border:none;
+    border-bottom:1px solid #adadad;
+    &::-webkit-input-placeholder {
+    color:#d2d2d2;
+  }
 `;
 
 const DetailSectionList = styled.ul`
@@ -32,8 +43,8 @@ const UserImg = styled.img`
     width:130px;
     height:130px;
     padding:40px;
-    border-bottom:2px solid black;
-    border-right:2px solid black;
+    border-bottom:1px solid #adadad;
+    border-right:1px solid #adadad;
     border-radius:50%;
 `;
 
@@ -42,6 +53,7 @@ const Btn = styled.button`
     height:auto;
     padding:7px;
     margin-top:5px;
+    margin-left:5px;
     border:none;
     border-bottom:1px solid black;
     border-top:1px solid black;
@@ -227,7 +239,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             nickname:<br/>
-                            <input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
+                            <Input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
                             <Btn onClick={this.dupleicateClick}>중복 체크</Btn>
                         </form>
                     </Details>)}
@@ -240,7 +252,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             introduce:<br/>
-                            <input type="text" name="name" onChange={this.introChange}  placeholder={introduce} />
+                            <Input type="text" name="name" onChange={this.introChange}  placeholder={introduce} />
                         </form>
                     </Details>)}
 

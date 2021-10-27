@@ -12,6 +12,7 @@ text-align: center;
 width: 80%;
 `
 const H3 = styled.h3 `
+color:#adadad;
 font-size: 1.5rem;
 font-weight: 600;
 margin-bottom: 40px;
@@ -28,16 +29,22 @@ border-bottom: 2px solid #adadad;
 width: 80%;
 `
 const Input = styled.input `
+color:white;
+background-color:#282828;
 padding: 8px 10px;
 width: 100%;
 border:none;
 outline:none;
 `
 const Button = styled.button `
+color:#adadad;
 margin-top: 10px;
 padding: 8px 30px;
+border:none;
+border:2px solid #adadad;
 border-radius: 10px;
 background-color: white;
+background-color:#282828;
 &:hover {
     background-color: black;
     color: white;

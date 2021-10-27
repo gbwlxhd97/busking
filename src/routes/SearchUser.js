@@ -6,20 +6,32 @@ import { _userServer } from '../service/user';
 import { Link } from "react-router-dom";
 
 const Search = styled.input`
-    margin-left:25%;
+    margin-left:37px;
     margin-top:20%;
+    background-color:#282828;
+    padding: 8px 10px;
+    color:white;
+    border:none;
+    outline:none;
+    padding-right:100px;
+    border-bottom: 2px solid #adadad;
+    &::-webkit-input-placeholder {
+    color:#d2d2d2;
+  }
 `;
 
 const Result =styled.div`
-    margin-left:25%;
+    margin-left:37px;
     margin-top:20px;
 `;
 
 const Img = styled.img`
     vertical-align:middle;
-    width:50px;
-    height:50px;
+    width:70px;
+    height:70px;
     margin-right:5px;
+    border-radius: 25%;
+    border:1.5px solid #FFC314;
 `;
 
 const GoToRoom = styled.button`
@@ -43,11 +55,23 @@ const SLink =styled(Link)`
     color:black;
 `;
 
+const Span1 = styled.span`
+    color:white;
+    font-size:20px;
+`;
+
+const UserList =styled.li`
+    margin-bottom:25px;
+    list-style: none;
+    color:white;
+`;
+
 class SearchUser extends React.Component{
     state={
         searchTerm:"",
         nickname:"",
         userImg:"",
+        allUser:[],
         loading: false,
         error:null,
         same:false
@@ -68,9 +92,28 @@ class SearchUser extends React.Component{
         })
     }
 
+    componentDidMount =()=>{
+        this.userAll();
+    }
+
+    userAll = async()=>{
+        try{
+            const res = await _userServer.getAllUser()
+            let {data:{data}}=res;
+            this.setState({
+                allUser:data
+            })
+        }catch (error){ 
+            this.setState({ error: "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요."})
+        }finally{
+            this.setState({
+                loading: false
+            })
+        }
+    }
+
     findSearchTerm = async ()=>{
         const {searchTerm} = this.state;
-
         try {
             const res =  await _userServer.searchUser(searchTerm)
             let {data:{data:{userDetail}}}=res;
@@ -78,7 +121,6 @@ class SearchUser extends React.Component{
                 nickname:userDetail.nickname,
                 userImg:userDetail.profileImgURL
             })
-            console.log(userDetail)
         } catch (error) { 
             this.setState({ error: "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요."})
         } finally {
@@ -89,17 +131,18 @@ class SearchUser extends React.Component{
         if(this.state.nickname===this.state.searchTerm){
             this.setState({
                 loading: true,
-                same:true
+                same:true,
             })
         }else{
             this.setState({
                 loading: false,
-                same:false
+                same:false,
             })
         }
     }
 
     render(){
+        const {userImg,nickname,allUser,searchTerm}=this.state;
         return(
             <>
             <form onSubmit={this.handleSearch}>
@@ -107,15 +150,32 @@ class SearchUser extends React.Component{
                     placeholder="버스커를 검색해주세요" 
                     onChange={this.updateTerm}
                 />
-                {this.state.loading ? 
+                {this.state.loading? 
                 (<Result>
-                    <Img src={this.state.userImg}/>
-                    <span>{this.state.nickname}</span>
+                    <Span1>🎵 버스커 검색 결과</Span1>
+                    <br/>
+                    <br/>
+                    <Img src={userImg}/>
+                    <Span1>{nickname}</Span1>
                     <GoToRoom>
-                        <SLink to={`/userroom/${this.state.nickname}`}>방 들어가기</SLink>
+                        <SLink to={`/userroom/${nickname}`}>방 들어가기</SLink>
                     </GoToRoom>
                 </Result>):
-                (<Result></Result>)}
+                (<Result>
+                    <Span1>🎵 버스커 목록</Span1>
+                    <br/>
+                    <br/>
+                    {allUser.map((userdata,index) =>(
+                        <UserList key={index}>
+                            <Img src={userdata.userDetail.profileImgURL}/>
+                            <Span1>{userdata.nickname}</Span1>
+                            <GoToRoom>
+                                <SLink to={`/userroom/${userdata.nickname}`}>방 들어가기</SLink>
+                            </GoToRoom>
+                        </UserList>
+                    ))
+                    }
+                </Result>)}
             </form>
             {this.state.same===false  && <Message text={this.state.error}/>}
             </>
@@ -128,6 +188,8 @@ export default SearchUser;
 
 
 /*
+
+
 
     updateTerm = (event) => {
         const {target:{value}} = event;

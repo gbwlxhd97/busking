@@ -9,6 +9,7 @@ import Detail from "../routes/Detail"
 import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
 import UserRoom from "../routes/UserRoom"
+import "../routes/Home.css";
 
 // eslint-disable-next-line
 export default () => (
