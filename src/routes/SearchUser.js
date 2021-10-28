@@ -22,7 +22,9 @@ const Search = styled.input`
 
 const Result =styled.div`
     margin-left:37px;
-    margin-top:20px;
+    margin-top:25px;
+    overflow: auto;
+    height:300px;
 `;
 
 const Img = styled.img`
@@ -56,6 +58,16 @@ const SLink =styled(Link)`
 `;
 
 const Span1 = styled.span`
+    color:white;
+    font-size:20px;
+`;
+
+const Span2 = styled.span`
+    margin-left:37px;
+    padding-top:40px;
+    padding-bottom:5px;
+    padding-right: 20px;
+    border-bottom:2px solid #adadad;
     color:white;
     font-size:20px;
 `;
@@ -151,31 +163,37 @@ class SearchUser extends React.Component{
                     onChange={this.updateTerm}
                 />
                 {this.state.loading? 
-                (<Result>
-                    <Span1>🎵 버스커 검색 결과</Span1>
-                    <br/>
-                    <br/>
-                    <Img src={userImg}/>
-                    <Span1>{nickname}</Span1>
-                    <GoToRoom>
-                        <SLink to={`/userroom/${nickname}`}>방 들어가기</SLink>
-                    </GoToRoom>
-                </Result>):
-                (<Result>
-                    <Span1>🎵 버스커 목록</Span1>
-                    <br/>
-                    <br/>
-                    {allUser.map((userdata,index) =>(
-                        <UserList key={index}>
-                            <Img src={userdata.userDetail.profileImgURL}/>
-                            <Span1>{userdata.nickname}</Span1>
-                            <GoToRoom>
-                                <SLink to={`/userroom/${userdata.nickname}`}>방 들어가기</SLink>
-                            </GoToRoom>
-                        </UserList>
-                    ))
-                    }
-                </Result>)}
+                (
+                    <div>
+                        <br/>
+                        <Span2>🎵 버스커 검색 결과</Span2>
+                        <Result>
+                        <Img src={userImg}/>
+                        <Span1>{nickname}</Span1>
+                        <GoToRoom>
+                            <SLink to={`/userroom/${nickname}`}>방 들어가기</SLink>
+                        </GoToRoom>
+                        </Result>
+                    </div>
+                    ):(
+                    <div>
+                        <br/>
+                        <Span2>🎵 버스커 목록</Span2>
+                        <Result>
+                        {allUser.map((userdata,index) =>userdata.userDetail!==null ? (
+                            <UserList key={index}>
+                                <Img src={userdata.userDetail.profileImgURL}/>
+                                <Span1>{userdata.nickname}</Span1>
+                                <GoToRoom>
+                                    <SLink to={`/userroom/${userdata.nickname}`}>방 들어가기</SLink>
+                                </GoToRoom>
+                            </UserList>
+                        ):(
+                            <>
+                            </>
+                        ))}
+                        </Result>
+                    </div>)}
             </form>
             {this.state.same===false  && <Message text={this.state.error}/>}
             </>
@@ -188,9 +206,6 @@ export default SearchUser;
 
 
 /*
-
-
-
     updateTerm = (event) => {
         const {target:{value}} = event;
         this.setState({

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Lyrics from "../Components/Lyrics"
 import { _musicServer } from '../service/music';
+import { Link} from "react-router-dom";
 
 const Container = styled.div`
 color:white;
@@ -15,6 +16,18 @@ const Title = styled.div`
 
 const Reservation = styled.div`
 
+`;
+
+const RLink = styled(Link)`
+    color:white;
+    text-decoration-line: none;
+    font-size:16px;
+`;
+
+const Btn = styled.button`
+    margin-left:30px;
+    background-color: #282828;
+    border:none;
 `;
 
 const Chat = styled.div`
@@ -53,7 +66,6 @@ class UserRoom extends React.Component{
                 loading: false
             })
         }
-
     }
 
     componentDidMount(){
@@ -69,15 +81,20 @@ class UserRoom extends React.Component{
     }
     
     render(){
-        const {lyrics,singer,img,title}=this.state
+        const {lyrics,singer,img,title,nickname}=this.state
         return(
             <Container>
                 <Section>
-                    <Title>🎵 {this.state.nickname}님 방</Title>
+                    <Title>🎵 {nickname}님 방</Title>
                 </Section>
 
                 <Section>
-                    <Reservation>예약 노래</Reservation>
+                    <Reservation>
+                        <span>⎧예약 노래 보기 ᐳ</span>
+                        <Btn>
+                            <RLink to ={`/reservation/${nickname}`}>⎧노래 예약하러가기 ᐳ</RLink>
+                        </Btn>
+                    </Reservation>
                 </Section>
 
                 <Section>

@@ -9,6 +9,7 @@ import Detail from "../routes/Detail"
 import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
 import UserRoom from "../routes/UserRoom"
+import BuskingMange from "../routes/BuskingManage"
 import "../routes/Home.css";
 
 // eslint-disable-next-line
@@ -22,10 +23,11 @@ export default () => (
             <Route path="/" exact component={Home} /> 
             <Route path="/login" exact component={Login} />
             <Route path="/signup" exact component={SignUp} />
-            <Route path="/reservation" exact component={Reservation} /> 
+            <Route path="/reservation/:nickname" exact component={Reservation} /> 
             <Route path="/userdetail/:nickName" exact component={Detail}/>
             <Route path="/searchuser" exact component={SearchUser}/>
             <Route path="/userroom/:nickName" exact component={UserRoom}/>
+            <Route path="/buskingmanage/:nickName" exact component={BuskingMange}/>
         </>
     </Router>
 )

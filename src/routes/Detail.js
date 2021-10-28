@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { _userServer } from '../service/user';
+import {Link} from "react-router-dom"
 const Container = styled.div`
     margin-left:15%;
     background-color:white;
@@ -64,6 +65,10 @@ const Btn = styled.button`
     }
 `;
 
+const SLink = styled(Link)`
+    color:black;
+    text-decoration-line: none;
+`;
 
 export default class extends React.Component{
     state={
@@ -267,9 +272,13 @@ export default class extends React.Component{
                     </Details>
 
                     {btnClick ===true ?
-                        <Btn onClick={this.onClick}>정보 수정기</Btn>
+                        <>
+                            <Btn onClick={this.onClick}>정보 수정</Btn>
+                            <Btn >
+                                <SLink to={`/buskingmanage/${userNickname}`}>공연 관리</SLink>
+                            </Btn>
+                        </>
                         :<Btn onClick={this.offClick} onClick={this.handleFix} >수정 완료</Btn>}
-                    
                 </DetailSectionList>
             </Container>)
     }
