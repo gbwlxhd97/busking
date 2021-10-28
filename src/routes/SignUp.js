@@ -71,17 +71,25 @@ function Sign() {
     const submit = async(event) => {
         event.preventDefault()
         try {
-            await _authServer.createAccount({
+            const res = await _authServer.createAccount({
                 username: values.id, 
                 password: values.pw,
                 nickname: values.name,
                 birthday: values.birthday,
                 gender: values.gender,
             })
-            alert('회원가입 완료 로그인페이지로 이동합니다.')
-            history.push('/login')
+            console.log(res);
+            if(res.data ===409) {
+                alert('해당 아이디는 혹은 닉네임이 중복됩니다.')
+                return
+            }
+            if(res.data ===201) {
+                alert('회원가입 완료 로그인페이지로 이동합니다.')
+                history.push('/login')
+            }
         } catch (error) {
             console.log(error);
+            
         }
     }
     return(
@@ -116,6 +124,7 @@ function Sign() {
                         value={values.birthday || ''}
                         name="birthday"
                         onChange={change}
+                        type="number"
                         />
                     </InputDiv>
                     <GenderDiv>

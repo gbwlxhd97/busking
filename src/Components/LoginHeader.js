@@ -35,7 +35,7 @@ const SLink = Styled(Link)`
     &:hover {
         border-bottom:3px solid black;
         transition:border-bottom 0.3s ease-in-out;
-      }
+    }
 `;
 
 const LogoutBtn = Styled.button`
