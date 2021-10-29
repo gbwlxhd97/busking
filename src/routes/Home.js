@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Map from '../Components/Map';
 import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
@@ -11,17 +11,6 @@ function Home() {
     <>
       <div className="homeMap">
         {/* <Map/> */}
-        {
-          
-        <ReMap pos3={pos20}/> 
-        }
-        {localStorage.getItem('username') && (
-          <div>
-            닉네임 : {localStorage.getItem('username')}
-            <button onClick={Logout}>logout</button>
-            <button onClick={startBus}>버스킹 방송시작하기!</button>
-          </div>
-        )}
         <ReMap/>
       </div>
     </>

@@ -1,48 +1,44 @@
 import React from "react";
-<<<<<<< HEAD
-import { server } from '../api';
-/*
-function Room() {
-    return(
-        <div>
-            <h1>방 만들기</h1>
-        </div>
-    );
-
-    
-}
-
-*/
-
-class UserRoom extends React.Component{
-    render(){
-        <div>
-            <h1>방 만들기</h1>
-        </div>
-    }
-=======
 import styled from "styled-components";
+import Swal from 'sweetalert2'
 
 const Title = styled.div`
+    width:360px;
+    height:80px;
+    border:1px solid;
+    font-size:25px;
 
 `;
 
 const Reservation = styled.div`
-
+    border: 1px solid;
+    width: 320px;
+    height: 140px;
+    margin-left:20px;
 `;
 
 const Lyrics = styled.div`
-
+    border:1px solid;
+    width: 320px;
+    height: 270px;  
+    margin-left:20px;
 `;
 
 const Chat = styled.div`
+    border:1px solid;
+    width: 320px;
+    height: 150px; 
+    margin-left:20px;
+`;
 
+const Contents = styled.div`
+    width:360px;
+    height:640px;
 `;
 
 
-
-
 class UserRoom extends React.Component{
+    
     state={
         nickname:""
     }
@@ -56,18 +52,24 @@ class UserRoom extends React.Component{
             nickname:nickName
         })
     }
+    
     render(){
+        
         return(
             <>
-            <Title>{this.state.nickname}님 방</Title>
-            <Reservation>예약 노래</Reservation>
-            <Lyrics>가사</Lyrics>
-            <Chat>채팅</Chat>
+
+            <Contents>
+                <Title>{this.state.nickname}님의 방</Title>
+                <Reservation>예약 노래</Reservation>
+                <Lyrics>가사</Lyrics>
+                <Chat>채팅</Chat>
+            </Contents>
+            
             </>
+            
         )
     }
 
->>>>>>> 698efc7226ffad0f6d112f0446e77c8dd515fc4d
 }
 
 

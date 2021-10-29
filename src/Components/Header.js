@@ -33,8 +33,11 @@ export default withRouter =>(
             </Item>
             
             <Item>
-                <SLink to="/reservation">reservation</SLink>
+                <SLink to={`/userdetail/${nickname}`}>
+                    {nickname}버스커 찾기
+                </SLink>
             </Item>
+           
             
             <Item>
                 <SLink to="/login">login</SLink>
@@ -44,7 +47,7 @@ export default withRouter =>(
                 <SLink to="/signup">signup</SLink>
             </Item>   
             
-           
+            
         </List>
     </Header>
 );
