@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import Lyrics from "../Components/Lyrics"
+import Lyrics from "../Components/Lyrics";
 const Container = styled.div`
-    color:white;
+  color: white;
 `;
 
-//공연관리에서 필요한것들 
+//공연관리에서 필요한것들
 
 //목표는 한페이지 모든 정보를 다 볼 수 있도록 만드는것이 목표
 
@@ -16,23 +16,19 @@ const Container = styled.div`
     + 공연 순서 정하기[] 할 수 있으면
 */
 
-class BuskingMange extends React.Component{
+class BuskingMange extends React.Component {
+  componentDidMount() {}
 
-    componentDidMount(){
-        
-    }
-
-    render(){
-        return(
-            <Container>
-                <div>신청곡[]</div>
-                <div>노래 정보[]</div>
-                <div>노래 가사[]</div>
-                <div>공연 순서 정하기[]</div>
-
-            </Container>
-        )
-    }
+  render() {
+    return (
+      <Container>
+        <div>신청곡[]</div>
+        <div>노래 정보[]</div>
+        <div>노래 가사[]</div>
+        <div>공연 순서 정하기[]</div>
+      </Container>
+    );
+  }
 }
 
 export default BuskingMange;

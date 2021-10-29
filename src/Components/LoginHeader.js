@@ -1,7 +1,7 @@
 import React from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Logout } from '../Components/TokenSave';
+import { Logout } from "../Components/TokenSave";
 import PropTypes from "prop-types";
 
 const Header = Styled.div`
@@ -49,35 +49,31 @@ const LogoutBtn = Styled.button`
     font-size:16px;
 `;
 
-const WithRouter = ({ nickname }) =>(
-    <Header>
-        <SLink to="/">
-            BUSKiNG hELPER
-        </SLink>
-        <List>
-            <Item>
-                <SLink to="/searchuser">버스커 찾기</SLink>
-            </Item>
-        </List>
+const WithRouter = ({ nickname }) => (
+  <Header>
+    <SLink to="/">BUSKiNG hELPER</SLink>
+    <List>
+      <Item>
+        <SLink to="/searchuser">버스커 찾기</SLink>
+      </Item>
+    </List>
 
-        <List>
-            <Item>
-                <SLink to={`/userdetail/${nickname}`}>
-                    {nickname}
-                </SLink>
-            </Item>
+    <List>
+      <Item>
+        <SLink to={`/userdetail/${nickname}`}>{nickname}</SLink>
+      </Item>
 
-            <Item>
-                <LogoutBtn onClick={Logout}>
-                    <SLink to="/">Logout</SLink>
-                </LogoutBtn>
-            </Item>
-        </List>
-    </Header>
+      <Item>
+        <LogoutBtn onClick={Logout}>
+          <SLink to="/">Logout</SLink>
+        </LogoutBtn>
+      </Item>
+    </List>
+  </Header>
 );
 
 WithRouter.propTypes = {
-    nickname:PropTypes.string
+  nickname: PropTypes.string,
 };
 
 export default WithRouter;
