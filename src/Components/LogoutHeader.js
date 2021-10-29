@@ -6,10 +6,10 @@ import { Link} from "react-router-dom";
 const Header = Styled.div`
     display:flex;
     padding: 10px;
-    background: linear-gradient( to bottom, black, rgba(125,125,125,0.001) );
+    background-color:#323232;
     justify-content: space-around;
     align-items:center;
-
+    border-bottom:3px solid #FFC314;
 `;
 
 const List = Styled.ul`
@@ -32,7 +32,7 @@ const SLink = Styled(Link)`
     color:white;
     text-decoration: none;
     &:hover {
-        border-bottom:3px solid black;
+        border-bottom:3px solid #FFC314;
         transition:border-bottom 0.3s ease-in-out;
     }
 `;

@@ -5,7 +5,7 @@ const api = axios.create({
 })
 
 export const _musicServer = {
-  getSongList: () => api.get("/music/all"),
+  getSong: (title) => api.get(`/music/title/${title}/one`),
   searchSong: (keyword) => api.get(`/music/keyword/${keyword}`, {
     params: {
       query: encodeURIComponent(keyword)

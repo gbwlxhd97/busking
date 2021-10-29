@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components";
-import Swal from 'sweetalert2'
+import Lyrics from "../Components/Lyrics"
+import { _musicServer } from '../service/music';
+import { Link} from "react-router-dom";
+
+const Container = styled.div`
+color:white;
+`;
 
 const Title = styled.div`
-    width:360px;
-    height:80px;
-    border:1px solid;
-    font-size:25px;
-
+    display:inline-block;
+    margin:20px;
+    padding-right:10px;
 `;
 
 const Reservation = styled.div`
@@ -17,11 +21,16 @@ const Reservation = styled.div`
     margin-left:20px;
 `;
 
-const Lyrics = styled.div`
-    border:1px solid;
-    width: 320px;
-    height: 270px;  
-    margin-left:20px;
+const RLink = styled(Link)`
+    color:white;
+    text-decoration-line: none;
+    font-size:16px;
+`;
+
+const Btn = styled.button`
+    margin-left:30px;
+    background-color: #282828;
+    border:none;
 `;
 
 const Chat = styled.div`
@@ -31,17 +40,41 @@ const Chat = styled.div`
     margin-left:20px;
 `;
 
-const Contents = styled.div`
-    width:360px;
-    height:640px;
-`;
+const Section = styled.div`
 
+`;
 
 class UserRoom extends React.Component{
     
     state={
-        nickname:""
+        nickname:"",
+        lyrics: "",
+        singer:"",
+        img:"",
+        title:"",
+        loading: false,
+        error: null
     }
+
+    getSong = async()=>{
+        try{
+            const res = await _musicServer.getSong("이로하")
+            let {data:{data}}=res;
+            this.setState({
+                lyrics:data.lyrics,
+                singer:data.singer,
+                img:data.profileImgURL,
+                title:data.title
+            })
+        }catch(error){ 
+            this.setState({ error: "응애"})
+        }finally{
+            this.setState({
+                loading: false
+            })
+        }
+    }
+
     componentDidMount(){
         const {
             match: {
@@ -51,26 +84,49 @@ class UserRoom extends React.Component{
         this.setState({
             nickname:nickName
         })
+        this.getSong()
     }
     
     render(){
-        
+        const {lyrics,singer,img,title,nickname}=this.state
         return(
-            <>
+            <Container>
+                <Section>
+                    <Title>🎵 {nickname}님 방</Title>
+                </Section>
 
-            <Contents>
-                <Title>{this.state.nickname}님의 방</Title>
-                <Reservation>예약 노래</Reservation>
-                <Lyrics>가사</Lyrics>
-                <Chat>채팅</Chat>
-            </Contents>
-            
-            </>
-            
+                <Section>
+                    <Reservation>
+                        <span>⎧예약 노래 보기 ᐳ</span>
+                        <Btn>
+                            <RLink to ={`/reservation/${nickname}`}>⎧노래 예약하러가기 ᐳ</RLink>
+                        </Btn>
+                    </Reservation>
+                </Section>
+
+                <Section>
+                    <Lyrics
+                        lyrics={lyrics}
+                        singer={singer}
+                        img={img}
+                        title={title}
+                    />
+                </Section>
+
+                <Section>
+                    <Chat>채팅</Chat>
+                </Section>
+            </Container>
         )
     }
-
 }
 
 
 export default UserRoom;
+
+/*
+
+    
+    var str = this.state.lyrics.split('~')
+    str.map(asdf => console.log(asdf))
+*/

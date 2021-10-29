@@ -11,6 +11,7 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 text-align: center;
+color:white;
 width: 80%;
 `;
 const H3 = styled.h3 `
@@ -30,16 +31,23 @@ border-bottom: 2px solid #adadad;
 width: 80%;
 `
 const Input = styled.input `
+color:white;
 padding: 8px 10px;
 width: 100%;
 border:none;
 outline:none;
+padding-right:100px;
+background-color: #282828;
+&::-webkit-input-placeholder{
+    color:#d2d2d2;
+  }
 `
 const GenderDiv = styled.div `
 display: flex;
 margin: 15px;
 `
 const Gender = styled.div `
+
 margin: 0 5px;
 font-size: 1rem;
 `

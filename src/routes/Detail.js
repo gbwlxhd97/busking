@@ -1,16 +1,28 @@
 import React from "react";
 import styled from "styled-components";
 import { _userServer } from '../service/user';
+import {Link} from "react-router-dom"
 const Container = styled.div`
     margin-left:15%;
     background-color:white;
+    color:white;
     display: flex;
     flex-direction: column;
+    background-color:#282828;
 `;
 
 const ImgSection = styled.div`
     margin-top:10px;
     margin-left:8px;
+`;
+
+const Input = styled.input`
+    background-color:#282828;
+    border:none;
+    border-bottom:1px solid #adadad;
+    &::-webkit-input-placeholder {
+    color:#d2d2d2;
+  }
 `;
 
 const DetailSectionList = styled.ul`
@@ -32,8 +44,8 @@ const UserImg = styled.img`
     width:130px;
     height:130px;
     padding:40px;
-    border-bottom:2px solid black;
-    border-right:2px solid black;
+    border-bottom:1px solid #adadad;
+    border-right:1px solid #adadad;
     border-radius:50%;
 `;
 
@@ -42,6 +54,7 @@ const Btn = styled.button`
     height:auto;
     padding:7px;
     margin-top:5px;
+    margin-left:5px;
     border:none;
     border-bottom:1px solid black;
     border-top:1px solid black;
@@ -52,6 +65,10 @@ const Btn = styled.button`
     }
 `;
 
+const SLink = styled(Link)`
+    color:black;
+    text-decoration-line: none;
+`;
 
 export default class extends React.Component{
     state={
@@ -88,7 +105,7 @@ export default class extends React.Component{
 
     valueChange=(event)=>{
         this.setState({
-            userNickname:event.target.value
+            value:event.target.value
         })
     }
     
@@ -97,6 +114,7 @@ export default class extends React.Component{
             introduce:event.target.value
         })
     }
+
     dupleicateClick=(event)=>{
         event.preventDefault();
         const {
@@ -127,26 +145,30 @@ export default class extends React.Component{
                 params: { nickName }
             }
         } = this.props;
-    
-        try{
-            const fixData = await _userServer.putUserDetail({
-                    oldNickname: nickName,
-                    nickname: this.state.userNickname,
-                    profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
-                    introduce: this.state.introduce
-            });
-            alert('정보 수정 완료')
-            window.location.href = "/"
-            localStorage.setItem('username',this.state.userNickname)
-            
-        }catch (error){
-            console.log(error)
-            
-        }finally {
-            this.setState({
-                loading: false
-            });
+        if(this.state.duplicateCheck===true){
+            try{
+                const fixData = await _userServer.putUserDetail({
+                        oldNickname: nickName,
+                        nickname: this.state.userNickname,
+                        profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+                        introduce: this.state.introduce
+                });
+                alert('정보 수정 완료')
+                window.location.href = "/"
+                localStorage.setItem('username',this.state.userNickname)
+                
+            }catch (error){
+                console.log(error)
+                
+            }finally {
+                this.setState({
+                    loading: false
+                });
+            }
+        }else{
+            alert("닉네임 중복체크 해주세요")
         }
+       
     }
 
     sendFix=()=>{
@@ -177,6 +199,7 @@ export default class extends React.Component{
         try{
             const info = await _userServer.getUserDetail(nickName);
             let {data:{data}} = info;
+            
             this.setState({
                 userNickname:data.nickname,
                 birthday:data.birthday,
@@ -206,7 +229,6 @@ export default class extends React.Component{
             userImgUrl,
             introduce
         } = this.state;
-        console.log(this.props)
         return(
             <Container>
                 <ImgSection>
@@ -222,7 +244,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             nickname:<br/>
-                            <input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
+                            <Input type="text" name="name" onChange={this.valueChange}  placeholder={userNickname} />
                             <Btn onClick={this.dupleicateClick}>중복 체크</Btn>
                         </form>
                     </Details>)}
@@ -235,7 +257,7 @@ export default class extends React.Component{
                     <Details>
                         <form>
                             introduce:<br/>
-                            <input type="text" name="name" onChange={this.introChange}  placeholder={introduce} />
+                            <Input type="text" name="name" onChange={this.introChange}  placeholder={introduce} />
                         </form>
                     </Details>)}
 
@@ -250,9 +272,13 @@ export default class extends React.Component{
                     </Details>
 
                     {btnClick ===true ?
-                        <Btn onClick={this.onClick}>정보 수정기</Btn>
+                        <>
+                            <Btn onClick={this.onClick}>정보 수정</Btn>
+                            <Btn >
+                                <SLink to={`/buskingmanage/${userNickname}`}>공연 관리</SLink>
+                            </Btn>
+                        </>
                         :<Btn onClick={this.offClick} onClick={this.handleFix} >수정 완료</Btn>}
-                    
                 </DetailSectionList>
             </Container>)
     }
