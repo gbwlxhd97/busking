@@ -2,6 +2,7 @@ import React,{useState} from "react";
 import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
 import { _authServer } from '../service/auth';
+import Swal from 'sweetalert2'
 
 const Form = styled.div `
 position: absolute;
