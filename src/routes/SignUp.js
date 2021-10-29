@@ -1,6 +1,6 @@
 
 import React,{useState} from "react";
-import { server } from '../api';
+import { _authServer } from '../service/auth';
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2'
@@ -11,13 +11,13 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 text-align: center;
-width: 80%
-`
+width: 80%;
+`;
 const H3 = styled.h3 `
 font-size: 1.5rem;
 font-weight: 600;
 margin-bottom: 50px;
-`
+`;
 const FormDiv = styled.div `
 margin: 20px 0;
 display: flex;
@@ -27,7 +27,7 @@ align-items: center;
 const InputDiv = styled.div `
 margin: 10px 0;
 border-bottom: 2px solid #adadad;
-width: 80%
+width: 80%;
 `
 const Input = styled.input `
 padding: 8px 10px;
@@ -77,25 +77,26 @@ function Sign() {
         event.preventDefault()
         
         try {
-            await server.createAccount({
+            const res = await _authServer.createAccount({
                 username: values.id, 
                 password: values.pw,
                 nickname: values.name, 
                 birthday: values.birthday,
                 gender: values.gender,
             })
-
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: '회원가입 완료 \n로그인 페이지로 이동합니다.',
-                showConfirmButton: true
-            })
-
-            history.push('/login')
+            console.log(res);
+            if(res.data ===409) {
+                alert('해당 아이디는 혹은 닉네임이 중복됩니다.')
+                return
+            }
+            if(res.data ===201) {
+                alert('회원가입 완료 로그인페이지로 이동합니다.')
+                history.push('/login')
+            }
         } catch (error) {
                   
             console.log(error);
+            
         }
     }
     return(
@@ -130,6 +131,7 @@ function Sign() {
                         value={values.birthday || ''}
                         name="birthday"
                         onChange={change}
+                        type="number"
                         />
                     </InputDiv>
                     <GenderDiv>

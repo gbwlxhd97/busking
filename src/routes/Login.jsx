@@ -1,8 +1,7 @@
 import React,{useState} from "react";
 import { useHistory } from 'react-router-dom';
 import styled from "styled-components";
-import { server } from '../api';
-import Swal from 'sweetalert2'
+import { _authServer } from '../service/auth';
 
 const Form = styled.div `
 position: absolute;
@@ -10,7 +9,7 @@ top: 50%;
 left: 50%;
 transform: translate(-50%, -50%);
 text-align: center;
-width: 80%
+width: 80%;
 `
 const H3 = styled.h3 `
 font-size: 1.5rem;
@@ -26,7 +25,7 @@ align-items: center;
 const InputDiv = styled.div `
 margin: 8px 0;
 border-bottom: 2px solid #adadad;
-width: 80%
+width: 80%;
 `
 const Input = styled.input `
 padding: 8px 10px;
@@ -35,7 +34,7 @@ border:none;
 outline:none;
 `
 const Button = styled.button `
-margin-top: 10nppx;
+margin-top: 10px;
 padding: 8px 30px;
 border-radius: 10px;
 background-color: white;
@@ -47,8 +46,9 @@ background-color: white;
 
 
 function Login() {
-    const [values, setValues] = useState({id: "", pw: ""});
     const history = useHistory();
+
+    const [values, setValues] = useState({id: "", pw: ""});
 
     const handleChange = (event) => {
         
@@ -60,30 +60,17 @@ function Login() {
     const  handleSubmit = async(event) => {
     event.preventDefault();
         try {
-        const res = await server.loginUser({
+        const res = await _authServer.loginUser({
                 username: values.id,
                 password: values.pw
             })
-            // console.log(res);
-            const {data:{token,userNickname}} = res
-            localStorage.setItem('token',token)
-            localStorage.setItem('username',userNickname)
-
-            const Toast = Swal.mixin({
-                toast: true,
-                position: 'top-end',
-                showConfirmButton: false,
-                timer: 3000,
-                timerProgressBar: true
-            })
-              
-              Toast.fire({
-                icon: 'success',
-                title: '로그인 성공'
-            })
-            console.log('로그인성공');
-            //history.push('/')
+            const {data:{token,userNickname,teamName}} = res
+            localStorage.setItem('token',token);
+            localStorage.setItem('username',userNickname);
+            localStorage.setItem('teamname',teamName);
+            // history.push('/')
             window.location.href="/"
+            console.log(res);
         } catch (error) {
             Swal.fire({
                 position: 'center',

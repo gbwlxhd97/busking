@@ -45,9 +45,9 @@ class UserRoom extends React.Component{
     componentDidMount(){
         const {
             match: {
-              params: { nickName }
+                params: { nickName }
             }
-          } = this.props;
+        } = this.props;
         this.setState({
             nickname:nickName
         })

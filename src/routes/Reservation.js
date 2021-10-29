@@ -1,6 +1,5 @@
 import React from "react";
-import { server } from '../api';
-import "./style/Reservation.css"
+import { _musicServer } from '../service/music';
 import Section from '../Components/Section';
 import Loader from '../Components/Loader';
 import Message from '../Components/Message';
@@ -67,7 +66,7 @@ class Reservation extends React.Component{
             loading: true
         })
         try {
-            const res =  await server.searchSong(searchTerm)
+            const res =  await _musicServer.searchSong(searchTerm)
             let {data:{data}} = res;
             this.setState({ 
                 songList: data 
@@ -75,6 +74,7 @@ class Reservation extends React.Component{
             if(res.data.status ===204 ) {
                 throw new Error('catch');
             }
+            
         } catch (error) { 
             this.setState({ error: "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요."})
             // console.log(error);
@@ -108,15 +108,13 @@ class Reservation extends React.Component{
     
     
     render(){
-       let {songList ,loading,error} = this.state;
+    let {songList ,loading,error} = this.state;
         return(
         <div>
-            <form onSubmit={this.handleSearch}>
-                <input 
-                    placeholder="검색할 음악제목"  
-                    onChange={this.updateTerm} 
-                    value={this.state.searchTerm}/>
-            </form>
+            <Form onSubmit={this.handleSearch}>
+                <Input placeholder="검색할 음악제목"  onChange={this.updateTerm} value={this.state.searchTerm}/>
+                <Button onChange={this.updateTerm}>검색</Button>
+            </Form>
                 {loading ? <Loader/> :
                     <>
                     {songList.length > 0 && songList   &&

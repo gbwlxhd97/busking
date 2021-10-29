@@ -35,7 +35,7 @@ const SLink = Styled(Link)`
     &:hover {
         border-bottom:3px solid black;
         transition:border-bottom 0.3s ease-in-out;
-      }
+    }
 `;
 
 const LogoutBtn = Styled.button`
@@ -49,7 +49,6 @@ const LogoutBtn = Styled.button`
 
 const WithRouter = ({ nickname }) =>(
     <Header>
-        <>
         <SLink to="/">
             BUSKiNG hELPER
         </SLink>
@@ -72,7 +71,6 @@ const WithRouter = ({ nickname }) =>(
                 </LogoutBtn>
             </Item>
         </List>
-        </>
     </Header>
 );
 
