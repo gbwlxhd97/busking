@@ -53,8 +53,9 @@ background-color:#282828;
 
 
 function Login() {
-    const [values, setValues] = useState({id: "", pw: ""});
     const history = useHistory();
+
+    const [values, setValues] = useState({id: "", pw: ""});
 
     const handleChange = (event) => {
         
@@ -70,11 +71,13 @@ function Login() {
                 username: values.id,
                 password: values.pw
             })
-            const {data:{token,userNickname}} = res
+            const {data:{token,userNickname,teamName}} = res
             localStorage.setItem('token',token);
             localStorage.setItem('username',userNickname);
-            //history.push('/')
+            localStorage.setItem('teamname',teamName);
+            // history.push('/')
             window.location.href="/"
+            console.log(res);
         } catch (error) {
             alert('아이디 비밀번호가 맞지않음')
             console.log(error);

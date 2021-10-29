@@ -19,6 +19,7 @@ export default () => (
             <LoginHeader
                 nickname={localStorage.getItem("username")}
             /> : <LogoutHeader/>}
+        
         <>
             <Route path="/" exact component={Home} /> 
             <Route path="/login" exact component={Login} />

@@ -34,7 +34,7 @@ const SLink = Styled(Link)`
     &:hover {
         border-bottom:3px solid #FFC314;
         transition:border-bottom 0.3s ease-in-out;
-      }
+    }
 `;
 
 export default WithRouter =>(
