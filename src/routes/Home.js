@@ -33,7 +33,7 @@ const Span2 = styled.span`
 
 
 //let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
-const startBusKing = '⎧버스킹 방송시작하기 ⎭'
+const startBusKing = '⎧버스킹 방송시작하기⎭'
 const endBusKing = '⎧버스킹 방송종료⎭'
 let item =false;
 function Home() {
