@@ -7,10 +7,11 @@ const Container = styled.div`
 
 `
 const NowLyrics = styled.div`
+    margin-left:20px;
     overflow: auto;
-    height:100px;
-    width:375px;
-    padding-left:10px;
+    height:120px;
+    width:310px;
+    padding:10px 0 10px 10px;
     border-top:2px solid #adadad;
     border-bottom:2px solid #adadad;
 `;
@@ -31,14 +32,13 @@ const Span = styled.span`
 
 const Lyrics = ({lyrics,singer,img,title}) =>(
     <Container>
-        <Span>현재 노래 정보</Span>
+        <Span></Span>
         <br/>
         <MusicInfo>
-            <NowImg src={img}/>
-            <span>{singer}-{title}</span>
+         
         </MusicInfo>
         <br/>
-        <Span>가사:</Span>
+        <Span> </Span>
         <NowLyrics>
             {lyrics.split('~').map((word , index)=>(<div key={index}>{word}</div>))}
         </NowLyrics>
@@ -53,3 +53,20 @@ Lyrics.propTypes={
 }
 
 export default Lyrics
+
+/*
+
+ <Container>
+        <Span></Span>
+        <br/>
+        <MusicInfo>
+            <NowImg src={img}/>
+            <span>{singer}-{title}</span>
+        </MusicInfo>
+        <br/>
+        <Span> </Span>
+        <NowLyrics>
+            {lyrics.split('~').map((word , index)=>(<div key={index}>{word}</div>))}
+        </NowLyrics>
+    </Container>
+    */
