@@ -61,7 +61,6 @@ function ReMap(props) {
             intro = on
             burkerImgSave = [...on.map(e => e.leader.userDetail)]
             setTes1(burkerImgSave)
-            console.log(tes1);
         } catch (error) {
             console.log(error);
         }

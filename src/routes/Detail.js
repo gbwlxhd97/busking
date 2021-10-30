@@ -58,7 +58,7 @@ export default class extends React.Component{
         userNickname:"",
         birthday:"",
         gender:"",
-        userImgUrl:"",
+        userImgUrl:null,
         introduce:"",
         loading: false,
         error: null,
@@ -132,7 +132,7 @@ export default class extends React.Component{
             const fixData = await _userServer.putUserDetail({
                     oldNickname: nickName,
                     nickname: this.state.userNickname,
-                    profileImgURL:"https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+                    profileImgURL:this.state.userImgUrl,
                     introduce: this.state.introduce
             });
             alert('정보 수정 완료')
@@ -147,6 +147,15 @@ export default class extends React.Component{
                 loading: false
             });
         }
+    }
+
+    onChangeImg = (event) => {
+        const formData = new FormData();
+        const img = event.target.files[0]
+        console.log(URL.createObjectURL(img));
+        this.setState({
+            userImgUrl: URL.createObjectURL(img).replace("blob:","")
+        })
     }
 
     sendFix=()=>{
@@ -206,8 +215,11 @@ export default class extends React.Component{
             userImgUrl,
             introduce
         } = this.state;
-        console.log(this.props)
+        
         return(
+            <>
+            <input type="file" onChange={this.onChangeImg} />
+            
             <Container>
                 <ImgSection>
                     <UserImg src={userImgUrl}/>
@@ -254,6 +266,9 @@ export default class extends React.Component{
                         :<Btn onClick={this.offClick} onClick={this.handleFix} >수정 완료</Btn>}
                     
                 </DetailSectionList>
-            </Container>)
+            </Container>
+            </>
+            )
     }
+          
 }
