@@ -29,7 +29,7 @@ function ReMap(props) {
     // eslint-disable-next-line
     const [kakaoMap,setKakaoMap] = useState(null)
     // eslint-disable-next-line
-    const [pospos,setPosPos] = useState('아무것도아니야')
+    const [pospos,setPosPos] = useState()
     const [tes1,setTes1] = useState(burkerImgSave)
     useEffect(() => {
         getUser();
@@ -50,7 +50,9 @@ function ReMap(props) {
         // console.log(typeof a);
         // console.log(pospos === a);
         
-    })
+        console.log(pospos);
+        console.log(props.pos3);
+    },[pospos])
     
     // team api
     const getTeam = async () => {
