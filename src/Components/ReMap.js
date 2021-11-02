@@ -45,6 +45,7 @@ function ReMap(props) {
     //   test =tt;
     //    t1 =parseFloat(test[0])
     //    t2 =parseFloat(test[1])
+
     // console.log(t1);
     // console.log(t2);
     // setPosPos(props.pos3.join(' '))
@@ -98,6 +99,30 @@ function ReMap(props) {
 
         // marker2.setMap(map)
       });
+
+        // console.log(t1);
+        // console.log(t2);
+        // setPosPos(props.pos3.join(' '))
+        
+        // setPosPos(Object.assign({}, a))
+        // console.log(typeof a);
+        // console.log(pospos === a);
+        
+    }
+    
+    // team api
+    const getTeam = async () => {
+        try {
+            const res =await _teamServer.getTeam()
+            const {data: {data}} =res;
+            const on = data.filter(e => e.onAir ===true)
+            intro = on
+            burkerImgSave = [...on.map(e => e.leader.userDetail)]
+            setTes1(burkerImgSave)
+        } catch (error) {
+            console.log(error);
+        }
+
     }
 
     const options = {
