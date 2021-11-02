@@ -1,17 +1,16 @@
-const TOKEN = 'token'
+const TOKEN = "token";
 
 export function Logout() {
-  
   localStorage.clear();
-  window.location.reload()
+  window.location.reload();
 }
 
 export default class TokenSave {
   saveToken(token) {
-    localStorage.setItem(TOKEN,token)
+    localStorage.setItem(TOKEN, token);
   }
   getToken() {
-    return localStorage.getItem(TOKEN)
+    return localStorage.getItem(TOKEN);
   }
   Logout() {
     localStorage.clear();

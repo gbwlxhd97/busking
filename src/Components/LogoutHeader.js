@@ -1,7 +1,6 @@
 import React from "react";
 import Styled from "styled-components";
-import { Link} from "react-router-dom";
-
+import { Link } from "react-router-dom";
 
 const Header = Styled.div`
     display:flex;
@@ -37,27 +36,24 @@ const SLink = Styled(Link)`
     }
 `;
 
-export default WithRouter =>(
-    <Header>
+export default (WithRouter) => (
+  <Header>
     <>
-    <SLink to="/">
-        BUSKiNG hELPER
-    </SLink>
-    <List>
+      <SLink to="/">BUSKiNG hELPER</SLink>
+      <List>
         <Item>
-            <SLink to="/searchuser">버스커 검색</SLink>
+          <SLink to="/searchuser">버스커 검색</SLink>
         </Item>
-    </List>
-    <List>
+      </List>
+      <List>
         <Item>
-            <SLink to="/login">Login</SLink>
+          <SLink to="/login">Login</SLink>
         </Item>
-        
-        <Item>
-            <SLink to="/signup">Signup</SLink>
-        </Item> 
-    </List>
 
+        <Item>
+          <SLink to="/signup">Signup</SLink>
+        </Item>
+      </List>
     </>
-    </Header>
+  </Header>
 );
