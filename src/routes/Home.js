@@ -40,23 +40,22 @@ function Home() {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
     pos.push(`${lat},${lon}`);
-    pos2 = [...pos];
-    // console.log(pos2);
-  });
-  const [pos20, setPos2] = useState([]);
+    propsPos = [...pos];
+    console.log(propsPos);
+  })
+  const [statePos,setPos] = useState([])
   const startBus = () => {
-    setPos2(pos2);
-    console.log(pos20);
-  };
-
-  const startBusK = async () => {
+    setPos(propsPos);
+    console.log(statePos);
+  }
+  
+  const startBusK = async() => {
     try {
       const res = await _teamServer.postOnAir({
         teamName: localStorage.getItem("teamname"),
       });
       alert("방송시작!");
       item = !item;
-      console.log(item);
     } catch (error) {
       console.log(error);
     }
