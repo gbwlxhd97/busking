@@ -32,7 +32,7 @@ const Span2 = styled.span`
 
 //let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
 const startBusKing = "⎧버스킹 방송시작하기 ⎭";
-const endBusKing = "⎧버스킹 방송종료⎭";
+const endBusKing = "⎧버스킹 방송종료⎭";      
 let item = false;
 function Home() {
   navigator.geolocation.getCurrentPosition((position) => {
@@ -66,19 +66,13 @@ function Home() {
     <>
       <ReMap pos3={pos20} />
       <Costainer>
-        <StartBtn onClick={(startBus, startBusK)}>
+        <StartBtn onClick={startBus, startBusK}>
           {item && endBusKing}
           {!item && startBusKing}
         </StartBtn>
-        <br />
         <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
-        <br />
-        <br />
         <Span2>버스커들이 당신을 기다리는 장소</Span2>
       </Costainer>
-      <div>
-        <ReMap pos3={pos20} />
-      </div>
     </>
   );
 }

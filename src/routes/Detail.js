@@ -69,26 +69,25 @@ const SLink = styled(Link)`
   text-decoration-line: none;
 `;
 
-export default class extends React.Component{
-    state={
-        userNickname:"",
-        birthday:"",
-        gender:"",
-        userImgUrl:null,
-        introduce:"",
-        loading: false,
-        error: null,
-        btnClick:true,
-        value:"",
-        duplicateCheck:false,
-        change:false,
-        count:0
-    };
-    onClick=()=>{
-        this.setState({
-            btnClick: !this.state.btnClick, 
-        })
-    }
+export default class extends React.Component {
+  state = {
+    userNickname: "",
+    birthday: "",
+    gender: "",
+    userImgUrl: "",
+    introduce: "",
+    loading: false,
+    error: null,
+    btnClick: true,
+    value: "",
+    duplicateCheck: false,
+    change: false,
+  };
+  onClick = () => {
+    this.setState({
+      btnClick: !this.state.btnClick,
+    });
+  };
 
   offClick = () => {
     if (this.state.duplicateCheck === false) {
@@ -134,65 +133,53 @@ export default class extends React.Component{
     } else {
       alert("칸이 비어있습니다.");
     }
-    
-    handleFix = async() =>{
-        const {
-            match: {
-                params: { nickName }
-            }
-        } = this.props;
-    
-        try{
-            const fixData = await _userServer.putUserDetail({
-                    oldNickname: nickName,
-                    nickname: this.state.userNickname,
-                    profileImgURL:this.state.userImgUrl,
-                    introduce: this.state.introduce
-            });
-            alert('정보 수정 완료')
-            window.location.href = "/"
-            localStorage.setItem('username',this.state.userNickname)
-            
-        }catch (error){
-            console.log(error)
-            
-        }finally {
-            this.setState({
-                loading: false
-            });
-        }
+  };
+
+  handleFix = async () => {
+    const {
+      match: {
+        params: { nickName },
+      },
+    } = this.props;
+    if (this.state.duplicateCheck === true) {
+      try {
+        const fixData = await _userServer.putUserDetail({
+          oldNickname: nickName,
+          nickname: this.state.userNickname,
+          profileImgURL:
+            "https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+          introduce: this.state.introduce,
+        });
+        alert("정보 수정 완료");
+        window.location.href = "/";
+        localStorage.setItem("username", this.state.userNickname);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        this.setState({
+          loading: false,
+        });
+      }
+    } else {
+      alert("닉네임 중복체크 해주세요");
     }
   };
 
   sendFix = () => {
     const { duplicateCheck, change } = this.state;
 
-    onChangeImg = (event) => {
-        const formData = new FormData();
-        const img = event.target.files[0]
-        console.log(URL.createObjectURL(img));
-        this.setState({
-            userImgUrl: URL.createObjectURL(img).replace("blob:","")
-        })
-    }
-
-    sendFix=()=>{
-        const {
-            duplicateCheck,
-            change
-        }=this.state;
-        
-        if(change===true){// 닉변 함
-            console.log("send data to db1")
-            this.setState({
-                value:""
-            })
-        }else if(change===false){// 닉변 안함
-            console.log("send data to db2")
-            this.setState({
-                value:""
-            })
-        }
+    if (change === true) {
+      // 닉변 함
+      console.log("send data to db1");
+      this.setState({
+        value: "",
+      });
+    } else if (change === false) {
+      // 닉변 안함
+      console.log("send data to db2");
+      this.setState({
+        value: "",
+      });
     }
   };
 
@@ -226,26 +213,16 @@ export default class extends React.Component{
     }
   }
 
-    render(){
-        const now = new Date();	// 현재 날짜 및 시간
-        var year = now.getFullYear();
-        const {
-            btnClick,
-            userNickname,
-            birthday,
-            gender,
-            userImgUrl,
-            introduce
-        } = this.state;
-        
-        return(
-            <>
-            <input type="file" onChange={this.onChangeImg} />
-            
-            <Container>
-                <ImgSection>
-                    <UserImg src={userImgUrl}/>
-                </ImgSection>
+  render() {
+    const now = new Date(); // 현재 날짜 및 시간
+    var year = now.getFullYear();
+    const { btnClick, userNickname, birthday, gender, userImgUrl, introduce } =
+      this.state;
+    return (
+      <Container>
+        <ImgSection>
+          <UserImg src={userImgUrl} />
+        </ImgSection>
 
         <DetailSectionList>
           {btnClick === true ? (
@@ -303,14 +280,28 @@ export default class extends React.Component{
             <Span>{year - birthday}</Span>
           </Details>
 
-                    {btnClick ===true ?
-                        <Btn onClick={this.onClick}>정보 수정기</Btn>
-                        :<Btn onClick={this.offClick} onClick={this.handleFix} >수정 완료</Btn>}
-                    
-                </DetailSectionList>
-            </Container>
+          <Details>
+            <span>
+              gender:
+              <br />
+            </span>
+            <Span>{gender}</Span>
+          </Details>
+
+          {btnClick === true ? (
+            <>
+              <Btn onClick={this.onClick}>정보 수정</Btn>
+              <Btn>
+                <SLink to={`/buskingmanage/${userNickname}`}>공연 관리</SLink>
+              </Btn>
             </>
-            )
-    }
-          
+          ) : (
+            <Btn onClick={this.offClick} onClick={this.handleFix}>
+              수정 완료
+            </Btn>
+          )}
+        </DetailSectionList>
+      </Container>
+    );
+  }
 }
