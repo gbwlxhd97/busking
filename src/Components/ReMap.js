@@ -2,16 +2,11 @@ import React, { useEffect, useState } from "react";
 import { _teamServer } from "../service/team";
 import { _userServer } from "../service/user";
 const { kakao } = window;
-
 let imgBox = [];
 let burkerImgSave = [];
-
 let test;
-
 let t1;
-
 let t2;
-
 let intro = [];
 
 //밑에는 home.js에서 props로 각 사용자별 위치값을 [{}] 형태로 넣어주는 위치데이터
@@ -34,16 +29,14 @@ var buskerPositions = [
 ];
 
 function ReMap(props) {
-  
+  // eslint-disable-next-line
   const [kakaoMap, setKakaoMap] = useState(null);
-  
+  // eslint-disable-next-line
   const [pospos, setPosPos] = useState("아무것도아니야");
   const [tes1, setTes1] = useState(burkerImgSave);
   useEffect(() => {
     getUser();
-    
     getTeam();
-    
   }, []);
   useEffect(() => {
     //    let a = props.pos3.join(' ').split(',')
@@ -71,7 +64,6 @@ function ReMap(props) {
       intro = on;
       burkerImgSave = [...on.map((e) => e.leader.userDetail)];
       setTes1(burkerImgSave);
-      console.log(tes1);
     } catch (error) {
       console.log(error);
     }
@@ -155,8 +147,7 @@ function ReMap(props) {
         let markerImage = createMarkerImage(
           tes1[i].profileImgURL
             ? tes1[i].profileImgURL
-            : require("../assets/outline_account_circle_black_24dp.png")
-                .default,
+            : require("../assets/logo192.png").default,
           imageSize,
           imageOptions
         );
@@ -193,7 +184,6 @@ function ReMap(props) {
   );
 }
 
-//userApi
 const getUser = async () => {
   try {
     const res = await _userServer.getAllUser();

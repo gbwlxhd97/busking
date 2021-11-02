@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
-import { _userServer } from "../service/user";
+import { _teamServer } from "../service/team";
 import { Link } from "react-router-dom";
 
 const Search = styled.input`
@@ -81,10 +81,8 @@ const UserList = styled.li`
 
 class SearchUser extends React.Component {
   state = {
-    searchTerm: "",
-    nickname: "",
-    userImg: "",
     allUser: [],
+    searchInfo:{},
     loading: false,
     error: null,
     same: false,
@@ -113,13 +111,13 @@ class SearchUser extends React.Component {
 
   userAll = async () => {
     try {
-      const res = await _userServer.getAllUser();
+      const res = await _teamServer.getAllTeam();
       let {
         data: { data },
       } = res;
       this.setState({
-        allUser: data,
-      });
+        allUser:data
+      })
     } catch (error) {
       this.setState({
         error:
@@ -135,16 +133,11 @@ class SearchUser extends React.Component {
   findSearchTerm = async () => {
     const { searchTerm } = this.state;
     try {
-      const res = await _userServer.searchUser(searchTerm);
-      let {
-        data: {
-          data: { userDetail },
-        },
-      } = res;
+      const res = await _teamServer.searchTeam(searchTerm);
+      var {data:{data}}=res
       this.setState({
-        nickname: userDetail.nickname,
-        userImg: userDetail.profileImgURL,
-      });
+        searchInfo:data
+      })
     } catch (error) {
       this.setState({
         error:
@@ -152,24 +145,14 @@ class SearchUser extends React.Component {
       });
     } finally {
       this.setState({
-        loading: false,
-      });
-    }
-    if (this.state.nickname === this.state.searchTerm) {
-      this.setState({
         loading: true,
-        same: true,
-      });
-    } else {
-      this.setState({
-        loading: false,
-        same: false,
       });
     }
+
   };
 
   render() {
-    const { userImg, nickname, allUser } = this.state;
+    const { allUser, searchInfo } = this.state;
     return (
       <>
         <form onSubmit={this.handleSearch}>
@@ -182,10 +165,10 @@ class SearchUser extends React.Component {
               <br />
               <Span2>🎵 버스커 검색 결과</Span2>
               <Result>
-                <Img src={userImg} />
-                <Span1>{nickname}</Span1>
+                <Img src={searchInfo.teamProfileImg} />
+                <Span1>{searchInfo.teamName}</Span1>
                 <GoToRoom>
-                  <SLink to={`/userroom/${nickname}`}>방 들어가기</SLink>
+                  <SLink to={`/userroom/${searchInfo.teamName}`}>방 들어가기</SLink>
                 </GoToRoom>
               </Result>
             </div>
@@ -195,12 +178,12 @@ class SearchUser extends React.Component {
               <Span2>🎵 버스커 목록</Span2>
               <Result>
                 {allUser.map((userdata, index) =>
-                  userdata.userDetail !== null && (
+                  userdata.userDetail !== null && userdata.onAir === true && (
                     <UserList key={index}>
-                      <Img src={userdata.userDetail.profileImgURL} />
-                      <Span1>{userdata.nickname}</Span1>
+                      <Img src={userdata.teamProfileImg} />
+                      <Span1>{userdata.teamName}</Span1>
                       <GoToRoom>
-                        <SLink to={`/userroom/${userdata.nickname}`}>
+                        <SLink to={`/userroom/${userdata.teamName}`}>
                           방 들어가기
                         </SLink>
                       </GoToRoom>

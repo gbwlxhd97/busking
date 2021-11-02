@@ -6,6 +6,7 @@ const api = axios.create({
 
 
 export const _teamServer = {
-  getTeam: () => api.get("/team/all"),
+  getAllTeam: () => api.get("/team/all"),
+  searchTeam: (teamName) => api.get(`/team/${teamName}`),
   postOnAir: (data) => api.post("/team/onAir",data),
 }

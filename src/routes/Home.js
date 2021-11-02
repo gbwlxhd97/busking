@@ -3,6 +3,7 @@ import ReMap from "../Components/ReMap";
 import styled from "styled-components";
 import { _teamServer } from "../service/team";
 
+
 let pos2 = []; //props로 전달해줄 버스커의 현재위치값
 
 const Costainer = styled.div`
@@ -51,7 +52,6 @@ function Home() {
 
   const startBusK = async () => {
     try {
-      
       const res = await _teamServer.postOnAir({
         teamName: localStorage.getItem("teamname"),
       });
@@ -63,11 +63,8 @@ function Home() {
     }
   };
 
-
-
   return (
     <>
-      <input type = "file" accept="image/*" capture="camera"/>
       <ReMap pos3={pos20} />
       <Costainer>
         <StartBtn onClick={(startBus, startBusK)}>

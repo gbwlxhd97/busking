@@ -5,6 +5,11 @@ import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import styled from "styled-components";
 
+const Container = styled.div`
+  color:white;
+ 
+`;
+
 const Form = styled.form`
   display: flex;
   justify-content: center;
@@ -39,6 +44,12 @@ const ReserveBtn = styled.button`
     background-color: black;
     color: white;
   }
+`;
+
+const Img = styled.img`
+  vertical-align: middle;
+  width:100px;
+  height:100px;
 `;
 
 class Reservation extends React.Component {
@@ -113,7 +124,7 @@ class Reservation extends React.Component {
   render() {
     let { songList, loading, error } = this.state;
     return (
-      <div>
+      <Container>
         <Form onSubmit={this.handleSearch}>
           <Input
             placeholder="검색할 음악제목"
@@ -132,7 +143,7 @@ class Reservation extends React.Component {
                   <Section title="음악리스트">
                     {songList.map((song) => (
                       <div className="musicList" key={song.id}>
-                        <img src={song.profileImgURL} alt="profile"></img>
+                        <Img src={song.profileImgURL} alt="profile"></Img>
                         {song.title} - {song.singer}
                         <ReserveBtn onClick={this.reservationBtn}>
                           예약하기
@@ -146,7 +157,7 @@ class Reservation extends React.Component {
             {songList.length === 0 && <Message text={error} />}
           </>
         )}
-      </div>
+      </Container>
     );
   }
 }
