@@ -143,11 +143,11 @@ export default class extends React.Component {
     } = this.props;
     if (this.state.duplicateCheck === true) {
       try {
+        
         const fixData = await _userServer.putUserDetail({
           oldNickname: nickName,
           nickname: this.state.userNickname,
-          profileImgURL:
-            "https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+          profileImgURL:this.state.userImgUrl,
           introduce: this.state.introduce,
         });
         alert("정보 수정 완료");
@@ -165,7 +165,9 @@ export default class extends React.Component {
     }
   };
 
+  
   sendFix = () => {
+    
     const { duplicateCheck, change } = this.state;
 
     if (change === true) {
@@ -219,6 +221,7 @@ export default class extends React.Component {
     const { btnClick, userNickname, birthday, gender, userImgUrl, introduce } =
       this.state;
     return (
+      
       <Container>
         <ImgSection>
           <UserImg src={userImgUrl} />
@@ -295,6 +298,7 @@ export default class extends React.Component {
                 <SLink to={`/buskingmanage/${userNickname}`}>공연 관리</SLink>
               </Btn>
             </>
+            
           ) : (
             <Btn onClick={this.offClick} onClick={this.handleFix}>
               수정 완료

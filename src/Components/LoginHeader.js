@@ -12,7 +12,7 @@ const Header = Styled.div`
     justify-content: space-around;
     align-items:center;
     border-bottom:3px solid #FFC314;
-;
+    width:375;
 `;
 
 const List = Styled.ul`

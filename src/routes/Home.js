@@ -51,6 +51,7 @@ function Home() {
 
   const startBusK = async () => {
     try {
+      
       const res = await _teamServer.postOnAir({
         teamName: localStorage.getItem("teamname"),
       });
@@ -62,8 +63,11 @@ function Home() {
     }
   };
 
+
+
   return (
     <>
+      <input type = "file" accept="image/*" capture="camera"/>
       <ReMap pos3={pos20} />
       <Costainer>
         <StartBtn onClick={(startBus, startBusK)}>

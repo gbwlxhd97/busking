@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import { _userServer } from "../service/user";
@@ -194,7 +195,7 @@ class SearchUser extends React.Component {
               <Span2>🎵 버스커 목록</Span2>
               <Result>
                 {allUser.map((userdata, index) =>
-                  userdata.userDetail !== null ? (
+                  userdata.userDetail !== null && (
                     <UserList key={index}>
                       <Img src={userdata.userDetail.profileImgURL} />
                       <Span1>{userdata.nickname}</Span1>
@@ -204,10 +205,8 @@ class SearchUser extends React.Component {
                         </SLink>
                       </GoToRoom>
                     </UserList>
-                  ) : (
-                    <div key={index}></div>
                   )
-                )}
+                  )}
               </Result>
             </div>
           )}

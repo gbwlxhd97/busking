@@ -12,7 +12,7 @@ import UserRoom from "../routes/UserRoom";
 import BuskingMange from "../routes/BuskingManage";
 import "../routes/Home.css";
 
-// eslint-disable-next-line
+
 export default () => (
   <Router>
     {localStorage.getItem("username") ? (

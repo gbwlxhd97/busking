@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+
 import Lyrics from "../Components/Lyrics";
 const Container = styled.div`
   color: white;
