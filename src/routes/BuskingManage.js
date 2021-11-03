@@ -1,8 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import {_userRoom} from "../service/room"
 import Lyrics from "../Components/Lyrics";
+
 const Container = styled.div`
   color: white;
+  
 `;
 
 //공연관리에서 필요한것들
@@ -15,9 +18,23 @@ const Container = styled.div`
     노래 가사[]
     + 공연 순서 정하기[] 할 수 있으면
 */
-
 class BuskingMange extends React.Component {
-  componentDidMount() {}
+
+  getRoomInfo = async ()=>{
+    try{
+      var res = await _userRoom.roomInfo({
+        roomName:localStorage.getItem("teamname")+"의 방",
+        teamName:localStorage.getItem("teamname")
+      })
+      console.log(res)
+    }catch (error) {
+      console.log(error);
+    }
+  }
+
+  componentDidMount() {
+    this.getRoomInfo()
+  }
 
   render() {
     return (

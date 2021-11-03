@@ -12,7 +12,7 @@ import UserRoom from "../routes/UserRoom";
 import BuskingMange from "../routes/BuskingManage";
 import "../routes/Home.css";
 
-// eslint-disable-next-line
+
 export default () => (
   <Router>
     {localStorage.getItem("username") ? (
@@ -28,7 +28,7 @@ export default () => (
       <Route path="/reservation/:nickname" exact component={Reservation} />
       <Route path="/userdetail/:nickName" exact component={Detail} />
       <Route path="/searchuser" exact component={SearchUser} />
-      <Route path="/userroom/:username" exact component={UserRoom} />
+      <Route path="/userroom/:teamName" exact component={UserRoom} />
       <Route path="/buskingmanage/:nickName" exact component={BuskingMange} />
     </>
   </Router>

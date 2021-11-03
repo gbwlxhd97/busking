@@ -2,13 +2,12 @@ import React from "react";
 import styled from "styled-components";
 import Lyrics from "../Components/Lyrics";
 import { _musicServer } from "../service/music";
-import { _userServer } from "../service/user";
+import { _teamServer } from "../service/team";
 import { Link } from "react-router-dom";
 
 const Container = styled.div`
   color: white;
 `;
-
 const UserImg = styled.img`
   vertical-align: middle;
   width: 70px;
@@ -72,10 +71,9 @@ const Table = styled.table`
 
 class UserRoom extends React.Component {
   state = {
-    nickname: "",
+    teamInfo: {},
     lyrics: "",
     singer: "",
-    userImg: "",
     img: "",
     title: "",
     click: false,
@@ -104,22 +102,22 @@ class UserRoom extends React.Component {
     }
   };
 
-  getImg = async () => {
+  getTeamInfo = async () => {
     const {
       match: {
-        params: { username },
+        params: { teamName },
       },
     } = this.props;
     try {
-      const res = await _userServer.getUserDetail(username);
+      const res = await _teamServer.searchTeam(teamName);
       let {
         data: {
-          data: { userDetail },
+          data
         },
       } = res;
+      console.log(data)
       this.setState({
-        nickname: userDetail.nickname,
-        userImg: userDetail.profileImgURL,
+        teamInfo:data
       });
     } catch (error) {
       this.setState({ error: "응애" });
@@ -131,7 +129,7 @@ class UserRoom extends React.Component {
   };
 
   componentDidMount() {
-    this.getImg();
+    this.getTeamInfo();
     this.getSong();
   }
 
@@ -142,13 +140,13 @@ class UserRoom extends React.Component {
   };
 
   render() {
-    const { lyrics, singer, img, title, nickname, userImg, click } = this.state;
+    const { lyrics, singer, img, title, teamInfo, click } = this.state;
     return (
       <Container>
         <Section>
           <Title>
-            <UserImg src={userImg} />
-            🎵 {nickname}님 방
+            <UserImg src={teamInfo.teamProfileImg} />
+            🎵 {teamInfo.teamName} 방
           </Title>
         </Section>
 
@@ -188,7 +186,7 @@ class UserRoom extends React.Component {
               <div></div>
             )}
             <Btn>
-              <RLink to={`/reservation/${nickname}`}>
+              <RLink to={`/reservation/${teamInfo.teamName}`}>
                 ⎧노래 예약하러가기 ᐳ
               </RLink>
             </Btn>
