@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 const Container = styled.div`
   color: white;
 `;
+
 const UserImg = styled.img`
   vertical-align: middle;
   width: 70px;

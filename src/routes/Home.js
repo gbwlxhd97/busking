@@ -40,16 +40,16 @@ function Home() {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;
     pos.push(`${lat},${lon}`);
-    propsPos = [...pos];
-    console.log(propsPos);
-  })
-  const [statePos,setPos] = useState([])
+    pos2 = [...pos];
+    // console.log(pos2);
+  });
+  const [pos20, setPos2] = useState([]);
   const startBus = () => {
-    setPos(propsPos);
-    console.log(statePos);
-  }
-  
-  const startBusK = async() => {
+    setPos2(pos2);
+    console.log(pos20);
+  };
+
+  const startBusK = async () => {
     try {
       const res = await _teamServer.postOnAir({
         teamName: localStorage.getItem("teamname"),
