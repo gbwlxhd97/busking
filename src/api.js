@@ -22,5 +22,6 @@ export const server = {
     params: {
       query: encodeURIComponent(nickname)
     }
-  })
+  }),
+  //postMusic: (data) => api.post(`/room/${roomName}/${teamName}/music`, data)
 }

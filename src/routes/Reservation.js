@@ -7,9 +7,7 @@ import styled from "styled-components";
 
 const Container = styled.div`
   color:white;
- 
 `;
-
 const Form = styled.form`
   display: flex;
   justify-content: center;
@@ -45,12 +43,13 @@ const ReserveBtn = styled.button`
     color: white;
   }
 `;
-
 const Img = styled.img`
   vertical-align: middle;
   width:100px;
   height:100px;
 `;
+
+
 
 class Reservation extends React.Component {
   state = {
@@ -58,6 +57,13 @@ class Reservation extends React.Component {
     loading: false,
     songList: [],
     error: null,
+
+    roomName: "",
+    teamNmae: "",
+    title: "",
+    singer: "",
+    profileImgURL: "",
+    lyrics: "",
   };
 
   handleSearch = (event) => {
@@ -115,11 +121,51 @@ class Reservation extends React.Component {
     );
   };
 
+
+  ////////////////////////////////////
+  handleRoomName = () => {
+    
+  }
+
+  handleTeamName = () => {
+  
+  }
+
+  handleTitle = () => {
+    //console.log(document.getElementsByClassName("musicList"))에서 1번
+  }
+
+  handleSinger = () => {
+    //console.log(document.getElementsByClassName("musicList"))에서 3번
+  }
+
+  handleFrofileImg = () => {
+    //console.log(document.getElementsByClassName("musicList"))에서 0번
+  }
+
+  handleLyrics = () => {
+
+  }
+/*
+  reservationEvent = () => {
+    console.log(document.getElementsByClassName("musicList"))
+  }
+
+  
   reservationBtn = () => {
     localStorage.getItem("username")
-      ? console.log("예약 성공")
+      ? reservationEvent()
+      : alert("이용할 수 없는 사용자입니다.");
+  }
+*/  
+
+  reservationBtn = () => {
+    localStorage.getItem("username")
+      ? console.log(document.getElementsByClassName("musicList"))
       : alert("이용할 수 없는 사용자입니다.");
   };
+
+  ////////////////////////////////////////
 
   render() {
     let { songList, loading, error } = this.state;

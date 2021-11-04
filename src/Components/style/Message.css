@@ -1,0 +1,11 @@
+.msg-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.msg {
+  font-weight: 600;
+  color: #e74c3c;
+}
