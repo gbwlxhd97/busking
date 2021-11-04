@@ -161,6 +161,8 @@ class Reservation extends React.Component {
       : alert("이용할 수 없는 사용자입니다.");
   };
 
+  musicArray = [];
+
   render() {
     let { songList, loading, error } = this.state;
     return (
@@ -186,7 +188,26 @@ class Reservation extends React.Component {
                         <Img src={song.profileImgURL} alt="profile"></Img>
                         <span id="title">{song.title}</span>-
                         <span id="singer">{song.singer}</span>
-                        <ReserveBtn onClick={this.reservationBtn}>
+                        <ReserveBtn
+                          onClick={
+                            (this.reservationBtn,
+                            () => {
+                              if(this.musicArray.length==0){
+                                this.musicArray.push({"title":song.title,"singer":song.singer});
+                                console.log(this.musicArray)
+                              }else{
+                                this.musicArray.map(ele=>{
+                                  if(Object.values(ele)[0]===song.title){
+
+                                  }else if(Object.values(ele)[0]!==song.title){
+
+                                  }
+                                })
+                              }
+                                
+                            })
+                          }
+                        >
                           예약하기
                         </ReserveBtn>
                       </div>
