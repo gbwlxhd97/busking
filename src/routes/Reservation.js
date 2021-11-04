@@ -1,13 +1,14 @@
 import React from "react";
 import { _musicServer } from "../service/music";
+import { _teamServer } from "../service/team";
+import { _userRoom } from "../service/room";
 import Section from "../Components/Section";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import styled from "styled-components";
 
 const Container = styled.div`
-  color:white;
- 
+  color: white;
 `;
 
 const Form = styled.form`
@@ -48,16 +49,56 @@ const ReserveBtn = styled.button`
 
 const Img = styled.img`
   vertical-align: middle;
-  width:100px;
-  height:100px;
+  width: 100px;
+  height: 100px;
 `;
 
 class Reservation extends React.Component {
   state = {
     searchTerm: "",
+    roomName: "",
+    teamName: "",
+    musicArray: [],
     loading: false,
     songList: [],
     error: null,
+  };
+
+  componentDidMount() {
+    this.getUserRoom();
+  }
+
+  getUserRoom = async () => {
+    const {
+      match: {
+        params: { teamName },
+      },
+    } = this.props;
+    try {
+      var res = await _teamServer.searchTeam(teamName);
+      const {
+        data: { data },
+      } = res;
+      var URL = data.onAirURL.split("/");
+      this.setState({
+        roomName: URL[4],
+        teamName: URL[5],
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  postReservateMusic = async () => {
+    const { roomName, teamName } = this.state;
+    try {
+      var res = await _userRoom.postMusic({
+        roomName: roomName,
+        teamName: teamName,
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   handleSearch = (event) => {
@@ -89,7 +130,6 @@ class Reservation extends React.Component {
         error:
           "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요.",
       });
-      // console.log(error);
     } finally {
       this.setState({
         loading: false,
@@ -144,7 +184,8 @@ class Reservation extends React.Component {
                     {songList.map((song) => (
                       <div className="musicList" key={song.id}>
                         <Img src={song.profileImgURL} alt="profile"></Img>
-                        {song.title} - {song.singer}
+                        <span id="title">{song.title}</span>-
+                        <span id="singer">{song.singer}</span>
                         <ReserveBtn onClick={this.reservationBtn}>
                           예약하기
                         </ReserveBtn>
