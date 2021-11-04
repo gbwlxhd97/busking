@@ -4,6 +4,7 @@ import Lyrics from "../Components/Lyrics";
 import { _musicServer } from "../service/music";
 import { _teamServer } from "../service/team";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 const Container = styled.div`
   color: white;
@@ -138,6 +139,7 @@ class UserRoom extends React.Component {
       click: !this.state.click,
     });
   };
+
 
   render() {
     const { lyrics, singer, img, title, teamInfo, click } = this.state;

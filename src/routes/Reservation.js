@@ -6,6 +6,7 @@ import Section from "../Components/Section";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import styled from "styled-components";
+import UserRoom from "./UserRoom";
 
 const Container = styled.div`
   color: white;
@@ -53,6 +54,17 @@ const Img = styled.img`
   height: 100px;
 `;
 
+const PostBtn = styled.button`
+  margin-top: 12px;
+  padding: 3px 5px;
+  border-radius: 10px;
+  background-color: white;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`;
+
 class Reservation extends React.Component {
   state = {
     searchTerm: "",
@@ -91,6 +103,7 @@ class Reservation extends React.Component {
 
   postReservateMusic = async () => {
     const { roomName, teamName } = this.state;
+
     try {
       var res = await _userRoom.postMusic({
         roomName: roomName,
@@ -192,19 +205,18 @@ class Reservation extends React.Component {
                           onClick={
                             (this.reservationBtn,
                             () => {
-                              if(this.musicArray.length==0){
-                                this.musicArray.push({"title":song.title,"singer":song.singer});
-                                console.log(this.musicArray)
-                              }else{
-                                this.musicArray.map(ele=>{
-                                  if(Object.values(ele)[0]===song.title){
-
-                                  }else if(Object.values(ele)[0]!==song.title){
-
-                                  }
-                                })
+                              if (this.musicArray.length === 0) {
+                                this.musicArray.push(song.title, song.singer);
+                              } else {
+                                if (
+                                  this.musicArray.includes(song.title) === true
+                                ) {
+                                  alert("이미 예약곡에 넣으셨습니다.");
+                                } else {
+                                  this.musicArray.push(song.title, song.singer);
+                                }
                               }
-                                
+                              console.log(this.musicArray);
                             })
                           }
                         >
@@ -217,6 +229,7 @@ class Reservation extends React.Component {
               </>
             )}
             {songList.length === 0 && <Message text={error} />}
+            <PostBtn onClick={this.asdf}>예약완료</PostBtn>
           </>
         )}
       </Container>
