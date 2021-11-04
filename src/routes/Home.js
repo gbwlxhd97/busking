@@ -5,7 +5,7 @@ import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
 import { _teamServer } from '../service/team';
 
-let propsPos =[]; //props로 전달해줄 버스커의 현재위치값
+let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
 const startBusKing = '버스킹 방송시작하기!'
 const endBusKing = '버스킹 방송종료'
 let item =false;
@@ -16,13 +16,13 @@ function Home() {
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;      
     pos.push(`${lat},${lon}`);
-    propsPos = [...pos];
-    console.log(propsPos);
+    pos2 = [...pos];
+    // console.log(pos2);
   })
-  const [statePos,setPos] = useState([])
+  const [pos20,setPos2] = useState([])
   const startBus = () => {
-    setPos(propsPos);
-    console.log(statePos);
+    setPos2(pos2);
+    console.log(pos20);
   }
   
   const startBusK = async() => {
@@ -32,6 +32,7 @@ function Home() {
       })
       alert('방송시작!');
       item = !item;
+      console.log(item);
     } catch (error) {
       console.log(error);
     }
@@ -46,18 +47,17 @@ function Home() {
             /> : <LogoutHeader/>} */}
         {
           
-        <ReMap pos3={statePos}/> 
+        <ReMap pos3={pos20}/> 
         }
         {localStorage.getItem('username') && (
           <div>
             닉네임 : {localStorage.getItem('username')}
             <button onClick={Logout}>logout</button>
-            <button onClick={startBusK}>
+            <button onClick={startBus,startBusK}>
               
               {item && endBusKing}
               {!item && startBusKing}
               </button>
-              <button onClick={startBus}>테스트</button>
           </div>
         )}
       </div>

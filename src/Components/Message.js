@@ -1,5 +1,5 @@
 import React from "react";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Div = styled.div`
   width: 100vw;
@@ -13,13 +13,9 @@ const Msg = styled.span`
 `;
 
 const Message = ({ text }) => (
-  
-  
   <Div>
     <Msg>{text}</Msg>
   </Div>
 );
-
-
 
 export default Message;

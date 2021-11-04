@@ -1,16 +1,18 @@
 import React from "react";
 import Styled from "styled-components";
 import { Link } from "react-router-dom";
-import { Logout } from '../Components/TokenSave';
+import { Logout } from "../Components/TokenSave";
 import PropTypes from "prop-types";
 
 const Header = Styled.div`
     font-size:15px;
     display:flex;
     padding: 10px;
-    background: linear-gradient( to bottom, black, rgba(125,125,125,0.001) );
+    background-color:#323232;
     justify-content: space-around;
     align-items:center;
+    border-bottom:3px solid #FFC314;
+    width:375;
 `;
 
 const List = Styled.ul`
@@ -33,7 +35,7 @@ const SLink = Styled(Link)`
     color:white;
     text-decoration: none;
     &:hover {
-        border-bottom:3px solid black;
+        border-bottom:3px solid #FFC314;
         transition:border-bottom 0.3s ease-in-out;
     }
 `;
@@ -47,35 +49,31 @@ const LogoutBtn = Styled.button`
     font-size:16px;
 `;
 
-const WithRouter = ({ nickname }) =>(
-    <Header>
-        <SLink to="/">
-            BUSKiNG hELPER
-        </SLink>
-        <List>
-            <Item>
-                <SLink to="/searchuser">버스커 찾기</SLink>
-            </Item>
-        </List>
+const WithRouter = ({ nickname }) => (
+  <Header>
+    <SLink to="/">BUSKiNG hELPER</SLink>
+    <List>
+      <Item>
+        <SLink to="/searchuser">버스커 찾기</SLink>
+      </Item>
+    </List>
 
-        <List>
-            <Item>
-                <SLink to={`/userdetail/${nickname}`}>
-                    {nickname}
-                </SLink>
-            </Item>
+    <List>
+      <Item>
+        <SLink to={`/userdetail/${nickname}`}>{nickname}</SLink>
+      </Item>
 
-            <Item>
-                <LogoutBtn onClick={Logout}>
-                    <SLink to="/">Logout</SLink>
-                </LogoutBtn>
-            </Item>
-        </List>
-    </Header>
+      <Item>
+        <LogoutBtn onClick={Logout}>
+          <SLink to="/">Logout</SLink>
+        </LogoutBtn>
+      </Item>
+    </List>
+  </Header>
 );
 
 WithRouter.propTypes = {
-    nickname:PropTypes.string
+  nickname: PropTypes.string,
 };
 
 export default WithRouter;
