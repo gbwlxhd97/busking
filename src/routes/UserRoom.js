@@ -81,7 +81,8 @@ class UserRoom extends React.Component {
     click: false,
     loading: false,
     error: null,
-
+    roomName: "",
+    teamName: ""
   };
 
   getSong = async () => {
@@ -105,26 +106,6 @@ class UserRoom extends React.Component {
     }
   };
 
-  searchTeam = async () => {
-    console.log(localStorage.getItem("teamname"))
-
-  };
-
- /*  getTeam = async () => {
-    try {
-      const res = await _userRoom.getTeam({
-        roomName: 값, 
-        teamName: 값 
-      });
-      
-    } catch {
-      
-    }
-  };
- */
-
-
-
   getTeamInfo = async () => {
     const {
       match: {
@@ -138,10 +119,15 @@ class UserRoom extends React.Component {
           data
         },
       } = res;
+      console.log(data.onAirURL.split('/'))
+      const information = data.onAirURL.split('/')
       console.log(data)
       this.setState({
-        teamInfo:data
+        teamInfo:data,
+        roomName: information[4] ,
+        teamName: information[5]
       });
+      console.log(this.state.roomName, this.state.teamName)
     } catch (error) {
       this.setState({ error: "응애" });
     } finally {
@@ -149,7 +135,39 @@ class UserRoom extends React.Component {
         loading: false,
       });
     }
+    this.getTeam();
   };
+
+  /*
+  searchTeam = async () => {
+    try {
+      const res = await _teamServer.searchTeam({
+        teamName: localStorage.getItem("teamname")
+      })
+      this.setState({
+        teamName: <- 줄이기
+      });
+      console.log(this.state.teamName)
+    } catch {
+      console.log("error")
+    }
+  };
+  */
+ 
+
+  getTeam = async () => {
+    try {
+      const res = await _userRoom.getTeam({
+        roomName: this.state.roomName, 
+        teamName: this.state.teamName
+      });
+      console.log(res)
+    } catch {
+      console.log("error")
+    }
+  };
+
+
 
   componentDidMount() {
     this.getTeamInfo();
@@ -166,11 +184,10 @@ class UserRoom extends React.Component {
 
   render() {
     const { lyrics, singer, img, title, teamInfo, click } = this.state;
-    console.log(localStorage.getItem("teamname"))
+  
     return (
       <Container>
-        <Section>
-          <Title>
+        <Section>          <Title>
             <UserImg src={teamInfo.teamProfileImg} />
             🎵 {teamInfo.teamName} 방
           </Title>

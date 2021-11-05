@@ -73,12 +73,13 @@ function Login() {
       const {
         data: { token, userNickname, teamName },
       } = res;
+      
       localStorage.setItem("token", token);
       localStorage.setItem("username", userNickname);
       localStorage.setItem("teamname", teamName);
       // history.push('/')
       window.location.href = "/";
-      console.log(res);
+      
     } catch (error) {
       alert("아이디 비밀번호가 맞지않음");
       console.log(error);
@@ -86,7 +87,9 @@ function Login() {
   };
 
   return (
+    
     <Form>
+      
       <H3>로그인</H3>
       <form>
         <FormDiv>

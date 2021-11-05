@@ -219,6 +219,7 @@ class Reservation extends React.Component {
   postArray = [];
   render() {
     let { songList, loading, error } = this.state;
+    console.log(localStorage.getItem("teamname"))
     return (
       <Container>
         <Form onSubmit={this.handleSearch}>
