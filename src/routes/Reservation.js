@@ -63,11 +63,9 @@ class Reservation extends React.Component {
     songList: [],
     error: null,
 
-    roomName: "",
-    teamNmae: "",
     title: "",
     singer: "",
-    profileImgURL: "",
+    profileImgURL: "",,
     lyrics: "",
   };
 
@@ -164,13 +162,6 @@ class Reservation extends React.Component {
 
 
   ////////////////////////////////////
-  handleRoomName = () => {
-    
-  }
-
-  handleTeamName = () => {
-  
-  }
 
   handleTitle = () => {
     //console.log(document.getElementsByClassName("musicList"))에서 1번
@@ -199,7 +190,7 @@ class Reservation extends React.Component {
       : alert("이용할 수 없는 사용자입니다.");
   }
 */  
-
+  
   reservationBtn = () => {
     localStorage.getItem("username")
       ? console.log(document.getElementsByClassName("musicList"))
@@ -207,7 +198,7 @@ class Reservation extends React.Component {
   };
 
   ////////////////////////////////////////
-  
+
   musicArray = [];
 
   render() {
