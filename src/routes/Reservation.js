@@ -77,6 +77,7 @@ class Reservation extends React.Component {
   };
 
   componentDidMount() {
+    
     this.getUserRoom();
   }
 
@@ -92,6 +93,7 @@ class Reservation extends React.Component {
         data: { data },
       } = res;
       var URL = data.onAirURL.split("/");
+      console.log(URL)
       this.setState({
         roomName: URL[4],
         teamName: URL[5],
@@ -180,6 +182,7 @@ class Reservation extends React.Component {
   musicArray = [];
   postArray = [];
   render() {
+    {console.log(localStorage.getItem("teamname"))}
     let { songList, loading, error } = this.state;
     return (
       <Container>

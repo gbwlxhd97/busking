@@ -70,15 +70,17 @@ function Login() {
         username: values.id,
         password: values.pw,
       });
+      
       const {
         data: { token, userNickname, teamName },
       } = res;
+      
       localStorage.setItem("token", token);
       localStorage.setItem("username", userNickname);
       localStorage.setItem("teamname", teamName);
       // history.push('/')
       window.location.href = "/";
-      console.log(res);
+      
     } catch (error) {
       alert("아이디 비밀번호가 맞지않음");
       console.log(error);

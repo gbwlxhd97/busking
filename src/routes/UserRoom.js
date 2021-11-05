@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Lyrics from "../Components/Lyrics";
 import { _musicServer } from "../service/music";
 import { _teamServer } from "../service/team";
+import { _userRoom } from "../service/room";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -77,6 +78,8 @@ class UserRoom extends React.Component {
     singer: "",
     img: "",
     title: "",
+    teamName: "",
+    roomName: "",
     click: false,
     loading: false,
     error: null,
@@ -112,20 +115,33 @@ class UserRoom extends React.Component {
     try {
       const res = await _teamServer.searchTeam(teamName);
       let {
-        data: {
-          data
-        },
+        data: { data },
       } = res;
-      console.log(data)
       this.setState({
-        teamInfo:data
+        teamInfo: data,
+        teamName: data.onAirURL.split("/")[5],
+        roomName: data.onAirURL.split("/")[4],
       });
+      console.log(this.state.teamName, this.state.roomName);
     } catch (error) {
       this.setState({ error: "응애" });
     } finally {
       this.setState({
         loading: false,
       });
+    }
+    this.getTeam();
+  };
+
+  getTeam = async () => {
+    try {
+      const res = await _userRoom.getRoomInfo({
+        roomName: this.state.roomName,
+        teamName: this.state.teamName,
+      });
+      console.log(res)
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -139,7 +155,6 @@ class UserRoom extends React.Component {
       click: !this.state.click,
     });
   };
-
 
   render() {
     const { lyrics, singer, img, title, teamInfo, click } = this.state;

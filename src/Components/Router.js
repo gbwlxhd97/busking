@@ -9,6 +9,7 @@ import Detail from "../routes/Detail";
 import LogoutHeader from "../Components/LogoutHeader";
 import LoginHeader from "../Components/LoginHeader";
 import UserRoom from "../routes/UserRoom";
+import CreatTeam from "../routes/CreatTeam";
 import BuskingMange from "../routes/BuskingManage";
 import "../routes/Home.css";
 
@@ -30,6 +31,7 @@ export default () => (
       <Route path="/searchuser" exact component={SearchUser} />
       <Route path="/userroom/:teamName" exact component={UserRoom} />
       <Route path="/buskingmanage/:nickName" exact component={BuskingMange} />
+      <Route path="/creatteam/:nickName" exact component={CreatTeam}/>
     </>
   </Router>
 );
