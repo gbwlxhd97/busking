@@ -8,5 +8,6 @@ const api = axios.create({
 export const _userRoom = {
     getRoom: () => api.get("/room/all"),
     creatRoom: (data) => api.post("/room",data),
-    postMusic: (info) => api.post(`/room/${info.roomName}/${info.teamName}/music`,info)
+    postMusic: (info) => api.post(`/room/${info.roomName}/${info.teamName}/music`,info),
+    getTeam: (info)=>api.get(`/room/${info.roomName}/${info.teamName}`)
 }

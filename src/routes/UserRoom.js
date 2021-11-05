@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Lyrics from "../Components/Lyrics";
 import { _musicServer } from "../service/music";
 import { _teamServer } from "../service/team";
+import { _userRoom } from "../service/room";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -80,6 +81,7 @@ class UserRoom extends React.Component {
     click: false,
     loading: false,
     error: null,
+
   };
 
   getSong = async () => {
@@ -102,6 +104,26 @@ class UserRoom extends React.Component {
       });
     }
   };
+
+  searchTeam = async () => {
+    console.log(localStorage.getItem("teamname"))
+
+  };
+
+ /*  getTeam = async () => {
+    try {
+      const res = await _userRoom.getTeam({
+        roomName: 값, 
+        teamName: 값 
+      });
+      
+    } catch {
+      
+    }
+  };
+ */
+
+
 
   getTeamInfo = async () => {
     const {
@@ -140,9 +162,11 @@ class UserRoom extends React.Component {
     });
   };
 
+  
 
   render() {
     const { lyrics, singer, img, title, teamInfo, click } = this.state;
+    console.log(localStorage.getItem("teamname"))
     return (
       <Container>
         <Section>
