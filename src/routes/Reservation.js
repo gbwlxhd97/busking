@@ -103,17 +103,20 @@ class Reservation extends React.Component {
 
   postReservateMusic = async () => {
     const { roomName, teamName } = this.state;
-
+    console.log(this.postArray)
     try {
       var res = await _userRoom.postMusic({
         roomName: roomName,
         teamName: teamName,
+        title: this.postArray[0],
+        singer: this.postArray[1],
       });
     } catch (error) {
       console.log(error);
     }
+    this.postArray = [];
   };
-
+  
   handleSearch = (event) => {
     event.preventDefault();
     const { searchTerm } = this.state;
@@ -175,7 +178,7 @@ class Reservation extends React.Component {
   };
 
   musicArray = [];
-
+  postArray = [];
   render() {
     let { songList, loading, error } = this.state;
     return (
@@ -207,13 +210,17 @@ class Reservation extends React.Component {
                             () => {
                               if (this.musicArray.length === 0) {
                                 this.musicArray.push(song.title, song.singer);
+                                this.postArray.push(song.title, song.singer);
+                                this.postReservateMusic();
                               } else {
                                 if (
                                   this.musicArray.includes(song.title) === true
                                 ) {
-                                  alert("이미 예약곡에 넣으셨습니다.");
+                                  alert("이미 넣으신 노래 입니다.");
                                 } else {
                                   this.musicArray.push(song.title, song.singer);
+                                  this.postArray.push(song.title, song.singer);
+                                  this.postReservateMusic();
                                 }
                               }
                               console.log(this.musicArray);
@@ -229,7 +236,6 @@ class Reservation extends React.Component {
               </>
             )}
             {songList.length === 0 && <Message text={error} />}
-            <PostBtn onClick={this.asdf}>예약완료</PostBtn>
           </>
         )}
       </Container>
