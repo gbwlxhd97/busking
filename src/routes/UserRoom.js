@@ -81,8 +81,10 @@ class UserRoom extends React.Component {
     click: false,
     loading: false,
     error: null,
+
     roomName: "",
-    teamName: ""
+    teamName: "",
+    musicArr: null
   };
 
   getSong = async () => {
@@ -152,6 +154,12 @@ class UserRoom extends React.Component {
       console.log("error")
     }
   };
+
+  let {
+        data: {
+          data
+        },
+      } = res;
   */
  
 
@@ -161,13 +169,33 @@ class UserRoom extends React.Component {
         roomName: this.state.roomName, 
         teamName: this.state.teamName
       });
-      console.log(res)
+      let { data: {data}} = res;
+      this.setState({
+        musicArr: data.musics 
+      })
+      console.log(this.state.musicArr)
     } catch {
       console.log("error")
     }
   };
 
+  // getMusics = async () => {
+  //   try {
+  //     const res 
+  //   } catch {
+  //   }
+  // };
 
+
+  // getSearchTitle = async () => {
+  //   try {
+  //     const res = await _musicServer.getSearchTitle({
+  //     });
+  //     console.log(res);
+  //   } catch {
+  //     console.lof("error")
+  //   }
+  // };
 
   componentDidMount() {
     this.getTeamInfo();
@@ -180,10 +208,9 @@ class UserRoom extends React.Component {
     });
   };
 
-  
 
   render() {
-    const { lyrics, singer, img, title, teamInfo, click } = this.state;
+    const { lyrics, singer, img, title, teamInfo, click, musicArr } = this.state;
   
     return (
       <Container>
@@ -206,23 +233,13 @@ class UserRoom extends React.Component {
                   </tr>
                 </thead>
                 <Tbody>
-                  <tr>
-                    <Td>1</Td>
-                    <Td>이무진</Td>
-                    <Td>신호등</Td>
-                  </tr>
-
-                  <tr>
-                    <Td>2</Td>
-                    <Td>이무진</Td>
-                    <Td>신호등</Td>
-                  </tr>
-
-                  <tr>
-                    <Td>3</Td>
-                    <Td>이무진</Td>
-                    <Td>신호등</Td>
-                  </tr>
+                  {musicArr.map((e,index) => (
+                    <tr>
+                      <Td key={e.id}>{index+1}</Td>
+                      <Td>{e.title}</Td>
+                      <Td>{e.singer}</Td>
+                    </tr>
+                  ))}
                 </Tbody>
               </Table>
             ) : (
