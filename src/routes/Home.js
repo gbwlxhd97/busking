@@ -99,7 +99,7 @@ function Home() {
     <>
       <ReMap pos3={pos20} />
       <Costainer>
-        {teamBoolean === false ? (
+        {!teamBoolean ? (
           <>
             <Span1>팀을 생성해야 버스킹을 시작할 수 있습니다.</Span1>
             <Btn>
