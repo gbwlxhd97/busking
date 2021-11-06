@@ -71,7 +71,7 @@ const Table = styled.table`
 
 class UserRoom extends React.Component {
   state = {
-    teamInfo: {},
+    // teamInfo: {},
     lyrics: "",
     singer: "",
     img: "",
@@ -79,6 +79,7 @@ class UserRoom extends React.Component {
     click: false,
     loading: false,
     error: null,
+    id:1
   };
 
   getSong = async () => {
@@ -145,8 +146,8 @@ class UserRoom extends React.Component {
       <Container>
         <Section>
           <Title>
-            <UserImg src={teamInfo.teamProfileImg} />
-            🎵 {teamInfo.teamName} 방
+            {/* <UserImg src={teamInfo.teamProfileImg} /> */}
+            {/* 🎵 {teamInfo.teamName} 방 */}
           </Title>
         </Section>
 
@@ -186,9 +187,9 @@ class UserRoom extends React.Component {
               <div></div>
             )}
             <Btn>
-              <RLink to={`/reservation/${teamInfo.teamName}`}>
+              {/* <RLink to={`/reservation/${teamInfo.teamName}`}>
                 ⎧노래 예약하러가기 ᐳ
-              </RLink>
+              </RLink> */}
             </Btn>
           </Reservation>
         </Section>
