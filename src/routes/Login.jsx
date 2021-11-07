@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+// import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import { _authServer } from "../service/auth";
 
@@ -52,15 +52,12 @@ const Button = styled.button`
 `;
 
 function Login() {
-  
-  const history = useHistory();
-
+  // const history = useHistory();
   const [values, setValues] = useState({ id: "", pw: "" });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setValues({ ...values, [name]: value });
-    console.log(value);
   };
 
   const handleSubmit = async (event) => {
@@ -78,7 +75,6 @@ function Login() {
       localStorage.setItem("teamname", teamName);
       // history.push('/')
       window.location.href = "/";
-      console.log(res);
     } catch (error) {
       alert("아이디 비밀번호가 맞지않음");
       console.log(error);

@@ -84,6 +84,8 @@ class Reservation extends React.Component {
         roomName: URL[4],
         teamName: URL[5],
       });
+      console.log(this.state);
+      console.log(URL);
     } catch (error) {
       console.log(error);
     }
@@ -109,6 +111,7 @@ class Reservation extends React.Component {
     }
   };
 
+  saveMusicData = [];
   searchByTerm = async () => {
     const { searchTerm } = this.state;
     this.setState({
@@ -119,12 +122,14 @@ class Reservation extends React.Component {
       let {
         data: { data },
       } = res;
+      // console.log(data);
       this.setState({
         songList: data,
       });
       if (res.data.status === 204) {
         throw new Error("catch");
       }
+      console.log(this.state.songList);
     } catch (error) {
       this.setState({
         error:
@@ -160,8 +165,12 @@ class Reservation extends React.Component {
       ? console.log("예약 성공")
       : alert("이용할 수 없는 사용자입니다.");
   };
-
+  musicBox = []
+  musicId
+  musicTitle
+  
   render() {
+    // console.log(this.musicBox);
     let { songList, loading, error } = this.state;
     return (
       <Container>
@@ -186,7 +195,7 @@ class Reservation extends React.Component {
                         <Img src={song.profileImgURL} alt="profile"></Img>
                         <span id="title">{song.title}</span>-
                         <span id="singer">{song.singer}</span>
-                        <ReserveBtn onClick={this.reservationBtn}>
+                        <ReserveBtn onClick={this.reservationBtn,() => {this.musicBox.push({"title":song.title,"singer":song.singer,"index":song.length}); console.log(this.musicBox);}}>
                           예약하기
                         </ReserveBtn>
                       </div>

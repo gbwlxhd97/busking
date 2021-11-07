@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
 import LogoutHeader from "../Components/LogoutHeader"
 import LoginHeader from "../Components/LoginHeader"
 import { _teamServer } from '../service/team';
 
-let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
+let currentPos =[]; //props로 전달해줄 버스커의 현재위치값
 const startBusKing = '버스킹 방송시작하기!'
 const endBusKing = '버스킹 방송종료'
 let item =false;
@@ -15,14 +15,17 @@ function Home() {
     let pos = [];
     let lat = position.coords.latitude;
     let lon = position.coords.longitude;      
-    pos.push(`${lat},${lon}`);
-    pos2 = [...pos];
-    // console.log(pos2);
+    pos.push(
+      {"pos": `${lat},${lon}`,"teamName": localStorage.getItem('teamname')});
+    currentPos = [...pos];
   })
-  const [pos20,setPos2] = useState([])
+  const [statePos,setPos] = useState([]) //홈에서 map 으로 pos정보를 주기위한 state 단 map에서는 props임
+  useEffect(() => {
+    console.log(statePos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e)));
+  },[statePos])
+
   const startBus = () => {
-    setPos2(pos2);
-    console.log(pos20);
+    setPos(currentPos);
   }
   
   const startBusK = async() => {
@@ -41,23 +44,17 @@ function Home() {
   return (
     <>
       <div>
-      {/* {localStorage.getItem("username") ?
-            <LoginHeader
-                nickname={localStorage.getItem("username")}
-            /> : <LogoutHeader/>} */}
-        {
-          
-        <ReMap pos3={pos20}/> 
-        }
+        <ReMap posData={statePos}/> 
         {localStorage.getItem('username') && (
           <div>
             닉네임 : {localStorage.getItem('username')}
             <button onClick={Logout}>logout</button>
-            <button onClick={startBus,startBusK}>
+            <button onClick={startBusK}>
               
               {item && endBusKing}
               {!item && startBusKing}
               </button>
+              <button onClick={startBus} >위치 테스트</button>
           </div>
         )}
       </div>

@@ -8,22 +8,21 @@ let test;
 let t1;
 let t2;
 let intro = []
-
+let posArr = []
 //밑에는 home.js에서 props로 각 사용자별 위치값을 [{}] 형태로 넣어주는 위치데이터
 var buskerPositions = [
     {
-        imgSrc : "https://i.pinimg.com/originals/c0/da/57/c0da57e76bde0ccc9fc503bb3f77d217.jpg",
         latlng: new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
     },
     {
-        imgSrc : "https://ssl.pstatic.net/tveta/libs/1349/1349760/bdcd665caf6ebdd5faf1_20211015141108350.jpg",
         latlng: new kakao.maps.LatLng(38.49671536281186, 127.03020491448352),
     },
     {
-        imgSrc : "https://ssl.pstatic.net/tveta/libs/1349/1349760/bdcd665caf6ebdd5faf1_20211015141108350.jpg",
         latlng: new kakao.maps.LatLng(37.0671536281186, 127.03020491448352),
     }
 ]
+
+
 
 function ReMap(props) {
     // eslint-disable-next-line
@@ -31,35 +30,33 @@ function ReMap(props) {
     // eslint-disable-next-line
     const [pospos,setPosPos] = useState()
     const [tes1,setTes1] = useState(burkerImgSave)
+    
+    //api Hooks
     useEffect(() => {
         getUser();
         getTeam();
+        console.log(posArr);
     },[]);
     useEffect(() => {
-    //    let a = props.pos3.join(' ').split(',')
-    //    console.log(Object.assign({}, a));
-    //    let tt = Object.assign({}, a)
-     //   test =tt;
-    //    t1 =parseFloat(test[0])
-    //    t2 =parseFloat(test[1])
-        // console.log(t1);
-        // console.log(t2);
-        // setPosPos(props.pos3.join(' '))
-        
-        // setPosPos(Object.assign({}, a))
-        // console.log(typeof a);
-        // console.log(pospos === a);
-        
         console.log(pospos);
-        console.log(props.pos3);
+        console.log(props.posData);
+        console.log(posArr);
     },[pospos])
     
+    useEffect(() => {
+        setPosPos(props.posData)
+        posArr.push(pospos)
+        const set = new Set(posArr)
+        console.log(set);
+    })
+
     // team api
     const getTeam = async () => {
         try {
-            const res =await _teamServer.getTeam()
+            const res =await _teamServer.getAllTeam()
             const {data: {data}} =res;
-            const on = data.filter(e => e.onAir ===true)
+            console.log(data);
+            const on = data.filter(e => e.onAirURL !== null) //방송을켜서 방url이 있는사람
             intro = on
             burkerImgSave = [...on.map(e => e.leader.userDetail)]
             setTes1(burkerImgSave)
