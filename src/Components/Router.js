@@ -30,7 +30,7 @@ export default () => (
       <Route path="/userdetail/:nickName" exact component={Detail} />
       <Route path="/searchuser" exact component={SearchUser} />
       <Route path="/userroom/:teamName" exact component={UserRoom} />
-      <Route path="/buskingmanage/:nickName" exact component={BuskingMange} />
+      <Route path="/buskingmanage/:roomName/:teamName" exact component={BuskingMange} />
       <Route path="/creatteam/:nickName" exact component={CreatTeam}/>
     </>
   </Router>

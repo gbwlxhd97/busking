@@ -32,16 +32,18 @@ const SendBtn = styled.button`
   margin-top: 20px;
 `;
 
-const Home = styled(Link)`
+const GoToHome = styled(Link)`
   margin-left: 100px;
   margin-top: 20px;
   text-decoration: none;
+  color: white;
 `;
 
 const Img = styled.img`
   width: 100px;
   height: 100px;
 `;
+
 const Span = styled.span``;
 export default class extends React.Component {
   state = {
@@ -75,20 +77,53 @@ export default class extends React.Component {
   };
 
   postInfo = async () => {
-    const { teamName } = this.state;
+    const { teamName, basicResult } = this.state;
     if (teamName.length === 0) {
       alert("팀 이름을 작성해주세요.");
     } else {
-      try {
-        const res = await _teamServer.postTeam({
-          teamName: teamName,
-          leaderName: localStorage.getItem("username"),
-        });
-        this.setState({
-          complete: true,
-        });
-      } catch (error) {
-        console.log(error);
+      if (localStorage.getItem("teamname") === "null") {
+        if (basicResult === "Team" && basicResult.length !== 0) {
+          try {
+            console.log("Team")
+            const res = await _teamServer.postTeam({
+              teamName: teamName,
+              leaderName: localStorage.getItem("username"),
+              userList: this.memberArray,
+            });
+            this.setState({
+              complete: true,
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        } else if (basicResult === "Solo") {
+          console.log("solo")
+          try {
+            const res = await _teamServer.postTeam({
+              teamName: teamName,
+              leaderName: localStorage.getItem("username"),
+            });
+            this.setState({
+              complete: true,
+            });
+          } catch (error) {
+            console.log(error);
+          }
+        }
+      } else {
+        try {
+          console.log("put");
+          const res = await _teamServer.putTeam({
+            oldTeamName: localStorage.getItem("teamname"),
+            newTeamName: teamName,
+            leaderName: localStorage.getItem("username"),
+          });
+          this.setState({
+            complete: true,
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   };
@@ -121,8 +156,8 @@ export default class extends React.Component {
     }
   };
 
-  addTeam =()=>{
-    const {memberInfo}=this.state
+  addTeam = () => {
+    const { memberInfo } = this.state;
     if (this.memberArray.length === 0) {
       this.memberArray.push(memberInfo.nickname);
     } else {
@@ -132,10 +167,7 @@ export default class extends React.Component {
         this.memberArray.push(memberInfo.nickname);
       }
     }
-    console.log(this.memberArray);
-  }
-  
-
+  };
 
   render() {
     const { basicResult, radioArray, memberInfo, error, complete, search } =
@@ -172,8 +204,8 @@ export default class extends React.Component {
             )}
           </>
         )}
-        {/* {!complete && <SendBtn onClick={this.postInfo}>send</SendBtn>} */}
-        {!complete && <Link to="/">홈으로가기</Link>}
+        {!complete && <SendBtn onClick={this.postInfo}>send</SendBtn>}
+        {complete && <GoToHome to="/">홈으로가기</GoToHome>}
         {memberInfo.length === 0 && <Message text={error} />}
       </Container>
     );

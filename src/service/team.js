@@ -9,5 +9,6 @@ export const _teamServer = {
   getAllTeam: () => api.get("/team/all"),
   searchTeam: (teamName) => api.get(`/team/${teamName}`),
   postOnAir: (data) => api.post("/team/onAir",data),
-  postTeam:(data) => api.post ("/team",data), 
+  postTeam:(data) => api.post ("/team",data),
+  putTeam:(data)=> api.put(`/team/${data.oldTeamName}`,data)
 }
