@@ -175,46 +175,6 @@ class Reservation extends React.Component {
   };
 
 
-  ////////////////////////////////////
-
-  /*
-  handleTitle = () => {
-    
-  }
-
-  handleSinger = () => {
-    
-  }
-
-  handleFrofileImg = () => {
-    
-  }
-
-  handleLyrics = () => {
-
-  }
-
-  reservationEvent = () => {
-    console.log(document.getElementsByClassName("musicList"))
-  }
-
-  
-  reservationBtn = () => {
-    localStorage.getItem("username")
-      ? reservationEvent()
-      : alert("이용할 수 없는 사용자입니다.");
-  }
-  
-  
-  reservationBtn = () => {
-    localStorage.getItem("username")
-      ? console.log(document.getElementsByClassName("musicList"))
-      : alert("이용할 수 없는 사용자입니다.");
-  };
-  
-  */
-  ////////////////////////////////////////
-
   musicArray = [];
   postArray = [];
   render() {
@@ -252,6 +212,8 @@ class Reservation extends React.Component {
                                 this.postArray.push(song.title, song.singer);
                                 this.postReservateMusic();
                               } else {
+                                if(this.musicArray.length===2){alert("최대 2개까지 예약이 가능합니다.")}
+                                else{
                                 if (
                                   this.musicArray.includes(song.title) === true
                                 ) {
@@ -263,7 +225,7 @@ class Reservation extends React.Component {
                                 }
                               }
                               console.log(this.musicArray);
-                            })
+                            }})
                           }
                         >
                           예약하기
