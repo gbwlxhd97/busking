@@ -93,6 +93,7 @@ export default class extends React.Component {
             this.setState({
               complete: true,
             });
+            localStorage.setItem("teamname", teamName);
           } catch (error) {
             console.log(error);
           }
@@ -106,6 +107,7 @@ export default class extends React.Component {
             this.setState({
               complete: true,
             });
+            localStorage.setItem("teamname", teamName);
           } catch (error) {
             console.log(error);
           }
@@ -121,10 +123,12 @@ export default class extends React.Component {
           this.setState({
             complete: true,
           });
+          localStorage.setItem("teamname", teamName);
         } catch (error) {
           console.log(error);
         }
       }
+      
     }
   };
 

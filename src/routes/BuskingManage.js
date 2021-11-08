@@ -114,8 +114,6 @@ class BuskingMange extends React.Component {
               img={song.profileImgURL}
               title={song.title}
             />
-            {this.state.data.roomName}
-            {this.state.data.teamName}
             <button
               onClick={async () => {
                 const {
@@ -140,7 +138,6 @@ class BuskingMange extends React.Component {
             </button>
           </div>
         ))}
-
         <Btn onClick={this.turnOff}>방송끄기</Btn>
       </Container>
     );

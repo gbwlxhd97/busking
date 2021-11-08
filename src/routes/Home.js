@@ -38,12 +38,12 @@ const Span3 = styled.span`
 `;
 
 const CraetRoom = styled(Link)`
-  color: black;
+  color: white;
   text-decoration-line: none;
 `;
 
 const BuskingMange = styled(Link)`
-  color: black;
+  color: white;
   text-decoration-line: none;
 `;
 
@@ -121,10 +121,11 @@ function Home() {
       teamBoolean = true;
     }
   };
+
   const putRoomName = (e) => {
     setText(e.target.value);
   };
-  //"roomName":"1번방(필수)", "teamName":"1번팀(필수)"
+
   const postRoomName = async () => {
     if (text.length === 0) {
       alert("제목을 기입해주세요");
@@ -158,9 +159,8 @@ function Home() {
             </Btn>
           </>
         )}
-
         <>
-          {!item && (
+          {!item && teamBoolean && (
             <>
               <Span3>버스킹을 하시려면 제목을 설정후에 시작하셔야합니다!</Span3>
               <br />
@@ -174,7 +174,6 @@ function Home() {
               </SendRoomName>
             </>
           )}
-
           {item && (
             <>
               <StartBtn onClick={(startBus, startBusK)}>
@@ -183,7 +182,11 @@ function Home() {
               <br />
               <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
               {!manage && (
-                <BuskingMange to={`/buskingmanage/${text}/${localStorage.getItem("teamname")}`}>
+                <BuskingMange
+                  to={`/buskingmanage/${text}/${localStorage.getItem(
+                    "teamname"
+                  )}`}
+                >
                   asdfasdf
                 </BuskingMange>
               )}
