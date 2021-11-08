@@ -188,9 +188,4 @@ const getUser = async() => {
     }
 }
 
-
-
-
-
-
 export default ReMap;

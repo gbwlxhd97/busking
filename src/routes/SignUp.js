@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { _authServer } from "../service/auth";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 const Form = styled.div`
   position: absolute;
@@ -85,7 +86,13 @@ function Sign() {
       });
       console.log(res);
       if (res.data === 409) {
-        alert("해당 아이디는 혹은 닉네임이 중복됩니다.");
+        Swal.fire({
+          position: 'top-end',
+          icon: 'warning',
+          title: 'Your work has been saved',
+          showConfirmButton: false,
+          timer: 1500
+        })
         return;
       }
       if (res.data === 201) {
