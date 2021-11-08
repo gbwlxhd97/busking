@@ -121,11 +121,10 @@ function Home() {
       teamBoolean = true;
     }
   };
-
   const putRoomName = (e) => {
     setText(e.target.value);
   };
-
+  //"roomName":"1번방(필수)", "teamName":"1번팀(필수)"
   const postRoomName = async () => {
     if (text.length === 0) {
       alert("제목을 기입해주세요");
@@ -182,11 +181,7 @@ function Home() {
               <br />
               <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
               {!manage && (
-                <BuskingMange
-                  to={`/buskingmanage/${text}/${localStorage.getItem(
-                    "teamname"
-                  )}`}
-                >
+                <BuskingMange to={`/buskingmanage/${text}/${localStorage.getItem("teamname")}`}>
                   asdfasdf
                 </BuskingMange>
               )}

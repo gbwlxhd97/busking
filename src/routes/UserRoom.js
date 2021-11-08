@@ -78,6 +78,8 @@ class UserRoom extends React.Component {
     singer: "",
     img: "",
     title: "",
+    teamName: "",
+    roomName: "",
     click: false,
     loading: false,
     error: null,
@@ -117,19 +119,14 @@ class UserRoom extends React.Component {
     try {
       const res = await _teamServer.searchTeam(teamName);
       let {
-        data: {
-          data
-        },
+        data: { data },
       } = res;
-      console.log(data.onAirURL.split('/'))
-      const information = data.onAirURL.split('/')
-      console.log(data)
       this.setState({
-        teamInfo:data,
-        roomName: information[4] ,
-        teamName: information[5]
+        teamInfo: data,
+        teamName: data.onAirURL.split("/")[5],
+        roomName: data.onAirURL.split("/")[4],
       });
-      console.log(this.state.roomName, this.state.teamName)
+      console.log(this.state.teamName, this.state.roomName);
     } catch (error) {
       this.setState({ error: "응애" });
     } finally {
@@ -140,62 +137,22 @@ class UserRoom extends React.Component {
     this.getTeam();
   };
 
-  /*
-  searchTeam = async () => {
-    try {
-      const res = await _teamServer.searchTeam({
-        teamName: localStorage.getItem("teamname")
-      })
-      this.setState({
-        teamName: <- 줄이기
-      });
-      console.log(this.state.teamName)
-    } catch {
-      console.log("error")
-    }
-  };
-
-  let {
-        data: {
-          data
-        },
-      } = res;
-  */
- 
-
   getTeam = async () => {
     try {
-      const res = await _userRoom.getTeam({
-        roomName: this.state.roomName, 
-        teamName: this.state.teamName
+      const res = await _userRoom.getRoomInfo({
+        roomName: this.state.roomName,
+        teamName: this.state.teamName,
       });
       let { data: {data}} = res;
       this.setState({
         musicArr: data.musics 
       })
-      console.log(this.state.musicArr)
-    } catch {
-      console.log("error")
+      console.log(res)
+    } catch (error) {
+      console.log(error);
     }
   };
 
-  // getMusics = async () => {
-  //   try {
-  //     const res 
-  //   } catch {
-  //   }
-  // };
-
-
-  // getSearchTitle = async () => {
-  //   try {
-  //     const res = await _musicServer.getSearchTitle({
-  //     });
-  //     console.log(res);
-  //   } catch {
-  //     console.lof("error")
-  //   }
-  // };
 
   componentDidMount() {
     this.getTeamInfo();
@@ -207,7 +164,6 @@ class UserRoom extends React.Component {
       click: !this.state.click,
     });
   };
-
 
   render() {
     const { lyrics, singer, img, title, teamInfo, click, musicArr } = this.state;
@@ -234,8 +190,8 @@ class UserRoom extends React.Component {
                 </thead>
                 <Tbody>
                   {musicArr.map((e,index) => (
-                    <tr>
-                      <Td key={e.id}>{index+1}</Td>
+                    <tr key={e.id}>
+                      <Td>{index+1}</Td>
                       <Td>{e.title}</Td>
                       <Td>{e.singer}</Td>
                     </tr>
@@ -257,9 +213,6 @@ class UserRoom extends React.Component {
           <Lyrics lyrics={lyrics} singer={singer} img={img} title={title} />
         </Section>
 
-        <Section>
-          <Chat>채팅</Chat>
-        </Section>
       </Container>
     );
   }

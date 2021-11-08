@@ -70,6 +70,7 @@ function Login() {
         username: values.id,
         password: values.pw,
       });
+      
       const {
         data: { token, userNickname, teamName },
       } = res;
@@ -79,7 +80,6 @@ function Login() {
       localStorage.setItem("teamname", teamName);
       // history.push('/')
       window.location.href = "/";
-      
     } catch (error) {
       alert("아이디 비밀번호가 맞지않음");
       console.log(error);

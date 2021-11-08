@@ -95,6 +95,7 @@ class Reservation extends React.Component {
         data: { data },
       } = res;
       var URL = data.onAirURL.split("/");
+      console.log(URL);
       this.setState({
         roomName: URL[4],
         teamName: URL[5],
@@ -106,11 +107,12 @@ class Reservation extends React.Component {
 
   postReservateMusic = async () => {
     const { roomName, teamName } = this.state;
-    console.log(this.postArray)
+    console.log(this.postArray);
     try {
-      var res = await _userRoom.postMusic({
+      const res = await _userRoom.postMusic({
         roomName: roomName,
         teamName: teamName,
+        userNickname: localStorage.getItem("username"),
         title: this.postArray[0],
         singer: this.postArray[1],
       });
@@ -119,7 +121,7 @@ class Reservation extends React.Component {
     }
     this.postArray = [];
   };
-  
+
   handleSearch = (event) => {
     event.preventDefault();
     const { searchTerm } = this.state;
@@ -178,6 +180,9 @@ class Reservation extends React.Component {
   musicArray = [];
   postArray = [];
   render() {
+    {
+      console.log(localStorage.getItem("teamname"));
+    }
     let { songList, loading, error } = this.state;
     console.log(localStorage.getItem("teamname"))
     return (
@@ -197,7 +202,7 @@ class Reservation extends React.Component {
             {songList.length > 0 && songList && (
               <>
                 <Div>
-                  <Section title="음악리스트">
+                  <Section title="음악리스트">
                     {songList.map((song) => (
                       <div className="musicList" key={song.id}>
                         <Img src={song.profileImgURL} alt="profile"></Img>
@@ -212,7 +217,7 @@ class Reservation extends React.Component {
                                 this.postArray.push(song.title, song.singer);
                                 this.postReservateMusic();
                               } else {
-                                if(this.musicArray.length===2){alert("최대 2개까지 예약이 가능합니다.")}
+                                if(this.musicArray.length===4){alert("최대 2개까지 예약이 가능합니다.")}
                                 else{
                                 if (
                                   this.musicArray.includes(song.title) === true
@@ -224,7 +229,6 @@ class Reservation extends React.Component {
                                   this.postReservateMusic();
                                 }
                               }
-                              console.log(this.musicArray);
                             }})
                           }
                         >

@@ -7,5 +7,4 @@ const api = axios.create({
 export const _authServer = {
   loginUser: (data) =>api.post("/user/login",data), //로그인 ``
   createAccount: (data) =>api.post("/user",data), //회원가입 post Method
-  
 }
