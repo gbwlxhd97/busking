@@ -158,6 +158,7 @@ function Home() {
             </Btn>
           </>
         )}
+
         <>
           {!item && (
             <>
@@ -182,7 +183,7 @@ function Home() {
               <br />
               <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
               {!manage && (
-                <BuskingMange to={`/buskingmanage/${text}/${teamName}`}>
+                <BuskingMange to={`/buskingmanage/${text}/${localStorage.getItem("teamname")}`}>
                   asdfasdf
                 </BuskingMange>
               )}

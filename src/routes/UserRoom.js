@@ -87,7 +87,7 @@ class UserRoom extends React.Component {
 
   getSong = async () => {
     try {
-      const res = await _musicServer.getSong("이로하");
+      const res = await _musicServer.getSong("아로하");
       let {
         data: { data },
       } = res;
@@ -214,9 +214,6 @@ class UserRoom extends React.Component {
           <Lyrics lyrics={lyrics} singer={singer} img={img} title={title} />
         </Section>
 
-        <Section>
-          <Chat>채팅</Chat>
-        </Section>
       </Container>
     );
   }
