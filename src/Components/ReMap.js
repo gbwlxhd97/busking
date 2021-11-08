@@ -163,13 +163,14 @@ setBuskerMarker(map)
     },[tes1])
     return (
         <div id="myMap" style={{
-            width: '300px',
-            height: '300px',
+            width: '350px',
+            height: '350px',
             top: '50%',
             left: '50%',
             transform: 'translate(-50%, -50%)',
             position: 'absolute',
             overflow: 'hidden',
+            
     
         }}></div>
     )

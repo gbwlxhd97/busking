@@ -86,7 +86,7 @@ class UserRoom extends React.Component {
 
     roomName: "",
     teamName: "",
-    musicArr: null
+    musicArr: null,
   };
 
   getSong = async () => {
@@ -143,16 +143,17 @@ class UserRoom extends React.Component {
         roomName: this.state.roomName,
         teamName: this.state.teamName,
       });
-      let { data: {data}} = res;
+      let {
+        data: { data },
+      } = res;
       this.setState({
-        musicArr: data.musics 
-      })
-      console.log(res)
+        musicArr: data.musics,
+      });
+      console.log(res);
     } catch (error) {
       console.log(error);
     }
   };
-
 
   componentDidMount() {
     this.getTeamInfo();
@@ -166,11 +167,14 @@ class UserRoom extends React.Component {
   };
 
   render() {
-    const { lyrics, singer, img, title, teamInfo, click, musicArr } = this.state;
-  
+    const { lyrics, singer, img, title, teamInfo, click, musicArr } =
+      this.state;
+
     return (
       <Container>
-        <Section>          <Title>
+        <Section>
+          {" "}
+          <Title>
             <UserImg src={teamInfo.teamProfileImg} />
             🎵 {teamInfo.teamName} 방
           </Title>
@@ -189,9 +193,9 @@ class UserRoom extends React.Component {
                   </tr>
                 </thead>
                 <Tbody>
-                  {musicArr.map((e,index) => (
+                  {musicArr.map((e, index) => (
                     <tr key={e.id}>
-                      <Td>{index+1}</Td>
+                      <Td>{index + 1}</Td>
                       <Td>{e.title}</Td>
                       <Td>{e.singer}</Td>
                     </tr>
@@ -212,7 +216,6 @@ class UserRoom extends React.Component {
         <Section>
           <Lyrics lyrics={lyrics} singer={singer} img={img} title={title} />
         </Section>
-
       </Container>
     );
   }

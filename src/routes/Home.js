@@ -8,8 +8,7 @@ import { Link } from "react-router-dom";
 let pos2 = []; //props로 전달해줄 버스커의 현재위치값
 
 const Costainer = styled.div`
-  margin-left: 37px;
-  margin-top: 90px;
+  margin: 40px 37px 0;
 `;
 
 const StartBtn = styled.button`
@@ -20,64 +19,99 @@ const StartBtn = styled.button`
   border: none;
   background-color: #282828;
   padding: 0px;
+  display: block;
+  margin: auto;
+`
+
+const Title1 = styled.h1`
+ font-size: 35px;
+ text-align: center;
+ margin-top: 63.5px;
+`
+
+const Span1 = styled.p`
+  text-align: center;
+  font-size: 15px;
+  color: #e6e185;
 `;
 
-const Span1 = styled.span`
-  font-size: 13px;
-  color: #8ae634;
-`;
-
-const Span2 = styled.span`
-  font-size: 13px;
+const MapText1 = styled.p`
+  text-align: center;
+  font-size: 13.5px;
   color: white;
+  margin-top: 410px;
 `;
 
-const Span3 = styled.span`
+const MapText2 = styled.p`
+  text-align: center;
+  font-size: 13.5px;
+  color: white;
+  margin-top: 387px;
+`;
+
+const Span3 = styled.p`
+  text-align: center;
+  margin: 0;
   font-size: 20px;
   color: #ffc314;
 `;
 
+const DivTitle = styled.div`
+`
+
 const CraetRoom = styled(Link)`
-  color: white;
+  color: black;
   text-decoration-line: none;
 `;
 
 const BuskingMange = styled(Link)`
+  margin-left: 48px;
   color: white;
   text-decoration-line: none;
 `;
 
 const Btn = styled.button`
-  width: auto;
-  height: auto;
+  display: block;
+  margin: auto;
   padding: 7px;
-  margin-top: 5px;
   border: none;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
-  font-size: 20px;
+  font-size: 18px;
   border-radius: 5px;
-  background-color: white;
-  color: #ffc314;
-  background-color: #282828;
+  background-color: #ffc314;
   &:active {
     background-color: gray;
+    
   }
 `;
 
 const SendRoomName = styled.button`
-  margin-left: 10px;
+  height: 24px;
+  margin-left: 7px;
   border-style: none;
+  border-radius: 6px;
+  border-top: 1px solid black;
+  background-color: #ffc314;
+  &:active {
+    background-color: gray;
+    color: #ffc314;
+  }
 `;
 
 const InputRoomName = styled.input`
-  width: auto;
-  height: 20px;
-  margin-top: 10px;
+  width: 160px;
+  height: 23px;
+  margin-top: 20px;
+  margin-left: 7px;
+  padding-left: 6px;
+  border: 1px;
 `;
+///////////////////////////////////////////////////////////////////
+
 
 //let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
-const startBusKing = "⎧버스킹 방송시작하기 ⎭";
+const startBusKing = "⎧버스킹 방송시작하기⎭";
 const endBusKing = "⎧버스킹 방송종료⎭";
 let teamBoolean = Boolean; // true 면 있는거 false면 없는거
 
@@ -95,6 +129,7 @@ function Home() {
   const [item, setitem] = useState(false);
   const [manage, setmanage] = useState(false);
   const [teamName, setteamName] = useState("");
+  const [onAirURL, setOnAirURL] = useState("");
 
   const startBus = () => {
     setPos2(pos2);
@@ -144,6 +179,23 @@ function Home() {
   const useEffect = () => {
     setteamName(localStorage.getItem("teamname"));
   };
+
+  const getOnAirURL = async () => {
+    try{
+      const res = await _teamServer.searchTeam (
+        localStorage.getItem("teamname")
+      )
+      let {
+        data: { data },
+      } = res;
+      setOnAirURL(data.onAirURL)
+      console.log(onAirURL)
+    } catch {
+      console.log("ERROR")
+    }
+  }
+
+
   return (
     <>
       <ReMap pos3={pos20} />
@@ -156,21 +208,26 @@ function Home() {
                 팀 생성하러 가기
               </CraetRoom>
             </Btn>
+            <MapText1>[ 버스커들이 당신을 기다리는 장소 ]</MapText1>
+            <Title1>BUSKiNG hELPER</Title1>
           </>
         )}
         <>
-          {!item && (
+          {!item && teamBoolean && (
             <>
-              <Span3>버스킹을 하시려면 제목을 설정후에 시작하셔야합니다!</Span3>
-              <br />
-              <InputRoomName
-                placeholder="버스킹 제목을 적어주세요"
-                onChange={putRoomName}
-                value={text}
-              ></InputRoomName>
-              <SendRoomName onClick={postRoomName}>
-                버스킹 제목 설정
-              </SendRoomName>
+              <Span3>버스킹을 시작하려면<br></br>제목을 설정해야합니다!</Span3>
+              <DivTitle>
+                <InputRoomName
+                  placeholder="버스킹 제목을 적어주세요"
+                  onChange={putRoomName}
+                  value={text}
+                ></InputRoomName>
+                <SendRoomName onClick={postRoomName}>
+                  버스킹 제목 설정
+                </SendRoomName>
+              </DivTitle>
+              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+            <Title1>BUSKiNG hELPER</Title1>
             </>
           )}
           {item && (
@@ -178,18 +235,31 @@ function Home() {
               <StartBtn onClick={(startBus, startBusK)}>
                 {startBusKing}
               </StartBtn>
-              <br />
+              
               <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
               {!manage && (
                 <BuskingMange to={`/buskingmanage/${text}/${localStorage.getItem("teamname")}`}>
-                  asdfasdf
+                  ⎧BUSKiNG MANAGEMENT⎭
                 </BuskingMange>
               )}
+              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+            <Title1>BUSKiNG hELPER</Title1>
             </>
           )}
+
+
+          {localStorage.getItem("username")==="null" && (
+            <>
+              <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
+              <Title1>BUSKiNG hELPER</Title1>
+            </>
+          )}
+
+
+          
           <br />
           <br />
-          <Span2>버스커들이 당신을 기다리는 장소</Span2>
+          
         </>
       </Costainer>
       <div>
