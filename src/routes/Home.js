@@ -65,7 +65,7 @@ const CraetRoom = styled(Link)`
 `;
 
 const BuskingMange = styled(Link)`
-  margin-left: 48px;
+  margin-left: 48px;``
   color: white;
   text-decoration-line: none;
 `;
