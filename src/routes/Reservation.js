@@ -6,10 +6,10 @@ import Section from "../Components/Section";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import styled from "styled-components";
-import UserRoom from "./UserRoom";
+
 
 const Container = styled.div`
-  color:white;
+  color: white;
 `;
 const Form = styled.form`
   display: flex;
@@ -174,7 +174,7 @@ class Reservation extends React.Component {
       console.log(localStorage.getItem("teamname"));
     }
     let { songList, loading, error } = this.state;
-    console.log(localStorage.getItem("teamname"))
+    console.log(localStorage.getItem("teamname"));
     return (
       <Container>
         <Form onSubmit={this.handleSearch}>
@@ -207,19 +207,28 @@ class Reservation extends React.Component {
                                 this.postArray.push(song.title, song.singer);
                                 this.postReservateMusic();
                               } else {
-                                if(this.musicArray.length===4){alert("최대 2개까지 예약이 가능합니다.")}
-                                else{
-                                if (
-                                  this.musicArray.includes(song.title) === true
-                                ) {
-                                  alert("이미 넣으신 노래 입니다.");
+                                if (this.musicArray.length === 4) {
+                                  alert("최대 2개까지 예약이 가능합니다.");
                                 } else {
-                                  this.musicArray.push(song.title, song.singer);
-                                  this.postArray.push(song.title, song.singer);
-                                  this.postReservateMusic();
+                                  if (
+                                    this.musicArray.includes(song.title) ===
+                                    true
+                                  ) {
+                                    alert("이미 넣으신 노래 입니다.");
+                                  } else {
+                                    this.musicArray.push(
+                                      song.title,
+                                      song.singer
+                                    );
+                                    this.postArray.push(
+                                      song.title,
+                                      song.singer
+                                    );
+                                    this.postReservateMusic();
+                                  }
                                 }
                               }
-                            }})
+                            })
                           }
                         >
                           예약하기
