@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
+import QrCode from '../Components/QrCode';
 import ReMap from '../Components/ReMap';
 import { Logout } from '../Components/TokenSave';
-import LogoutHeader from "../Components/LogoutHeader"
-import LoginHeader from "../Components/LoginHeader"
 import { _teamServer } from '../service/team';
+
+
 
 let currentPos =[]; //props로 전달해줄 버스커의 현재위치값
 const startBusKing = '버스킹 방송시작하기!'
@@ -57,6 +58,7 @@ function Home() {
               <button onClick={startBus} >위치 테스트</button>
           </div>
         )}
+        <QrCode />
       </div>
     </>
   );
