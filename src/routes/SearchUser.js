@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 const Search = styled.input`
   margin-left: 37px;
-  margin-top: 20%;
+  margin-top: 30px;
   background-color: #282828;
   padding: 8px 10px;
   color: white;
@@ -25,29 +25,26 @@ const Result = styled.div`
   margin-left: 37px;
   margin-top: 25px;
   overflow: auto;
-  height: 300px;
+  height: 570px;
 `;
 
 const Img = styled.img`
   vertical-align: middle;
   width: 70px;
   height: 70px;
-  margin-right: 5px;
+  margin-right: 8px;
   border-radius: 25%;
   border: 1.5px solid #ffc314;
 `;
 
 const GoToRoom = styled.button`
-  vertical-align: middle;
-  border-style: none;
-  width: auto;
-  height: auto;
-  margin-left: 5px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  border-radius: 5px;
-  background-color: white;
+  float: right;
+  font-size: 15px;
+  padding: 5px 8px;
+  margin-top: 19.5px;
+  margin-right: 20px;
+  border-radius: 15px;
+  background-color: #ffc314;
   &:active {
     background-color: gray;
   }
@@ -77,7 +74,7 @@ const UserList = styled.li`
   margin-bottom: 25px;
   list-style: none;
   color: white;
-`;
+`
 
 class SearchUser extends React.Component {
   state = {

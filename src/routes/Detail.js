@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { _userServer } from "../service/user";
 import { Link } from "react-router-dom";
-import {_teamServer} from "../service/team"
+import { _teamServer } from "../service/team";
 const Container = styled.div`
   margin-left: 15%;
   background-color: white;
@@ -49,21 +49,37 @@ const UserImg = styled.img`
   border-radius: 50%;
 `;
 
+const Buttons = styled.div`
+  margin-right: 56.250px;
+  display: flex;
+  justify-content: space-between;
+`
+
+
 const Btn = styled.button`
-  width: auto;
-  height: auto;
-  padding: 7px;
-  margin-top: 5px;
-  margin-left: 5px;
-  border: none;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  border-radius: 5px;
-  background-color: white;
+  font-size: 14px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  background-color: #ffc314;
   &:active {
     background-color: gray;
   }
 `;
+
+const ResetBtn = styled.button`
+font-size: 14px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  background-color: #ffc314;
+  &:active {
+    background-color: gray;
+  }
+`;
+
+const Reset = styled(Link)`
+  text-decoration: none;
+  color: black;
+`
 
 const SLink = styled(Link)`
   color: black;
@@ -330,7 +346,11 @@ export default class extends React.Component {
             <Span>{gender}</Span>
           </Details>
 
-          {btnClick === true ? (
+          
+        </DetailSectionList>
+
+        <Buttons>
+        {btnClick === true ? (
             <>
               <Btn onClick={this.onClick}>정보 수정</Btn>
               {teamBoolean && (
@@ -346,7 +366,15 @@ export default class extends React.Component {
               수정 완료
             </Btn>
           )}
-        </DetailSectionList>
+          {localStorage.getItem("teamname") !== "null" && (
+          <ResetBtn>
+            <Reset to={`/creatteam/${localStorage.getItem("username")}`}>
+              팀이름변경
+            </Reset>
+          </ResetBtn>
+        )}
+        </Buttons>
+        
       </Container>
     );
   }

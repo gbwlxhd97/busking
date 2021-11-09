@@ -6,11 +6,22 @@ import Section from "../Components/Section";
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import styled from "styled-components";
-import UserRoom from "./UserRoom";
+
 
 const Container = styled.div`
+  margin: 8px;
+  font-size: 17px;
   color: white;
 `;
+
+const Musics = styled.div`
+  margin-top: 15px;
+`
+
+const Music = styled.div`
+  margin: 10px 0;
+`
+
 const Form = styled.form`
   display: flex;
   justify-content: center;
@@ -18,7 +29,7 @@ const Form = styled.form`
   width: 100%;
 `;
 const Input = styled.input`
-  padding: 0 5px;
+  padding: 0 6px;
   border-radius: 7px;
   width: 60%;
 `;
@@ -37,10 +48,11 @@ const Div = styled.div`
 `;
 const ReserveBtn = styled.button`
   float: right;
-  margin-top: 12px;
+  margin-top: 30px;
   padding: 3px 5px;
   border-radius: 10px;
   background-color: white;
+  background-color: #ffc314;
   &:hover {
     background-color: black;
     color: white;
@@ -48,8 +60,9 @@ const ReserveBtn = styled.button`
 `;
 const Img = styled.img`
   vertical-align: middle;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
+  margin-right: 10px;
 `;
 
 const PostBtn = styled.button`
@@ -166,16 +179,7 @@ class Reservation extends React.Component {
       searchTerm: value,
     });
   };
-
-  MusicList = (musicInfo) => {
-    console.log(musicInfo[0], musicInfo[1]);
-    return (
-      <div>
-        {musicInfo[0]}-{musicInfo[1]}
-      </div>
-    );
-  };
-
+  
   musicArray = [];
   postArray = [];
   render() {
@@ -202,11 +206,11 @@ class Reservation extends React.Component {
               <>
                 <Div>
                   <Section title="음악리스트">
+                    <Musics>
                     {songList.map((song) => (
-                      <div className="musicList" key={song.id}>
+                      <Music className="musicList" key={song.id}>
                         <Img src={song.profileImgURL} alt="profile"></Img>
-                        <span id="title">{song.title}</span>-
-                        <span id="singer">{song.singer}</span>
+                        <span id="title">{song.title}</span> - <span id="singer">{song.singer}</span>
                         <ReserveBtn
                           onClick={
                             (this.reservationBtn,
@@ -242,8 +246,9 @@ class Reservation extends React.Component {
                         >
                           예약하기
                         </ReserveBtn>
-                      </div>
+                      </Music>
                     ))}
+                    </Musics>
                   </Section>
                 </Div>
               </>

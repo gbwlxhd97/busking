@@ -21,13 +21,13 @@ const StartBtn = styled.button`
   padding: 0px;
   display: block;
   margin: auto;
-`
+`;
 
 const Title1 = styled.h1`
- font-size: 35px;
- text-align: center;
- margin-top: 63.5px;
-`
+  font-size: 35px;
+  text-align: center;
+  margin-top: 63.5px;
+`;
 
 const Span1 = styled.p`
   text-align: center;
@@ -49,6 +49,20 @@ const MapText2 = styled.p`
   margin-top: 387px;
 `;
 
+const MapText3 = styled.p`
+  text-align: center;
+  font-size: 13.5px;
+  color: white;
+  margin-top: 385px;
+`;
+
+const MapText4 = styled.p`
+  text-align: center;
+  font-size: 13.5px;
+  color: white;
+  margin-top: 432px;
+`;
+
 const Span3 = styled.p`
   text-align: center;
   margin: 0;
@@ -56,8 +70,7 @@ const Span3 = styled.p`
   color: #ffc314;
 `;
 
-const DivTitle = styled.div`
-`
+const DivTitle = styled.div``;
 
 const CraetRoom = styled(Link)`
   color: black;
@@ -65,7 +78,11 @@ const CraetRoom = styled(Link)`
 `;
 
 const BuskingMange = styled(Link)`
-  margin-left: 48px;
+  color: white;
+  text-decoration-line: none;
+`;
+const BuskingMange2 = styled(Link)`
+  margin-left: 47px;
   color: white;
   text-decoration-line: none;
 `;
@@ -82,7 +99,6 @@ const Btn = styled.button`
   background-color: #ffc314;
   &:active {
     background-color: gray;
-    
   }
 `;
 
@@ -109,7 +125,6 @@ const InputRoomName = styled.input`
 `;
 ///////////////////////////////////////////////////////////////////
 
-
 //let pos2 =[]; //props로 전달해줄 버스커의 현재위치값
 const startBusKing = "⎧버스킹 방송시작하기⎭";
 const endBusKing = "⎧버스킹 방송종료⎭";
@@ -128,7 +143,7 @@ function Home() {
   const [text, setText] = useState("");
   const [item, setitem] = useState(false);
   const [manage, setmanage] = useState(false);
-  const [teamName, setteamName] = useState("");
+  const [userName, setUserName] = useState("");
   const [onAirURL, setOnAirURL] = useState("");
   const [teamName, setTeamName] = useState("");
 
@@ -150,17 +165,11 @@ function Home() {
     }
   };
 
-  const haveTeam = () => {
-    if (localStorage.getItem("teamname") === "null") {
-      teamBoolean = false;
-    } else {
-      teamBoolean = true;
-    }
-  };
+
   const putRoomName = (e) => {
     setText(e.target.value);
   };
-  //"roomName":"1번방(필수)", "teamName":"1번팀(필수)"
+
   const postRoomName = async () => {
     if (text.length === 0) {
       alert("제목을 기입해주세요");
@@ -173,41 +182,35 @@ function Home() {
       } catch (error) {
         console.log(error);
       }
-      setitem(!item);
+      setitem(true);
     }
   };
-  haveTeam();
-  const useEffect = () => {
-    setteamName(localStorage.getItem("teamname"));
-  };
-
   const getOnAirURL = async () => {
-    try{
-      const res = await _teamServer.searchTeam (
+    try {
+      const res = await _teamServer.searchTeam(
         localStorage.getItem("teamname")
-      )
-      let {
-        data: { data },
+      );
+      const {
+        data: {
+          data: { onAirURL },
+        },
       } = res;
-      setOnAirURL(data.onAirURL)
-      console.log(onAirURL)
-    } catch {
-      console.log("ERROR")
+      setOnAirURL(onAirURL);
+    } catch (error) {
+      console.log(error);
     }
-  }
-
-  
+  };
   useEffect(() => {
-     setTeamName(String(localStorage.getItem("username")));
-     console.log(1,teamName);
-   }, []);
-
-
+    setUserName(String(localStorage.getItem("username")));
+    if (userName !== "null") {
+      getOnAirURL();
+    }
+  }, []);
   return (
     <>
       <ReMap pos3={pos20} />
       <Costainer>
-        {!teamBoolean && (
+        {userName != "null" && localStorage.getItem("teamname") == "null" && (
           <>
             <Span1>팀을 생성해야 버스킹을 시작할 수 있습니다.</Span1>
             <Btn>
@@ -219,60 +222,61 @@ function Home() {
             <Title1>BUSKiNG hELPER</Title1>
           </>
         )}
-        <>
-          {!item && teamBoolean && (
-            <>
-              <Span3>버스킹을 시작하려면<br></br>제목을 설정해야합니다!</Span3>
-              <DivTitle>
-                <InputRoomName
-                  placeholder="버스킹 제목을 적어주세요"
-                  onChange={putRoomName}
-                  value={text}
-                ></InputRoomName>
-                <SendRoomName onClick={postRoomName}>
+
+        {userName != "null" && localStorage.getItem("teamname") !== "null" && onAirURL == null && (
+          <>
+            <Span3>
+              버스킹을 시작하려면<br></br>제목을 설정해야합니다!
+            </Span3>
+            <DivTitle>
+              <InputRoomName
+                placeholder="버스킹 제목을 적어주세요"
+                onChange={putRoomName}
+                value={text}
+              ></InputRoomName>
+              <SendRoomName onClick={postRoomName}>
+                <BuskingMange
+                  to={`/buskingmanage/${text}/${localStorage.getItem(
+                    "teamname"
+                  )}`}
+                >
                   버스킹 제목 설정
-                </SendRoomName>
-              </DivTitle>
-              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
-            <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
-          {item && (
-            <>
-              <StartBtn onClick={(startBus, startBusK)}>
-                {startBusKing}
-              </StartBtn>
-              
-              <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
-              {!manage && (
-                <BuskingMange to={`/buskingmanage/${text}/${localStorage.getItem("teamname")}`}>
-                  ⎧BUSKiNG MANAGEMENT⎭
                 </BuskingMange>
-              )}
-              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+              </SendRoomName>
+            </DivTitle>
+            <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
             <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
+          </>
+        )}
 
+        {userName != "null" && localStorage.getItem("teamname") !== "null" && onAirURL != null && (
+          <>
+            {!item&& setitem(true)}
+            <StartBtn onClick={(startBus, startBusK)}>{startBusKing}</StartBtn>
+            <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
+            <BuskingMange2
+              to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
+                localStorage.getItem("teamname")
+              )}`}
+            >
+              ⎧BUSKiNG MANAGEMENT⎭
+            </BuskingMange2>
+            <MapText3>[ 버스커들이 당신을 기다리는 장소 ]</MapText3>
+            <Title1>BUSKiNG hELPER</Title1>
+          </>
+        )}
 
-          {localStorage.getItem("username")==="null" && (
-            <>
-            {teamName === "null" && <Span2>로그인 안되었을때 화면</Span2>}
-              <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
-              <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
+        {userName == "null" && (
+          <>
+            <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
+            <MapText4>[ 버스커들이 당신을 기다리는 장소 ]</MapText4>
+            <Title1>BUSKiNG hELPER</Title1>
+          </>
+        )}
 
-
-          
-          <br />
-          <br />
-          
-        </>
+        <br />
+        <br />
       </Costainer>
-      <div>
-        <ReMap pos3={pos20} />
-      </div>
     </>
   );
 }

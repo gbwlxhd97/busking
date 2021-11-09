@@ -6,18 +6,31 @@ import { _teamServer } from "../service/team";
 import { Link } from "react-router-dom";
 
 const TeamInput = styled.input`
-  width: auto;
+  padding: 4px 8px;
+  width: 200px;
   height: 20px;
+  display: block;
+  margin: auto;
   margin-top: 50px;
-  margin-left: 100px;
 `;
 
 const MemberInput = styled.input`
-  width: auto;
+  padding: 4px 6px;
+  width: 148px;
   height: 20px;
   margin-top: 50px;
-  margin-left: 100px;
+  margin-left: 77.5px;
+  margin-bottom: 20px;
 `;
+
+const SearchBtn = styled.button`
+  font-size: 15px;
+  padding: 4px 8px;
+  margin-left: 6px;
+  border-radius: 15px;
+  background-color: #ffc314;
+`
+
 const Container = styled.div`
   color: white;
 `;
@@ -28,23 +41,52 @@ const RadioBox = styled.input`
 `;
 
 const SendBtn = styled.button`
-  margin-left: 100px;
-  margin-top: 20px;
+  font-size: 18px;
+  padding: 6px 10px;
+  border-radius: 15px;
+  background-color: #ffc314;
+  display: block;
+  margin: auto;
+  margin-top: 50px;
 `;
 
 const GoToHome = styled(Link)`
-  margin-left: 100px;
-  margin-top: 20px;
   text-decoration: none;
-  color: white;
+  font-size: 20px;
+  color: #ffc314;
 `;
+
+const Home = styled.div`
+  margin-top: 50px;
+  margin-left: 136.5px;
+`
 
 const Img = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 65px;
+  height: 65px;
+  vertical-align: middle;
 `;
 
-const Span = styled.span``;
+const Search = styled.div`
+  margin: auto;
+  width: 20px;
+`
+const Span = styled.span`
+  font-size: 15px;
+  margin-left: 10px;
+`;
+
+const AddBtn = styled.button`
+  font-size: 15px;
+  padding: 4px 8px;
+  margin-left: 6px;
+  border-radius: 15px;
+  background-color: #ffc314;
+  margin-top: 16.5px;
+  float: right;
+`
+
+
 export default class extends React.Component {
   state = {
     teamName: "",
@@ -84,7 +126,7 @@ export default class extends React.Component {
       if (localStorage.getItem("teamname") === "null") {
         if (basicResult === "Team" && basicResult.length !== 0) {
           try {
-            console.log("Team")
+            console.log("Team");
             const res = await _teamServer.postTeam({
               teamName: teamName,
               leaderName: localStorage.getItem("username"),
@@ -93,11 +135,12 @@ export default class extends React.Component {
             this.setState({
               complete: true,
             });
+            localStorage.setItem("teamname", teamName);
           } catch (error) {
             console.log(error);
           }
         } else if (basicResult === "Solo") {
-          console.log("solo")
+          console.log("solo");
           try {
             const res = await _teamServer.postTeam({
               teamName: teamName,
@@ -106,6 +149,7 @@ export default class extends React.Component {
             this.setState({
               complete: true,
             });
+            localStorage.setItem("teamname", teamName);
           } catch (error) {
             console.log(error);
           }
@@ -115,12 +159,13 @@ export default class extends React.Component {
           console.log("put");
           const res = await _teamServer.putTeam({
             oldTeamName: localStorage.getItem("teamname"),
-            newTeamName: teamName,
+            teamName: teamName,
             leaderName: localStorage.getItem("username"),
           });
           this.setState({
             complete: true,
           });
+          localStorage.setItem("teamname", teamName);
         } catch (error) {
           console.log(error);
         }
@@ -140,7 +185,7 @@ export default class extends React.Component {
           data: { data },
         } = res;
         this.setState({
-          memberInfo: data.userDetail,
+          memberInfo: data,
           search: true,
         });
       } catch (error) {
@@ -194,18 +239,18 @@ export default class extends React.Component {
         {basicResult === "Team" && (
           <>
             <MemberInput onChange={this.searchTerm} placeholder="팀원 검색" />
-            <button onClick={this.searchResult}>검색</button>
+            <SearchBtn onClick={this.searchResult}>검색</SearchBtn>
             {search && (
-              <>
-                {/* <Img src={memberInfo.profileImgURL} />  */}
+              <Search>
+                <Img src={memberInfo.userDetail.profileImgURL} />
                 <Span>{memberInfo.nickname}</Span>
-                <button onClick={this.addTeam}>추가</button>
-              </>
+                <AddBtn onClick={this.addTeam}>추가</AddBtn>
+              </Search>
             )}
           </>
         )}
         {!complete && <SendBtn onClick={this.postInfo}>send</SendBtn>}
-        {complete && <GoToHome to="/">홈으로가기</GoToHome>}
+        <Home>{complete && <GoToHome to="/">홈으로가기</GoToHome>}</Home>
         {memberInfo.length === 0 && <Message text={error} />}
       </Container>
     );
