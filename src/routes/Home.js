@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { _teamServer } from "../service/team";
 import { _userRoom } from "../service/room";
 import { Link } from "react-router-dom";
+import QrCode from "../Components/QrCode";
 
 let pos2 = []; //props로 전달해줄 버스커의 현재위치값
 
@@ -82,6 +83,7 @@ const endBusKing = "⎧버스킹 방송종료⎭";
 let teamBoolean = Boolean; // true 면 있는거 false면 없는거
 
 function Home() {
+  
   navigator.geolocation.getCurrentPosition((position) => {
     let pos = [];
     let lat = position.coords.latitude;
@@ -149,6 +151,7 @@ function Home() {
     <>
       <ReMap pos3={pos20} />
       <Costainer>
+        
         {!teamBoolean && (
           <>
             <Span1>팀을 생성해야 버스킹을 시작할 수 있습니다.</Span1>
@@ -199,9 +202,11 @@ function Home() {
       </Costainer>
       <div>
         <ReMap pos3={pos20} />
+        <QrCode/>
       </div>
     </>
   );
 }
+
 
 export default Home;
