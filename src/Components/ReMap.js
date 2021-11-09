@@ -147,7 +147,7 @@ function createBuskerData() {
             content: `<div style="font-size: 12px;">${tes1[i].introduce}</div>` , // 인포윈도우에 표시할 내용 
             removable : iwRemoveable,
         });
-        let markerImage = createMarkerImage(tes1[i].profileImgURL ? tes1[i].profileImgURL : require("../assets/logo192.png").default, imageSize, imageOptions)    
+        let markerImage = createMarkerImage(tes1[i].profileImgURL ? tes1[i].profileImgURL : require("../assets/outline_account_circle_black_24dp.png").default, imageSize, imageOptions)    
         let data = createMarker(buskerPositions[i].latlng, markerImage,infowindow);
             buskerDataBox.push(data)
         }

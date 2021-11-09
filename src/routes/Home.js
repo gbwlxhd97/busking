@@ -130,7 +130,6 @@ function Home() {
 
   const startBus = () => {
     setPos2(pos2);
-    setmanage(!manage);
     console.log(pos20);
   };
 
@@ -234,7 +233,8 @@ function Home() {
           {(item || onAirURL !== null) && { userName } !== null && (
             <>
               <StartBtn onClick={(startBus, startBusK)}>
-                {startBusKing}
+                {!manage && startBusKing} 
+                {manage && endBusKing}
               </StartBtn>
 
               <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
@@ -262,10 +262,6 @@ function Home() {
           <br />
         </>
       </Costainer>
-
-      <div>
-        <ReMap pos3={pos20} />
-      </div>
     </>
   );
 }
