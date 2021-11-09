@@ -130,6 +130,7 @@ function Home() {
   const [manage, setmanage] = useState(false);
   const [teamName, setteamName] = useState("");
   const [onAirURL, setOnAirURL] = useState("");
+  const [teamName, setTeamName] = useState("");
 
   const startBus = () => {
     setPos2(pos2);
@@ -195,6 +196,12 @@ function Home() {
     }
   }
 
+  
+  useEffect(() => {
+     setTeamName(String(localStorage.getItem("username")));
+     console.log(1,teamName);
+   }, []);
+
 
   return (
     <>
@@ -250,6 +257,7 @@ function Home() {
 
           {localStorage.getItem("username")==="null" && (
             <>
+            {teamName === "null" && <Span2>로그인 안되었을때 화면</Span2>}
               <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
               <Title1>BUSKiNG hELPER</Title1>
             </>
