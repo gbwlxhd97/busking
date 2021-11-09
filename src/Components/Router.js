@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "../routes/Home";
-import Login from "../routes/Login";
+import Login from "../routes/Login"
 import SignUp from "../routes/SignUp";
 import SearchUser from "../routes/SearchUser";
 import Reservation from "../routes/Reservation";
@@ -9,9 +9,9 @@ import Detail from "../routes/Detail";
 import LogoutHeader from "../Components/LogoutHeader";
 import LoginHeader from "../Components/LoginHeader";
 import UserRoom from "../routes/UserRoom";
-import CreatTeam from "../routes/CreatTeam";
 import BuskingMange from "../routes/BuskingManage";
 import "../routes/Home.css";
+import CreatTeam from "../routes/CreatTeam";
 
 
 export default () => (
@@ -35,3 +35,4 @@ export default () => (
     </>
   </Router>
 );
+

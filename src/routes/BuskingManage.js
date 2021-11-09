@@ -91,8 +91,8 @@ class BuskingMange extends React.Component {
     console.log(roomName, teamName);
     try {
       await _userRoom.deleteRoom({
-        roomName: "1번팀의 방",
-        teamName: "1번팀",
+        roomName: roomName,
+        teamName: teamName,
       });
     } catch (error) {
       console.log(error);
@@ -114,6 +114,7 @@ class BuskingMange extends React.Component {
               img={song.profileImgURL}
               title={song.title}
             />
+
             <button
               onClick={async () => {
                 const {
@@ -136,9 +137,12 @@ class BuskingMange extends React.Component {
             >
               예약곡 삭제
             </button>
+            <hr></hr>
           </div>
         ))}
-        <Btn onClick={this.turnOff}>방송끄기</Btn>
+        <Btn onClick={this.turnOff}>
+          <Link to="/">방송끄기</Link>
+        </Btn>
       </Container>
     );
   }

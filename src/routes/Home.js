@@ -94,8 +94,8 @@ function Home() {
   const [text, setText] = useState("");
   const [item, setitem] = useState(false);
   const [manage, setmanage] = useState(false);
-  const [teamName, setteamName] = useState("");
-
+  const [userName, setUserName] = useState("");
+  const [onAirURL, setOnAirURL] = useState("");
   const startBus = () => {
     setPos2(pos2);
     setmanage(!manage);
@@ -142,9 +142,27 @@ function Home() {
     }
   };
   haveTeam();
-  const useEffect = () => {
-    setteamName(localStorage.getItem("teamname"));
+  const getOnAirURL = async () => {
+    try {
+      const res = await _teamServer.searchTeam(
+        localStorage.getItem("teamname")
+      );
+      const {
+        data: {
+          data: { onAirURL },
+        },
+      } = res;
+      setOnAirURL(onAirURL);
+    } catch (error) {
+      console.log(error);
+    }
   };
+  useEffect(() => {
+    setUserName(String(localStorage.getItem("username")));
+    if (userName !== "null") {
+      getOnAirURL();
+    }
+  }, []);
   return (
     <>
       <ReMap pos3={pos20} />
@@ -160,7 +178,7 @@ function Home() {
           </>
         )}
         <>
-          {!item && teamBoolean && (
+          {!item && teamBoolean && onAirURL === null && (
             <>
               <Span3>버스킹을 하시려면 제목을 설정후에 시작하셔야합니다!</Span3>
               <br />
@@ -174,7 +192,7 @@ function Home() {
               </SendRoomName>
             </>
           )}
-          {item && (
+          {userName !== "null" && onAirURL !== null && (
             <>
               <StartBtn onClick={(startBus, startBusK)}>
                 {startBusKing}
@@ -187,16 +205,18 @@ function Home() {
                     "teamname"
                   )}`}
                 >
-                  asdfasdf
+                  BUSKING MANGEMENT
                 </BuskingMange>
               )}
             </>
           )}
-          <br />
-          <br />
+
+          {userName === "null" && <Span2>로그인 안되었을때 화면</Span2>}
+          <br/>
           <Span2>버스커들이 당신을 기다리는 장소</Span2>
         </>
       </Costainer>
+      
       <div>
         <ReMap pos3={pos20} />
       </div>

@@ -201,7 +201,7 @@ export default class extends React.Component {
             <button onClick={this.searchResult}>검색</button>
             {search && (
               <>
-                <Img src={memberInfo.profileImgURL} />
+                {/* <Img src={memberInfo.profileImgURL} />  */}
                 <Span>{memberInfo.nickname}</Span>
                 <button onClick={this.addTeam}>추가</button>
               </>

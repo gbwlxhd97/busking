@@ -22,5 +22,5 @@ export const server = {
     params: {
       query: encodeURIComponent(nickname)
     }
-  })
+  }),
 }

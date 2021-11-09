@@ -9,9 +9,8 @@ import styled from "styled-components";
 import UserRoom from "./UserRoom";
 
 const Container = styled.div`
-  color: white;
+  color:white;
 `;
-
 const Form = styled.form`
   display: flex;
   justify-content: center;
@@ -47,7 +46,6 @@ const ReserveBtn = styled.button`
     color: white;
   }
 `;
-
 const Img = styled.img`
   vertical-align: middle;
   width: 100px;
@@ -74,6 +72,11 @@ class Reservation extends React.Component {
     loading: false,
     songList: [],
     error: null,
+
+    title: "",
+    singer: "",
+    profileImgURL: "",
+    lyrics: "",
   };
 
   componentDidMount() {
@@ -163,22 +166,7 @@ class Reservation extends React.Component {
       searchTerm: value,
     });
   };
-
-  MusicList = (musicInfo) => {
-    console.log(musicInfo[0], musicInfo[1]);
-    return (
-      <div>
-        {musicInfo[0]}-{musicInfo[1]}
-      </div>
-    );
-  };
-
-  reservationBtn = () => {
-    localStorage.getItem("username")
-      ? console.log("예약 성공")
-      : alert("이용할 수 없는 사용자입니다.");
-  };
-
+  
   musicArray = [];
   postArray = [];
   render() {
@@ -186,6 +174,7 @@ class Reservation extends React.Component {
       console.log(localStorage.getItem("teamname"));
     }
     let { songList, loading, error } = this.state;
+    console.log(localStorage.getItem("teamname"))
     return (
       <Container>
         <Form onSubmit={this.handleSearch}>
@@ -218,6 +207,8 @@ class Reservation extends React.Component {
                                 this.postArray.push(song.title, song.singer);
                                 this.postReservateMusic();
                               } else {
+                                if(this.musicArray.length===4){alert("최대 2개까지 예약이 가능합니다.")}
+                                else{
                                 if (
                                   this.musicArray.includes(song.title) === true
                                 ) {
@@ -228,7 +219,7 @@ class Reservation extends React.Component {
                                   this.postReservateMusic();
                                 }
                               }
-                            })
+                            }})
                           }
                         >
                           예약하기

@@ -11,5 +11,5 @@ export const _musicServer = {
       query: encodeURIComponent(keyword)
     }
   }),
-  
+  getSearchTitle: (title) => api.get(`/music/title/${title}`)
 }

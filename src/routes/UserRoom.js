@@ -41,68 +41,57 @@ const Btn = styled.button`
   font-size: 16px;
 `;
 
-const Chat = styled.div``;
-
 const Section = styled.div``;
 
-const Th = styled.th`
-  border-bottom: 1px solid grey;
-  background-color: #828282;
-`;
-const Tbody = styled.tbody`
-  border-bottom: 1px solid grey;
-  font-size: 14px;
-  color: #ffc314;
-  & tr:nth-child(2n) {
-    background-color: #c8c8c840;
-  }
-  & tr:nth-child(2n + 1) {
-    background-color: #64646440;
-  }
+const MusicList = styled.div`
+  max-width: 1200px;
+  max-height: 0px;
+  margin: 0 auto;
+  overflow: hidden;
 `;
 
-const Td = styled.td`
-  padding: 20px;
-  width: max-content;
+const Ul = styled.ul`
+  white-space: nowrap;
 `;
 
-const Table = styled.table`
-  border: 1px solid #444444;
-  border-collapse: collapse;
+const Li = styled.li`
+  margin-left: 20px;
+  list-style: none;
+  float: left;
 `;
 
 class UserRoom extends React.Component {
   state = {
     teamInfo: {},
-    lyrics: "",
-    singer: "",
-    img: "",
-    title: "",
+    musicsInfo: [],
     teamName: "",
     roomName: "",
     click: false,
     loading: false,
     error: null,
+    roomName: "",
+    teamName: "",
+    musicArr: null,
   };
 
   getSong = async () => {
-    try {
-      const res = await _musicServer.getSong("아로하");
-      let {
-        data: { data },
-      } = res;
-      this.setState({
-        lyrics: data.lyrics,
-        singer: data.singer,
-        img: data.profileImgURL,
-        title: data.title,
-      });
-    } catch (error) {
-      this.setState({ error: "응애" });
-    } finally {
-      this.setState({
-        loading: false,
-      });
+    const { musicArr } = this.state;
+    for (let i = 0; i < musicArr.length; i++) {
+      try {
+        const res = await _musicServer.getSong(musicArr[i].title);
+        let {
+          data: { data },
+        } = res;
+        this.setState({
+          musicsInfo: this.state.musicsInfo.concat(data),
+        });
+      } catch (error) {
+        this.setState({ error: "응애" });
+      } finally {
+        this.setState({
+          loading: false,
+        });
+      }
     }
   };
 
@@ -139,15 +128,21 @@ class UserRoom extends React.Component {
         roomName: this.state.roomName,
         teamName: this.state.teamName,
       });
-      console.log(res)
+      let {
+        data: { data },
+      } = res;
+      this.setState({
+        musicArr: data.musics,
+      });
+      console.log(this.state.musicArr);
     } catch (error) {
       console.log(error);
     }
+    this.getSong();
   };
 
   componentDidMount() {
     this.getTeamInfo();
-    this.getSong();
   }
 
   openTable = () => {
@@ -157,7 +152,8 @@ class UserRoom extends React.Component {
   };
 
   render() {
-    const { lyrics, singer, img, title, teamInfo, click } = this.state;
+    const { musicsInfo, teamInfo, click, musicArr } = this.state;
+
     return (
       <Container>
         <Section>
@@ -169,39 +165,21 @@ class UserRoom extends React.Component {
 
         <Section>
           <Reservation>
-            <Btn onClick={this.openTable}>⎧예약 노래 보기 ᐳ</Btn>
-            {click ? (
-              <Table>
-                <thead>
-                  <tr>
-                    <Th>No.</Th>
-                    <Th>Singer</Th>
-                    <Th>Music</Th>
-                  </tr>
-                </thead>
-                <Tbody>
-                  <tr>
-                    <Td>1</Td>
-                    <Td>이무진</Td>
-                    <Td>신호등</Td>
-                  </tr>
-
-                  <tr>
-                    <Td>2</Td>
-                    <Td>이무진</Td>
-                    <Td>신호등</Td>
-                  </tr>
-
-                  <tr>
-                    <Td>3</Td>
-                    <Td>이무진</Td>
-                    <Td>신호등</Td>
-                  </tr>
-                </Tbody>
-              </Table>
-            ) : (
-              <div></div>
-            )}
+            <Btn onClick={this.openTable}>⎧예약된 노래</Btn>
+            <MusicList>
+              <Ul>
+                {musicsInfo.map((e, index) => (
+                  <Li key={index}>
+                    <Lyrics
+                      lyrics={e.lyrics}
+                      singer={e.singer}
+                      img={e.profileImgURL}
+                      title={e.title}
+                    />
+                  </Li>
+                ))}
+              </Ul>
+            </MusicList>
             <Btn>
               <RLink to={`/reservation/${teamInfo.teamName}`}>
                 ⎧노래 예약하러가기 ᐳ
@@ -210,10 +188,7 @@ class UserRoom extends React.Component {
           </Reservation>
         </Section>
 
-        <Section>
-          <Lyrics lyrics={lyrics} singer={singer} img={img} title={title} />
-        </Section>
-
+        <Section></Section>
       </Container>
     );
   }
