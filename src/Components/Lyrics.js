@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 
 const Container = styled.div`
   margin-top: 10px;
-  
 `;
 const NowLyrics = styled.div`
   overflow: auto;
@@ -15,10 +14,11 @@ const NowLyrics = styled.div`
 `;
 const NowImg = styled.img`
   vertical-align: middle;
-  height: 50px;
-  width: 50px;
+  height: 150px;
+  width: 150px;
 `;
 const MusicInfo = styled.div`
+  margin-left: 113px;
   display: inline-block;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -35,25 +35,23 @@ function Lyrics({ lyrics, singer, img, title }) {
     setOpen(!open);
   };
 
-  return(
+  return (
     <Container>
       <br />
       <MusicInfo>
         <NowImg src={img} />
+        <br />
         <span>
           {singer}-{title}
         </span>
       </MusicInfo>
       <br />
       <Span>가사:</Span>
-      <button onClick={openLyrics}>가사 펼쳐보기</button>
-      {open && (
-        <NowLyrics>
-          {lyrics.split("~").map((word, index) => (
-            <div key={index}>{word}</div>
-          ))}
-        </NowLyrics>
-      )}
+      <NowLyrics>
+        {lyrics.split("~").map((word, index) => (
+          <div key={index}>{word}</div>
+        ))}
+      </NowLyrics>
     </Container>
   );
 }

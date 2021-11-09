@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 const Container = styled.div`
   color: white;
+  height: 500px;
 `;
 
 //공연관리에서 필요한것들
@@ -19,14 +20,21 @@ const Container = styled.div`
     노래 가사[]
 */
 
-const Btn = styled.button``;
+const Btn = styled.button`
+  margin-top: 10px;
+  margin-left: 10px;
+`;
 
+const DeleteBtn = styled.button`
+  margin-top: 10px;
+  margin-left: 200px;
+`;
 class BuskingMange extends React.Component {
   state = {
     musics: [],
     musicsInfo: [],
     lyrics: false,
-    data: {}
+    data: {},
   };
 
   setMusics = async () => {
@@ -101,49 +109,53 @@ class BuskingMange extends React.Component {
   };
 
   render() {
-    const { musicsInfo, musics ,deleteReservation} = this.state;
-    // console.log(this.props)
+    const { musicsInfo, musics } = this.state;
+
     return (
       <Container>
         {musicsInfo.map((song, index) => (
           <div key={song.id}>
+            {index === 0 && (
+              <>
+                <div>노래 신청자: {musics[0].userNickname}</div>
+                <Lyrics
+                  lyrics={musicsInfo[0].lyrics}
+                  singer={musicsInfo[0].singer}
+                  img={musicsInfo[0].profileImgURL}
+                  title={musicsInfo[0].title}
+                />
+                <Btn onClick={this.turnOff}>
+                  <Link to="/">방송끄기</Link>
+                </Btn>
+                <DeleteBtn
+                  onClick={async () => {
+                    const {
+                      match: {
+                        params: { roomName, teamName },
+                      },
+                    } = this.props;
+                    try {
+                      const res = await _userRoom.deleteMusic({
+                        roomName: roomName,
+                        teamName: teamName,
+                        userNickname: musics[index].userNickname,
+                        title: song.title,
+                        singer: song.singer,
+                      });
+                    } catch (error) {
+                      console.log(error);
+                    }
+                  }}
+                >
+                  예약곡 삭제
+                </DeleteBtn>
+              </>
+            )}
             <div>노래 신청자: {musics[index].userNickname}</div>
-            <Lyrics
-              lyrics={song.lyrics}
-              singer={song.singer}
-              img={song.profileImgURL}
-              title={song.title}
-            />
-
-            <button
-              onClick={async () => {
-                const {
-                  match: {
-                    params: { roomName, teamName },
-                  },
-                } = this.props;
-                try {
-                  const res = await _userRoom.deleteMusic({
-                    roomName: roomName,
-                    teamName: teamName,
-                    userNickname: musics[index].userNickname,
-                    title: song.title,
-                    singer: song.singer,
-                  });
-
-                } catch (error) {
-                  console.log(error);
-                }
-              }}
-            >
-              예약곡 삭제
-            </button>
-            <hr></hr>
+            <div>{song.title}</div>
+            <div>{song.singer}</div>
           </div>
         ))}
-        <Btn onClick={this.turnOff}>
-          <Link to="/">방송끄기</Link>
-        </Btn>
       </Container>
     );
   }
