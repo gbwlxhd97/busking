@@ -4,7 +4,7 @@ import { _userRoom } from "../service/room";
 import { _musicServer } from "../service/music";
 import Lyrics from "../Components/Lyrics";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 const Container = styled.div`
   color: white;
 `;
@@ -26,6 +26,7 @@ class BuskingMange extends React.Component {
     musics: [],
     musicsInfo: [],
     lyrics: false,
+    data: {},
   };
 
   setMusics = async () => {
@@ -45,9 +46,15 @@ class BuskingMange extends React.Component {
           data: { musics },
         },
       } = res;
+      const {
+        data: { data },
+      } = res;
+
       this.setState({
         musics,
+        data,
       });
+      console.log(this.state.data);
     } catch (error) {
       console.log(error);
     }
@@ -69,20 +76,33 @@ class BuskingMange extends React.Component {
         this.setState({
           musicsInfo: this.state.musicsInfo.concat(data),
         });
-        console.log(this.state.musicsInfo);
       } catch (error) {
         console.log(error);
       }
     }
   };
 
-  turnOff = () => {
-    console.log("응애");
+  turnOff = async () => {
+    const {
+      match: {
+        params: { roomName, teamName },
+      },
+    } = this.props;
+    console.log(roomName, teamName);
+    try {
+      await _userRoom.deleteRoom({
+        roomName: "1번팀의 방",
+        teamName: "1번팀",
+      });
+    } catch (error) {
+      console.log(error);
+      console.log("어디서 캐치 되나");
+    }
   };
 
   render() {
     const { musicsInfo, musics } = this.state;
-    console.log(musicsInfo);
+    // console.log(this.props)
     return (
       <Container>
         {musicsInfo.map((song, index) => (
@@ -94,6 +114,28 @@ class BuskingMange extends React.Component {
               img={song.profileImgURL}
               title={song.title}
             />
+            <button
+              onClick={async () => {
+                const {
+                  match: {
+                    params: { roomName, teamName },
+                  },
+                } = this.props;
+                try {
+                  const res = await _userRoom.deleteMusic({
+                    roomName: roomName,
+                    teamName: teamName,
+                    userNickname: musics[index].userNickname,
+                    title: song.title,
+                    singer: song.singer,
+                  });
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              예약곡 삭제
+            </button>
           </div>
         ))}
         <Btn onClick={this.turnOff}>방송끄기</Btn>

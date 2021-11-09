@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { _userServer } from "../service/user";
 import { Link } from "react-router-dom";
-import {_teamServer} from "../service/team"
+import { _teamServer } from "../service/team";
 const Container = styled.div`
   margin-left: 15%;
   background-color: white;
@@ -347,6 +347,13 @@ export default class extends React.Component {
             </Btn>
           )}
         </DetailSectionList>
+        {localStorage.getItem("teamname") !== "null" && (
+          <button>
+            <Link to={`/creatteam/${localStorage.getItem("username")}`}>
+              sadasdf
+            </Link>
+          </button>
+        )}
       </Container>
     );
   }
