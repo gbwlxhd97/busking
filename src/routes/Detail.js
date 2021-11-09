@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { _userServer } from "../service/user";
 import { Link } from "react-router-dom";
+import {_teamServer} from "../service/team"
 const Container = styled.div`
   margin-left: 15%;
   background-color: white;
@@ -82,6 +83,9 @@ export default class extends React.Component {
     value: "",
     duplicateCheck: false,
     change: false,
+    teamName: "",
+    roomName: "",
+    teamBoolean: false,
   };
   onClick = () => {
     this.setState({
@@ -189,6 +193,7 @@ export default class extends React.Component {
         params: { nickName },
       },
     } = this.props;
+
     try {
       const info = await _userServer.getUserDetail(nickName);
       let {
@@ -211,13 +216,50 @@ export default class extends React.Component {
         loading: false,
       });
     }
+
+    if (localStorage.getItem("teamname") !== "null") {
+      this.getRoomInfo();
+      this.setState({
+        teamBoolean: !this.state.teamBoolean,
+      });
+    }
   }
+
+  getRoomInfo = async () => {
+    try {
+      const res = await _teamServer.searchTeam(
+        localStorage.getItem("teamname")
+      );
+      let {
+        data: { data },
+      } = res;
+      this.setState({
+        teamName: data.onAirURL.split("/")[5],
+        roomName: data.onAirURL.split("/")[4],
+      });
+    } catch (error) {
+      this.setState({ error: "응애" });
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
+  };
 
   render() {
     const now = new Date(); // 현재 날짜 및 시간
     var year = now.getFullYear();
-    const { btnClick, userNickname, birthday, gender, userImgUrl, introduce } =
-      this.state;
+    const {
+      btnClick,
+      userNickname,
+      birthday,
+      gender,
+      userImgUrl,
+      introduce,
+      teamName,
+      roomName,
+      teamBoolean,
+    } = this.state;
     return (
       <Container>
         <ImgSection>
@@ -291,9 +333,13 @@ export default class extends React.Component {
           {btnClick === true ? (
             <>
               <Btn onClick={this.onClick}>정보 수정</Btn>
-              <Btn>
-                <SLink to={`/buskingmanage/${userNickname}`}>공연 관리</SLink>
-              </Btn>
+              {teamBoolean && (
+                <Btn>
+                  <SLink to={`/buskingmanage/${roomName}/${teamName}`}>
+                    공연 관리
+                  </SLink>
+                </Btn>
+              )}
             </>
           ) : (
             <Btn onClick={this.offClick} onClick={this.handleFix}>
