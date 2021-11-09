@@ -10,7 +10,6 @@ const NowLyrics = styled.div`
   overflow: auto;
   height: 200px;
   width: 375px;
-  padding-left: 10px;
   border-top: 2px solid #adadad;
   border-bottom: 2px solid #adadad;
 `;
@@ -38,7 +37,6 @@ function Lyrics({ lyrics, singer, img, title }) {
 
   return(
     <Container>
-      <Span>현재 노래 정보</Span>
       <br />
       <MusicInfo>
         <NowImg src={img} />

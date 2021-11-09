@@ -146,13 +146,6 @@ function Home() {
     }
   };
 
-  const haveTeam = () => {
-    if (localStorage.getItem("teamname") === "null") {
-      teamBoolean = false;
-    } else {
-      teamBoolean = true;
-    }
-  };
 
   const putRoomName = (e) => {
     setText(e.target.value);
@@ -170,10 +163,9 @@ function Home() {
       } catch (error) {
         console.log(error);
       }
-      setitem(!item);
+      setitem(true);
     }
   };
-  haveTeam();
   const getOnAirURL = async () => {
     try {
       const res = await _teamServer.searchTeam(
@@ -199,7 +191,7 @@ function Home() {
     <>
       <ReMap pos3={pos20} />
       <Costainer>
-        {!teamBoolean && (
+        {userName != "null" && localStorage.getItem("teamname") == "null" && (
           <>
             <Span1>팀을 생성해야 버스킹을 시작할 수 있습니다.</Span1>
             <Btn>
@@ -211,61 +203,60 @@ function Home() {
             <Title1>BUSKiNG hELPER</Title1>
           </>
         )}
-        <>
-          {!item && teamBoolean && onAirURL === null && (
-            <>
-              <Span3>
-                버스킹을 시작하려면<br></br>제목을 설정해야합니다!
-              </Span3>
-              <DivTitle>
-                <InputRoomName
-                  placeholder="버스킹 제목을 적어주세요"
-                  onChange={putRoomName}
-                  value={text}
-                ></InputRoomName>
-                <SendRoomName onClick={postRoomName}>
+
+        {userName != "null" && onAirURL == null && (
+          <>
+            <Span3>
+              버스킹을 시작하려면<br></br>제목을 설정해야합니다!
+            </Span3>
+            <DivTitle>
+              <InputRoomName
+                placeholder="버스킹 제목을 적어주세요"
+                onChange={putRoomName}
+                value={text}
+              ></InputRoomName>
+              <SendRoomName onClick={postRoomName}>
+                <BuskingMange
+                  to={`/buskingmanage/${text}/${localStorage.getItem(
+                    "teamname"
+                  )}`}
+                >
                   버스킹 제목 설정
-                </SendRoomName>
-              </DivTitle>
-              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
-              <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
-          {(item || onAirURL !== null) && { userName } !== null && (
-            <>
-              <StartBtn onClick={(startBus, startBusK)}>
-                {startBusKing}
-              </StartBtn>
+                </BuskingMange>
+              </SendRoomName>
+            </DivTitle>
+            <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+            <Title1>BUSKiNG hELPER</Title1>
+          </>
+        )}
 
-              <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
-              <BuskingMange
-                to={`/buskingmanage/${text}}/${localStorage.getItem(
-                  "teamname"
-                )}`}
-              >
-                ⎧BUSKiNG MANAGEMENT⎭
-              </BuskingMange>
+        {userName != "null" && onAirURL != null && (
+          <>
+            {!item&& setitem(true)}
+            <StartBtn onClick={(startBus, startBusK)}>{startBusKing}</StartBtn>
+            <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
+            <BuskingMange
+              to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
+                localStorage.getItem("teamname")
+              )}`}
+            >
+              ⎧BUSKiNG MANAGEMENT⎭
+            </BuskingMange>
+            <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+            <Title1>BUSKiNG hELPER</Title1>
+          </>
+        )}
 
-              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
-              <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
+        {userName == "null" && (
+          <>
+            <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
+            <Title1>BUSKiNG hELPER</Title1>
+          </>
+        )}
 
-          {userName === "null" && (
-            <>
-              <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
-              <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
-
-          <br />
-          <br />
-        </>
+        <br />
+        <br />
       </Costainer>
-
-      <div>
-        <ReMap pos3={pos20} />
-      </div>
     </>
   );
 }

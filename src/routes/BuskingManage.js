@@ -26,7 +26,7 @@ class BuskingMange extends React.Component {
     musics: [],
     musicsInfo: [],
     lyrics: false,
-    data: {},
+    data: {}
   };
 
   setMusics = async () => {
@@ -101,7 +101,7 @@ class BuskingMange extends React.Component {
   };
 
   render() {
-    const { musicsInfo, musics } = this.state;
+    const { musicsInfo, musics ,deleteReservation} = this.state;
     // console.log(this.props)
     return (
       <Container>
@@ -130,6 +130,7 @@ class BuskingMange extends React.Component {
                     title: song.title,
                     singer: song.singer,
                   });
+
                 } catch (error) {
                   console.log(error);
                 }

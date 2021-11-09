@@ -25,7 +25,11 @@ const Title = styled.div`
   padding-right: 10px;
 `;
 
-const Reservation = styled.div``;
+const Reservation = styled.div`
+  overflow: auto;
+  height: 300px;
+  margin-left: 10px;
+`;
 
 const RLink = styled(Link)`
   color: white;
@@ -69,6 +73,14 @@ const Td = styled.td`
 const Table = styled.table`
   border: 1px solid #444444;
   border-collapse: collapse;
+`;
+
+const P = styled.p`
+  margin-left: 30px;
+  background-color: #282828;
+  border: none;
+  color: white;
+  font-size: 16px;
 `;
 
 class UserRoom extends React.Component {
@@ -174,38 +186,25 @@ class UserRoom extends React.Component {
         </Section>
 
         <Section>
+          <P onClick={this.openTable}>⎧예약 노래 보기 ᐳ</P>
           <Reservation>
-            <Btn onClick={this.openTable}>⎧예약 노래 보기 ᐳ</Btn>
-            {click ? (
-              <Table>
-                <thead>
-                  <tr>
-                    <Th>No.</Th>
-                    <Th>Singer</Th>
-                    <Th>Music</Th>
-                  </tr>
-                </thead>
-                <Tbody>
-                  {musicArr.map((e, index) => (
-                    <tr key={e.id}>
-                      <Td>{index + 1}</Td>
-                      <Td>{e.title}</Td>
-                      <Td>{e.singer}</Td>
-                    </tr>
-                  ))}
-                </Tbody>
-              </Table>
-            ) : (
-              <div></div>
-            )}
-            <Btn>
-              <RLink to={`/reservation/${teamInfo.teamName}`}>
-                ⎧노래 예약하러가기 ᐳ
-              </RLink>
-            </Btn>
+            {musicsInfo.map((e, index) => (
+              <div key={index}>
+                <Lyrics
+                  lyrics={e.lyrics}
+                  singer={e.singer}
+                  img={e.profileImgURL}
+                  title={e.title}
+                />
+              </div>
+            ))}
           </Reservation>
         </Section>
-
+        <Btn>
+          <RLink to={`/reservation/${teamInfo.teamName}`}>
+            ⎧노래 예약하러가기 ᐳ
+          </RLink>
+        </Btn>
       </Container>
     );
   }
