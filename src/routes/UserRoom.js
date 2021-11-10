@@ -93,7 +93,7 @@ const RadioBox = styled.input`
 `;
 
 const RSection =styled.div`
-  max-height: 50px;
+  max-height: 120px;
   overflow: auto;
 `;
 class UserRoom extends React.Component {
