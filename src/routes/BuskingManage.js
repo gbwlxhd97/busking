@@ -35,7 +35,12 @@ const RadioBox = styled.input`
 `;
 
 const Span1 = styled.span`
-  margin-left :10px;
+  margin-left: 10px;
+`;
+
+const RSection = styled.div`
+  max-height: 120px;
+  overflow: auto;
 `;
 
 class BuskingMange extends React.Component {
@@ -156,21 +161,21 @@ class BuskingMange extends React.Component {
               )}
             </div>
           ))}
-          
-        {radioBtn && (
-          <>
-            <Lyrics
-              lyrics={radioInfo.lyrics}
-              singer={radioInfo.singer}
-              img={radioInfo.profileImgURL}
-              title={radioInfo.title}
-            />
-            <Btn onClick={this.turnOff}>
-              <Link to="/">방송끄기</Link>
-            </Btn>
-          </>
-        )}
-
+        
+          {radioBtn && (
+            <>
+              <Lyrics
+                lyrics={radioInfo.lyrics}
+                singer={radioInfo.singer}
+                img={radioInfo.profileImgURL}
+                title={radioInfo.title}
+              />
+              <Btn onClick={this.turnOff}>
+                <Link to="/">방송끄기</Link>
+              </Btn>
+              </>
+          )}
+        <RSection>
         {musicsInfo.map((song, index) => (
           <div key={index}>
             <RadioBox
@@ -179,7 +184,8 @@ class BuskingMange extends React.Component {
               value={song.title}
               onChange={this.check}
             />
-            <Span1>노래 신청자: {musics[index].userNickname}</Span1><br/>
+            <Span1>노래 신청자: {musics[index].userNickname}</Span1>
+            <br />
             <Span1>{song.title}</Span1>
             <Span1>{song.singer}</Span1>
             <DeleteBtn
@@ -207,6 +213,7 @@ class BuskingMange extends React.Component {
             <br />
           </div>
         ))}
+        </RSection>
       </Container>
     );
   }

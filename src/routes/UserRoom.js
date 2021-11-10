@@ -91,6 +91,11 @@ const DeleteBtn = styled.button`
 const RadioBox = styled.input`
   margin-left: 10px;
 `;
+
+const RSection =styled.div`
+  max-height: 50px;
+  overflow: auto;
+`;
 class UserRoom extends React.Component {
   state = {
     teamInfo: {},
@@ -242,6 +247,7 @@ class UserRoom extends React.Component {
             )}
           </Reservation>
           <P>⎧예약 노래된 노래</P>
+          <RSection>
           {musicsInfo.map((song, index) => (
             <div key={index}>
               <RadioBox
@@ -254,6 +260,7 @@ class UserRoom extends React.Component {
               <span>{song.singer}</span>
             </div>
           ))}
+          </RSection>
         </Section>
       </Container>
     );
