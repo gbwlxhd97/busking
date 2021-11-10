@@ -58,15 +58,8 @@ const DeleteBtn = styled.button`
     노래 가사[]
 */
 
-const Btn = styled.button`
-  margin-top: 10px;
-  margin-left: 10px;
-`;
 
-const DeleteBtn = styled.button`
-  margin-top: 10px;
-  margin-left: 10px;
-`;
+
 
 const RadioBox = styled.input`
   margin-left: 10px;

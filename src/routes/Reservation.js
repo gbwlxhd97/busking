@@ -215,6 +215,9 @@ class Reservation extends React.Component {
                           onClick={
                             (this.reservationBtn,
                             () => {
+                              if (localStorage.getItem("username") == null) {
+                                alert("로그인 후 이용가능합니다")
+                              } else {
                               if (this.musicArray.length === 0) {
                                 this.musicArray.push(song.title, song.singer);
                                 this.postArray.push(song.title, song.singer);
@@ -240,7 +243,7 @@ class Reservation extends React.Component {
                                     this.postReservateMusic();
                                   }
                                 }
-                              }
+                              }}
                             })
                           }
                         >

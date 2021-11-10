@@ -3,11 +3,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const Container = styled.div`
-<<<<<<< HEAD
-  margin-left: 5px;
-=======
   margin-top: 10px;
->>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
 `;
 const NowLyrics = styled.div`
   overflow: auto;
@@ -20,14 +16,8 @@ const NowLyrics = styled.div`
 
 const NowImg = styled.img`
   vertical-align: middle;
-<<<<<<< HEAD
-  height: 60px;
-  width: 60px;
-  margin-right: 10px;
-=======
   height: 150px;
   width: 150px;
->>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
 `;
 
 const MusicInfo = styled.div`
@@ -66,22 +56,6 @@ function Lyrics({ lyrics, singer, img, title }) {
       <br />
       <MusicInfo>
         <NowImg src={img} />
-<<<<<<< HEAD
-        <Span1>
-          {singer} - {title}
-        </Span1>
-      </MusicInfo>
-      <br />
-      <Span>가사:</Span>
-      <OpenBtn onClick={openLyrics}>가사 펼쳐보기</OpenBtn>
-      {open && (
-        <NowLyrics>
-          {lyrics.split("~").map((word, index) => (
-            <div key={index}>{word}</div>
-          ))}
-        </NowLyrics>
-      )}
-=======
         <br />
         <span>
           {singer}-{title}
@@ -94,7 +68,6 @@ function Lyrics({ lyrics, singer, img, title }) {
           <div key={index}>{word}</div>
         ))}
       </NowLyrics>
->>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
     </Container>
   );
 }
