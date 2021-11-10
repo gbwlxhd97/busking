@@ -98,6 +98,7 @@ export default class extends React.Component {
     search: false,
     complete: false,
     loading: false,
+    noResult: false,
   };
 
   check = (e) => {
@@ -176,28 +177,34 @@ export default class extends React.Component {
   memberArray = [];
   searchResult = async () => {
     const { member } = this.state;
-    if (member.length === 0) {
-      alert("칸이 비어있습니다.");
-    } else {
-      try {
-        const res = await _userServer.searchUser(member);
-        const {
-          data: { data },
-        } = res;
+
+    try {
+      const res = await _userServer.searchUser(member);
+      const {
+        data: { data },
+      } = res;
+      this.setState({
+        memberInfo: data,
+      });
+      if (this.state.memberInfo.nickname === null) {
         this.setState({
-          memberInfo: data,
+          search: false,
+          noResult: true,
+        });
+      } else {
+        this.setState({
           search: true,
         });
-      } catch (error) {
-        this.setState({
-          error: "검색결과가 없습니다. 확인해주세요.",
-        });
-        console.log(error);
-      } finally {
-        this.setState({
-          loading: true,
-        });
       }
+    } catch (error) {
+      this.setState({
+        error: "검색결과가 없습니다. 확인해주세요.",
+      });
+      console.log(error);
+    } finally {
+      this.setState({
+        loading: true,
+      });
     }
   };
 
@@ -215,14 +222,22 @@ export default class extends React.Component {
   };
 
   render() {
-    const { basicResult, radioArray, memberInfo, error, complete, search } =
-      this.state;
+    const {
+      basicResult,
+      radioArray,
+      memberInfo,
+      error,
+      complete,
+      search,
+      noResult,
+    } = this.state;
     return (
       <Container>
         <TeamInput
           onChange={this.teamName}
           placeholder="팀 이름을 적어주세요"
         />
+
         {radioArray.map((result, index) => (
           <React.Fragment key={index}>
             <RadioBox
@@ -236,19 +251,28 @@ export default class extends React.Component {
           </React.Fragment>
         ))}
         <br />
+
         {basicResult === "Team" && (
           <>
             <MemberInput onChange={this.searchTerm} placeholder="팀원 검색" />
-            <SearchBtn onClick={this.searchResult}>검색</SearchBtn>
-            {search && (
-              <Search>
-                <Img src={memberInfo.userDetail.profileImgURL} />
-                <Span>{memberInfo.nickname}</Span>
-                <AddBtn onClick={this.addTeam}>추가</AddBtn>
-              </Search>
-            )}
+            <button onClick={this.searchResult}>검색</button>
           </>
         )}
+
+        {search && (
+          <>
+            <Img src={memberInfo.userDetail.profileImgURL} />
+            <Span>{memberInfo.nickname}</Span>
+            <button onClick={this.addTeam}>추가</button>
+          </>
+        )}
+
+        {!search && noResult && (
+          <>
+            <p>검색결과가 없습니다. 다시 검색해 주세요</p>
+          </>
+        )}
+
         {!complete && <SendBtn onClick={this.postInfo}>send</SendBtn>}
         <Home>{complete && <GoToHome to="/">홈으로가기</GoToHome>}</Home>
         {memberInfo.length === 0 && <Message text={error} />}
@@ -256,3 +280,7 @@ export default class extends React.Component {
     );
   }
 }
+
+/* 
+
+*/

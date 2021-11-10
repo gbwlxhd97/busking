@@ -9,6 +9,7 @@ const Container = styled.div`
   height: 748px;
   overflow: auto;
   color: white;
+  height: 500px;
 `;
 
 const Top = styled.div `
@@ -57,14 +58,36 @@ const DeleteBtn = styled.button`
     노래 가사[]
 */
 
+<<<<<<< HEAD
 
+=======
+const Btn = styled.button`
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const DeleteBtn = styled.button`
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const RadioBox = styled.input`
+  margin-left: 10px;
+`;
+
+const Span1 = styled.span`
+  margin-left :10px;
+`;
+>>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
 
 class BuskingMange extends React.Component {
   state = {
     musics: [],
     musicsInfo: [],
     lyrics: false,
-    data: {}
+    data: {},
+    radioBtn: false,
+    radioInfo: {},
   };
 
   setMusics = async () => {
@@ -138,11 +161,26 @@ class BuskingMange extends React.Component {
     }
   };
 
+  check = async (e) => {
+    try {
+      const res = await _musicServer.getSong(e.target.value);
+      const {
+        data: { data },
+      } = res;
+      this.setState({
+        radioBtn: true,
+        radioInfo: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
   render() {
-    const { musicsInfo, musics ,deleteReservation} = this.state;
-    // console.log(this.props)
+    const { musicsInfo, musics, radioBtn, radioInfo } = this.state;
+
     return (
       <Container>
+<<<<<<< HEAD
         {musicsInfo.map((song, index) => (
           <Reservation key={song.id}>
             <Top>
@@ -175,18 +213,86 @@ class BuskingMange extends React.Component {
 
             </Top>
             
+=======
+        {!radioBtn &&
+          musicsInfo.map((song, index) => (
+            <div key={song.id}>
+              {index === 0 && (
+                <>
+                  <Lyrics
+                    lyrics={musicsInfo[0].lyrics}
+                    singer={musicsInfo[0].singer}
+                    img={musicsInfo[0].profileImgURL}
+                    title={musicsInfo[0].title}
+                  />
+                  <Btn onClick={this.turnOff}>
+                    <Link to="/">방송끄기</Link>
+                  </Btn>
+                </>
+              )}
+            </div>
+          ))}
+          
+        {radioBtn && (
+          <>
+>>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
             <Lyrics
-              lyrics={song.lyrics}
-              singer={song.singer}
-              img={song.profileImgURL}
-              title={song.title}
+              lyrics={radioInfo.lyrics}
+              singer={radioInfo.singer}
+              img={radioInfo.profileImgURL}
+              title={radioInfo.title}
             />
+<<<<<<< HEAD
             <hr></hr>
           </Reservation>
         ))}
         <Btn onClick={this.turnOff}>
           <Off to="/">방송끄기</Off>
         </Btn>
+=======
+            <Btn onClick={this.turnOff}>
+              <Link to="/">방송끄기</Link>
+            </Btn>
+          </>
+        )}
+
+        {musicsInfo.map((song, index) => (
+          <div key={index}>
+            <RadioBox
+              type="radio"
+              name="platform"
+              value={song.title}
+              onChange={this.check}
+            />
+            <Span1>노래 신청자: {musics[index].userNickname}</Span1><br/>
+            <Span1>{song.title}</Span1>
+            <Span1>{song.singer}</Span1>
+            <DeleteBtn
+              onClick={async () => {
+                const {
+                  match: {
+                    params: { roomName, teamName },
+                  },
+                } = this.props;
+                try {
+                  const res = await _userRoom.deleteMusic({
+                    roomName: roomName,
+                    teamName: teamName,
+                    userNickname: musics[index].userNickname,
+                    title: song.title,
+                    singer: song.singer,
+                  });
+                } catch (error) {
+                  console.log(error);
+                }
+              }}
+            >
+              예약곡 삭제
+            </DeleteBtn>
+            <br />
+          </div>
+        ))}
+>>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
       </Container>
     );
   }

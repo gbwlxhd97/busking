@@ -166,8 +166,7 @@ export default class extends React.Component {
         const fixData = await _userServer.putUserDetail({
           oldNickname: nickName,
           nickname: this.state.userNickname,
-          profileImgURL:
-            "https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+          profileImgURL: this.state.userImgUrl,
           introduce: this.state.introduce,
         });
         alert("정보 수정 완료");
@@ -262,6 +261,12 @@ export default class extends React.Component {
     }
   };
 
+  imgSelete = (e) => {
+    console.log(e)
+/*     this.setState = ({
+      userImgUrl: e.target.value,
+    }); */
+  };
   render() {
     const now = new Date(); // 현재 날짜 및 시간
     var year = now.getFullYear();
@@ -279,7 +284,14 @@ export default class extends React.Component {
     return (
       <Container>
         <ImgSection>
-          <UserImg src={userImgUrl} />
+          {btnClick === true ? (
+            <UserImg src={userImgUrl} />
+          ) : (
+            <>
+              <UserImg src={userImgUrl} />
+              <input type="file" onChange={this.imgSelete} />
+            </>
+          )}
         </ImgSection>
 
         <DetailSectionList>
@@ -293,7 +305,7 @@ export default class extends React.Component {
             </Details>
           ) : (
             <Details>
-              <form>
+              <div>
                 nickname:
                 <br />
                 <Input
@@ -303,7 +315,7 @@ export default class extends React.Component {
                   placeholder={userNickname}
                 />
                 <Btn onClick={this.dupleicateClick}>중복 체크</Btn>
-              </form>
+              </div>
             </Details>
           )}
 
@@ -317,7 +329,7 @@ export default class extends React.Component {
             </Details>
           ) : (
             <Details>
-              <form>
+              <div>
                 introduce:
                 <br />
                 <Input
@@ -326,7 +338,7 @@ export default class extends React.Component {
                   onChange={this.introChange}
                   placeholder={introduce}
                 />
-              </form>
+              </div>
             </Details>
           )}
 

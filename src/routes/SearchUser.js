@@ -135,6 +135,7 @@ class SearchUser extends React.Component {
       this.setState({
         searchInfo:data
       })
+      console.log(this.state.searchInfo)
     } catch (error) {
       this.setState({
         error:
