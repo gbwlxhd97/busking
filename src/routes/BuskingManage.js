@@ -58,9 +58,6 @@ const DeleteBtn = styled.button`
     노래 가사[]
 */
 
-<<<<<<< HEAD
-
-=======
 const Btn = styled.button`
   margin-top: 10px;
   margin-left: 10px;
@@ -78,7 +75,6 @@ const RadioBox = styled.input`
 const Span1 = styled.span`
   margin-left :10px;
 `;
->>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
 
 class BuskingMange extends React.Component {
   state = {
@@ -180,40 +176,6 @@ class BuskingMange extends React.Component {
 
     return (
       <Container>
-<<<<<<< HEAD
-        {musicsInfo.map((song, index) => (
-          <Reservation key={song.id}>
-            <Top>
-
-              <Request>노래 신청자: {musics[index].userNickname}</Request>
-              
-              <DeleteBtn
-                onClick={async () => {
-                  const {
-                    match: {
-                      params: { roomName, teamName },
-                    },
-                  } = this.props;
-                  try {
-                    const res = await _userRoom.deleteMusic({
-                      roomName: roomName,
-                      teamName: teamName,
-                      userNickname: musics[index].userNickname,
-                      title: song.title,
-                      singer: song.singer,
-                    });
-
-                  } catch (error) {
-                    console.log(error);
-                  }
-                }}
-              >
-                예약곡 삭제
-              </DeleteBtn>
-
-            </Top>
-            
-=======
         {!radioBtn &&
           musicsInfo.map((song, index) => (
             <div key={song.id}>
@@ -235,21 +197,12 @@ class BuskingMange extends React.Component {
           
         {radioBtn && (
           <>
->>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
             <Lyrics
               lyrics={radioInfo.lyrics}
               singer={radioInfo.singer}
               img={radioInfo.profileImgURL}
               title={radioInfo.title}
             />
-<<<<<<< HEAD
-            <hr></hr>
-          </Reservation>
-        ))}
-        <Btn onClick={this.turnOff}>
-          <Off to="/">방송끄기</Off>
-        </Btn>
-=======
             <Btn onClick={this.turnOff}>
               <Link to="/">방송끄기</Link>
             </Btn>
@@ -292,7 +245,6 @@ class BuskingMange extends React.Component {
             <br />
           </div>
         ))}
->>>>>>> 6d83efe1e8ee96ae792bc57de3d5bdd894b5b9e4
       </Container>
     );
   }
