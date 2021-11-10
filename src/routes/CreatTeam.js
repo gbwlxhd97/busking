@@ -29,7 +29,7 @@ const SearchBtn = styled.button`
   margin-left: 6px;
   border-radius: 15px;
   background-color: #ffc314;
-`
+`;
 
 const Container = styled.div`
   color: white;
@@ -59,7 +59,7 @@ const GoToHome = styled(Link)`
 const Home = styled.div`
   margin-top: 50px;
   margin-left: 136.5px;
-`
+`;
 
 const Img = styled.img`
   width: 65px;
@@ -70,7 +70,7 @@ const Img = styled.img`
 const Search = styled.div`
   margin: auto;
   width: 20px;
-`
+`;
 const Span = styled.span`
   font-size: 15px;
   margin-left: 10px;
@@ -84,8 +84,7 @@ const AddBtn = styled.button`
   background-color: #ffc314;
   margin-top: 16.5px;
   float: right;
-`
-
+`;
 
 export default class extends React.Component {
   state = {
@@ -280,7 +279,3 @@ export default class extends React.Component {
     );
   }
 }
-
-/* 
-
-*/
