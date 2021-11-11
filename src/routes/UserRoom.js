@@ -76,7 +76,7 @@ const Table = styled.table`
 `;
 
 const P = styled.p`
-  margin-left: 30px;
+  margin-left: 35px;
   background-color: #282828;
   border: none;
   color: white;
@@ -95,6 +95,10 @@ const RadioBox = styled.input`
 const RSection =styled.div`
   max-height: 120px;
   overflow: auto;
+`;
+
+const Span = styled.span`
+  margin-left: 10px;
 `;
 class UserRoom extends React.Component {
   state = {
@@ -256,8 +260,8 @@ class UserRoom extends React.Component {
                 value={song.title}
                 onChange={this.check}
               />
-              <span>{song.title}</span>
-              <span>{song.singer}</span>
+              <Span>{song.title}</Span> -
+              <Span>{song.singer}</Span>
             </div>
           ))}
           </RSection>

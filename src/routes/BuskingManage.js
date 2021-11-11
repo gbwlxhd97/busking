@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 const Container = styled.div`
 margin-left: 10px;
+  height: 748px;
   color: white;
   height: 500px;
 `;
@@ -14,20 +15,20 @@ margin-left: 10px;
 const Top = styled.div `
   display: flex;
   justify-content: space-between;
-`
+`;
 
 const Reservation = styled.div`
   margin: 10px;
-`
+`;
 
 const Request = styled.div`
   font-size: 18px;
   margin-left: 5px;
-`
+`;
 
 const Off = styled(Link)`
   text-decoration: none;
-`
+`;
 
 const Btn = styled.button`
   font-size: 18px;
@@ -41,11 +42,11 @@ const Btn = styled.button`
 `;
 
 const DeleteBtn = styled.button`
-margin-left: 6px;
+margin-left: 10px;
   font-size: 16px;
   padding: 2px 7px;
   border-radius: 10px;
-`
+`;
 
 
 //공연관리에서 필요한것들
@@ -62,6 +63,7 @@ margin-left: 6px;
 
 
 const RadioBox = styled.input`
+margin-top: 10px;
   margin-left: 10px;
 `;
 
@@ -180,9 +182,7 @@ class BuskingMange extends React.Component {
                     img={musicsInfo[0].profileImgURL}
                     title={musicsInfo[0].title}
                   />
-                  <Btn onClick={this.turnOff}>
-                    <Link to="/">방송끄기</Link>
-                  </Btn>
+                  
                 </>
               )}
             </div>
@@ -238,6 +238,9 @@ class BuskingMange extends React.Component {
             <br />
           </div>
         ))}
+        <Btn onClick={this.turnOff}>
+                    <Link to="/">방송끄기</Link>
+                  </Btn>
       </Container>
     );
   }

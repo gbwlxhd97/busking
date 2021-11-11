@@ -165,7 +165,6 @@ function Home() {
     }
   };
 
-
   const putRoomName = (e) => {
     setText(e.target.value);
   };
@@ -223,48 +222,48 @@ function Home() {
           </>
         )}
 
-        {userName != "null" && localStorage.getItem("teamname") !== "null" && onAirURL == null && (
-          <>
-            <Span3>
-              버스킹을 시작하려면<br></br>제목을 설정해야합니다!
-            </Span3>
-            <DivTitle>
-              <InputRoomName
-                placeholder="버스킹 제목을 적어주세요"
-                onChange={putRoomName}
-                value={text}
-              ></InputRoomName>
-              <SendRoomName onClick={postRoomName}>
-                <BuskingMange
-                  to={`/buskingmanage/${text}/${localStorage.getItem(
-                    "teamname"
-                  )}`}
-                >
+        {userName != "null" &&
+          localStorage.getItem("teamname") !== "null" &&
+          onAirURL == null && (
+            <>
+              <Span3>
+                버스킹을 시작하려면<br></br>제목을 설정해야합니다!
+              </Span3>
+              <DivTitle>
+                <InputRoomName
+                  placeholder="버스킹 제목을 적어주세요"
+                  onChange={putRoomName}
+                  value={text}
+                ></InputRoomName>
+                <SendRoomName onClick={postRoomName}>
                   버스킹 제목 설정
-                </BuskingMange>
-              </SendRoomName>
-            </DivTitle>
-            <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
-            <Title1>BUSKiNG hELPER</Title1>
-          </>
-        )}
+                </SendRoomName>
+              </DivTitle>
+              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+              <Title1>BUSKiNG hELPER</Title1>
+            </>
+          )}
 
-        {userName != "null" && localStorage.getItem("teamname") !== "null" && onAirURL != null && (
-          <>
-            {!item&& setitem(true)}
-            <StartBtn onClick={(startBus, startBusK)}>{startBusKing}</StartBtn>
-            <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
-            <BuskingMange2
-              to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
-                localStorage.getItem("teamname")
-              )}`}
-            >
-              ⎧BUSKiNG MANAGEMENT⎭
-            </BuskingMange2>
-            <MapText3>[ 버스커들이 당신을 기다리는 장소 ]</MapText3>
-            <Title1>BUSKiNG hELPER</Title1>
-          </>
-        )}
+        {userName != "null" &&
+          localStorage.getItem("teamname") !== "null" &&
+          onAirURL != null && (
+            <>
+              {!item && setitem(true)}
+              <StartBtn onClick={(startBus, startBusK)}>
+                {startBusKing}
+              </StartBtn>
+              <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
+              <BuskingMange2
+                to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
+                  localStorage.getItem("teamname")
+                )}`}
+              >
+                ⎧BUSKiNG MANAGEMENT⎭
+              </BuskingMange2>
+              <MapText3>[ 버스커들이 당신을 기다리는 장소 ]</MapText3>
+              <Title1>BUSKiNG hELPER</Title1>
+            </>
+          )}
 
         {userName == "null" && (
           <>
