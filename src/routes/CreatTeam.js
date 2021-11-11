@@ -65,6 +65,7 @@ const Img = styled.img`
   width: 65px;
   height: 65px;
   vertical-align: middle;
+  margin-left:77.5px;
 `;
 
 const Search = styled.div`
@@ -260,6 +261,7 @@ export default class extends React.Component {
 
         {search && (
           <>
+          <br/>
             <Img src={memberInfo.userDetail.profileImgURL} />
             <Span>{memberInfo.nickname}</Span>
             <button onClick={this.addTeam}>추가</button>

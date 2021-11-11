@@ -7,28 +7,27 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 const Container = styled.div`
   height: 748px;
-  overflow: auto;
   color: white;
   height: 500px;
 `;
 
-const Top = styled.div `
+const Top = styled.div`
   display: flex;
   justify-content: space-between;
-`
+`;
 
 const Reservation = styled.div`
   margin: 10px;
-`
+`;
 
 const Request = styled.div`
   font-size: 18px;
   margin-left: 5px;
-`
+`;
 
 const Off = styled(Link)`
   text-decoration: none;
-`
+`;
 
 const Btn = styled.button`
   font-size: 18px;
@@ -42,31 +41,18 @@ const Btn = styled.button`
 `;
 
 const DeleteBtn = styled.button`
+  margin-left: 10px;
   font-size: 16px;
   padding: 2px 7px;
   border-radius: 10px;
-`
-
-
-//공연관리에서 필요한것들
-
-//목표는 한페이지 모든 정보를 다 볼 수 있도록 만드는것이 목표
-
-/*필요한 정보 => 
-    신청곡[o]=> (누가 예약했는지 보이며) 예/ 아니요 버튼으로 선정 가능
-    노래 정보[o]
-    노래 가사[]
-*/
-
-
-
+`;
 
 const RadioBox = styled.input`
   margin-left: 10px;
 `;
 
 const Span1 = styled.span`
-  margin-left :10px;
+  margin-left: 10px;
 `;
 
 class BuskingMange extends React.Component {
@@ -180,14 +166,11 @@ class BuskingMange extends React.Component {
                     img={musicsInfo[0].profileImgURL}
                     title={musicsInfo[0].title}
                   />
-                  <Btn onClick={this.turnOff}>
-                    <Link to="/">방송끄기</Link>
-                  </Btn>
                 </>
               )}
             </div>
           ))}
-          
+
         {radioBtn && (
           <>
             <Lyrics
@@ -210,7 +193,8 @@ class BuskingMange extends React.Component {
               value={song.title}
               onChange={this.check}
             />
-            <Span1>노래 신청자: {musics[index].userNickname}</Span1><br/>
+            <Span1>노래 신청자: {musics[index].userNickname}</Span1>
+            <br />
             <Span1>{song.title}</Span1>
             <Span1>{song.singer}</Span1>
             <DeleteBtn
@@ -238,6 +222,9 @@ class BuskingMange extends React.Component {
             <br />
           </div>
         ))}
+        <Btn onClick={this.turnOff}>
+          <Link to="/">방송끄기</Link>
+        </Btn>
       </Container>
     );
   }
