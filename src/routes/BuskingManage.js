@@ -6,8 +6,7 @@ import Lyrics from "../Components/Lyrics";
 import { Link } from "react-router-dom";
 import axios from "axios";
 const Container = styled.div`
-  height: 748px;
-  overflow: auto;
+margin-left: 10px;
   color: white;
   height: 500px;
 `;
@@ -42,6 +41,7 @@ const Btn = styled.button`
 `;
 
 const DeleteBtn = styled.button`
+margin-left: 6px;
   font-size: 16px;
   padding: 2px 7px;
   border-radius: 10px;
