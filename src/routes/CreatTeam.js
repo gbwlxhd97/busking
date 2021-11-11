@@ -80,11 +80,8 @@ const Span = styled.span`
 const AddBtn = styled.button`
   font-size: 15px;
   padding: 4px 8px;
-  margin-left: 6px;
-  border-radius: 15px;
-  background-color: #ffc314;
-  margin-top: 16.5px;
-  float: right;
+  margin-left: 15px;
+  border-radius: 10px;
 `;
 
 export default class extends React.Component {
@@ -255,7 +252,7 @@ export default class extends React.Component {
         {basicResult === "Team" && (
           <>
             <MemberInput onChange={this.searchTerm} placeholder="팀원 검색" />
-            <button onClick={this.searchResult}>검색</button>
+            <SearchBtn onClick={this.searchResult}>검색</SearchBtn>
           </>
         )}
 
@@ -264,7 +261,7 @@ export default class extends React.Component {
           <br/>
             <Img src={memberInfo.userDetail.profileImgURL} />
             <Span>{memberInfo.nickname}</Span>
-            <button onClick={this.addTeam}>추가</button>
+            <AddBtn onClick={this.addTeam}>추가</AddBtn>
           </>
         )}
 
