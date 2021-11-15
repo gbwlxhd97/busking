@@ -1,10 +1,12 @@
 import React,{useEffect,useState} from "react";
+import { _userRoom } from '../service/room';
 import {_teamServer} from "../service/team";
 import {_userServer} from "../service/user";
 const {kakao} = window;
 let imgBox=[];
 let burkerImgSave = [];
 let test;
+let test3;
 let t1;
 let t2;
 let intro = []
@@ -22,32 +24,49 @@ var buskerPositions = [
     }
 ]
 
-
-
+let real
+let real2
+let real3
 function ReMap(props) {
+    let currentPos = [];
+    let savePosData = [];
+    let res
+    let data
     // eslint-disable-next-line
     const [kakaoMap,setKakaoMap] = useState(null)
     // eslint-disable-next-line
-    const [pospos,setPosPos] = useState()
+    const [pospos,setPosPos] = useState([])
     const [tes1,setTes1] = useState(burkerImgSave)
     
     //api Hooks
     useEffect(() => {
         getUser();
         getTeam();
-        console.log(posArr);
+        getRoom();
+        console.log(tes1);
     },[]);
     useEffect(() => {
-        console.log(pospos);
+        // console.log(pospos);
         console.log(props.posData);
-        console.log(posArr);
-    },[pospos])
-    
+        // savePosData = [...savePosData,...pospos]
+        console.log(savePosData);
+        if(pospos.length >0) {
+            res = pospos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e))
+            // console.log(res.map(e => new kakao.maps.LatLng(e)));
+            real = res
+            real2 = real[0]
+            real3 = real[1]
+        } 
+        console.log(real2);
+        
+    })
+    var positionss = [
+        {
+            latlng: new kakao.maps.LatLng(real2, real3)
+        }
+    ]
     useEffect(() => {
         setPosPos(props.posData)
-        posArr.push(pospos)
-        const set = new Set(posArr)
-        console.log(set);
     })
 
     // team api
@@ -56,10 +75,12 @@ function ReMap(props) {
             const res =await _teamServer.getAllTeam()
             const {data: {data}} =res;
             console.log(data);
-            const on = data.filter(e => e.onAirURL !== null) //방송을켜서 방url이 있는사람
+            const on = data.filter(e => e.onAir === true) //방송킨사람
             intro = on
+            console.log(on);
             burkerImgSave = [...on.map(e => e.leader.userDetail)]
             setTes1(burkerImgSave)
+        
         } catch (error) {
             console.log(error);
         }
@@ -73,7 +94,7 @@ function ReMap(props) {
                 let lat = position.coords.latitude;
                 let lon = position.coords.longitude;
                 let pos = new kakao.maps.LatLng(lat,lon);
-        
+                test3 = lat
                 // const imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png', // 마커이미지의 주소입니다    
                 //     imageSize = new kakao.maps.Size(64, 69), // 마커이미지의 크기입니다
                 //     imageOption = {offset: new kakao.maps.Point(27, 69)}; // 마커이미지의 옵션입니다. 마커의 좌표와 일치시킬 이미지 안에서의 좌표를 설정합니다.
@@ -93,9 +114,7 @@ function ReMap(props) {
                     
                     // marker2.setMap(map)
             })
-        }
-
-
+        } 
         const options = {
             center: new kakao.maps.LatLng(37.365264512305174, 127.10676860117488),
             level: 7
@@ -129,10 +148,11 @@ function createMarker(position, image,infoData) {
 let buskerDataBox = []
 
 createBuskerData()
+
 //버스커들 정보를 만들어서 각 함수(ex: 이미지,소개글 ...)에 전달해주는 함수
 function createBuskerData() {
     let iwRemoveable = true; //x버튼
-    
+    console.log(tes1);
     for(let i=0; i <tes1.length; i++) {
         let imageSize = new kakao.maps.Size(30, 36),
             imageOptions = {   
@@ -144,10 +164,14 @@ function createBuskerData() {
             content: `<div style="font-size: 12px;">${tes1[i].introduce}</div>` , // 인포윈도우에 표시할 내용 
             removable : iwRemoveable,
         });
-        let markerImage = createMarkerImage(tes1[i].profileImgURL ? tes1[i].profileImgURL : require("../assets/logo192.png").default, imageSize, imageOptions)    
-        let data = createMarker(buskerPositions[i].latlng, markerImage,infowindow);
-            buskerDataBox.push(data)
-        }
+        let markerImage = createMarkerImage(tes1[i].profileImgURL ? tes1[i].profileImgURL : require("../assets/outline_account_circle_black_24dp.png").default, imageSize, imageOptions)    
+        
+            
+            let data = createMarker(buskerPositions[i].latlng, markerImage,infowindow);
+            buskerDataBox.push(data)    
+        
+        
+    }
 }
 //최종적으로 지도에 이미지를 뿌려줄때 buskerDataBox에 있는 아이들만 보여주기위한 함수
 function setBuskerMarker(map) {
@@ -158,17 +182,19 @@ function setBuskerMarker(map) {
 //최종적으로 지도에 이미지를 뿌려줌
 setBuskerMarker(map) 
     },[tes1])
-    return (
-        <div id="myMap" style={{
-            width: '300px',
-            height: '300px',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            position: 'absolute',
-            overflow: 'hidden',
     
-        }}></div>
+    return (
+        <div id="myMap" 
+            style={{
+                width: '300px',
+                height: '300px',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                position: 'absolute',
+                overflow: 'hidden',
+            }}>
+        </div>
     )
 }
 
@@ -180,6 +206,16 @@ const getUser = async() => {
         const res = await _userServer.getAllUser();
         const {data: {data}} =res;
         console.log(data);
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const getRoom = async () => {
+    try {
+        const res = await _userRoom.getRoom();
+        const {data:{data}} = res
+        console.log(data.map(e => e.latIng).join(",").split(","));
     } catch (error) {
         console.log(error);
     }
