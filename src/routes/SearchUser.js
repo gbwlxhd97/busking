@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-
 import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import { _teamServer } from "../service/team";
@@ -8,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Search = styled.input`
   margin-left: 37px;
-  margin-top: 20%;
+  margin-top: 30px;
   background-color: #282828;
   padding: 8px 10px;
   color: white;
@@ -25,29 +24,26 @@ const Result = styled.div`
   margin-left: 37px;
   margin-top: 25px;
   overflow: auto;
-  height: 300px;
+  height: 570px;
 `;
 
 const Img = styled.img`
   vertical-align: middle;
   width: 70px;
   height: 70px;
-  margin-right: 5px;
+  margin-right: 8px;
   border-radius: 25%;
   border: 1.5px solid #ffc314;
 `;
 
 const GoToRoom = styled.button`
-  vertical-align: middle;
-  border-style: none;
-  width: auto;
-  height: auto;
-  margin-left: 5px;
-  margin-bottom: 5px;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  border-radius: 5px;
-  background-color: white;
+  float: right;
+  font-size: 15px;
+  padding: 5px 8px;
+  margin-top: 19.5px;
+  margin-right: 20px;
+  border-radius: 15px;
+  background-color: #ffc314;
   &:active {
     background-color: gray;
   }
@@ -77,15 +73,16 @@ const UserList = styled.li`
   margin-bottom: 25px;
   list-style: none;
   color: white;
-`;
+`
 
 class SearchUser extends React.Component {
   state = {
     allUser: [],
-    searchInfo:{},
+    searchInfo: null,
     loading: false,
     error: null,
-    same: false,
+    active: false,
+    checkBusker: false
   };
 
   handleSearch = (event) => {
@@ -94,6 +91,9 @@ class SearchUser extends React.Component {
     if (searchTerm !== "") {
       this.findSearchTerm(searchTerm);
     }
+    this.setState({
+      active: true
+    })
   };
 
   updateTerm = (event) => {
@@ -119,10 +119,7 @@ class SearchUser extends React.Component {
         allUser:data
       })
     } catch (error) {
-      this.setState({
-        error:
-          "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요.",
-      });
+      console.log(error);
     } finally {
       this.setState({
         loading: false,
@@ -135,22 +132,31 @@ class SearchUser extends React.Component {
     try {
       const res = await _teamServer.searchTeam(searchTerm);
       var {data:{data}}=res
+      console.log(data);
+      
       this.setState({
-        searchInfo:data
+        searchInfo:data,
+        checkBusker: false
       })
+      //검색한 버스커가 없을때 에러 리턴
+      if (res.data.status === 204) {
+        throw new Error("catch");
+      }
+      console.log(res);
     } catch (error) {
       this.setState({
         error:
-          "검색 결과가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요.",
+          "일치하는 버스커가 없습니다.\n 검색어의 철자와 띄어쓰기가 정확한지 확인해 주세요.",
+          checkBusker: true
       });
     } finally {
       this.setState({
         loading: true,
       });
+      
     }
 
   };
-
   render() {
     const { allUser, searchInfo } = this.state;
     return (
@@ -160,7 +166,9 @@ class SearchUser extends React.Component {
             placeholder="버스커를 검색해주세요"
             onChange={this.updateTerm}
           />
-          {this.state.loading ? (
+          </form>
+          {this.state.loading && this.state.active && searchInfo !== null ?
+          (
             <div>
               <br />
               <Span2>🎵 버스커 검색 결과</Span2>
@@ -172,8 +180,12 @@ class SearchUser extends React.Component {
                 </GoToRoom>
               </Result>
             </div>
-          ) : (
-            <div>
+          ): null
+        }
+        
+        {/* 원래 기존의값 */}
+        { !this.state.active &&
+        <div>
               <br />
               <Span2>🎵 버스커 목록</Span2>
               <Result>
@@ -192,12 +204,13 @@ class SearchUser extends React.Component {
                   )}
               </Result>
             </div>
-          )}
-        </form>
-        {this.state.same === false && <Message text={this.state.error} />}
+        }
+          
+        { this.state.checkBusker&&<Message text={this.state.error} />}
       </>
     );
   }
 }
 
 export default SearchUser;
+

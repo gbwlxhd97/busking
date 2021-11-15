@@ -9,8 +9,19 @@ import styled from "styled-components";
 
 
 const Container = styled.div`
+  margin: 8px;
+  font-size: 17px;
   color: white;
 `;
+
+const Musics = styled.div`
+  margin-top: 15px;
+`
+
+const Music = styled.div`
+  margin: 10px 0;
+`
+
 const Form = styled.form`
   display: flex;
   justify-content: center;
@@ -18,7 +29,7 @@ const Form = styled.form`
   width: 100%;
 `;
 const Input = styled.input`
-  padding: 0 5px;
+  padding: 0 6px;
   border-radius: 7px;
   width: 60%;
 `;
@@ -37,10 +48,11 @@ const Div = styled.div`
 `;
 const ReserveBtn = styled.button`
   float: right;
-  margin-top: 12px;
+  margin-top: 30px;
   padding: 3px 5px;
   border-radius: 10px;
   background-color: white;
+  background-color: #ffc314;
   &:hover {
     background-color: black;
     color: white;
@@ -48,8 +60,9 @@ const ReserveBtn = styled.button`
 `;
 const Img = styled.img`
   vertical-align: middle;
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
+  margin-right: 10px;
 `;
 
 const PostBtn = styled.button`
@@ -100,6 +113,8 @@ class Reservation extends React.Component {
         roomName: URL[4],
         teamName: URL[5],
       });
+      console.log(this.state);
+      console.log(URL);
     } catch (error) {
       console.log(error);
     }
@@ -130,6 +145,7 @@ class Reservation extends React.Component {
     }
   };
 
+  saveMusicData = [];
   searchByTerm = async () => {
     const { searchTerm } = this.state;
     this.setState({
@@ -140,12 +156,14 @@ class Reservation extends React.Component {
       let {
         data: { data },
       } = res;
+      // console.log(data);
       this.setState({
         songList: data,
       });
       if (res.data.status === 204) {
         throw new Error("catch");
       }
+      console.log(this.state.songList);
     } catch (error) {
       this.setState({
         error:
@@ -193,15 +211,18 @@ class Reservation extends React.Component {
               <>
                 <Div>
                   <Section title="음악리스트">
+                    <Musics>
                     {songList.map((song) => (
-                      <div className="musicList" key={song.id}>
+                      <Music className="musicList" key={song.id}>
                         <Img src={song.profileImgURL} alt="profile"></Img>
-                        <span id="title">{song.title}</span>-
-                        <span id="singer">{song.singer}</span>
+                        <span id="title">{song.title}</span> - <span id="singer">{song.singer}</span>
                         <ReserveBtn
                           onClick={
                             (this.reservationBtn,
                             () => {
+                              if (localStorage.getItem("username") == null) {
+                                alert("로그인 후 이용가능합니다")
+                              } else {
                               if (this.musicArray.length === 0) {
                                 this.musicArray.push(song.title, song.singer);
                                 this.postArray.push(song.title, song.singer);
@@ -227,14 +248,15 @@ class Reservation extends React.Component {
                                     this.postReservateMusic();
                                   }
                                 }
-                              }
+                              }}
                             })
                           }
                         >
                           예약하기
                         </ReserveBtn>
-                      </div>
+                      </Music>
                     ))}
+                    </Musics>
                   </Section>
                 </Div>
               </>

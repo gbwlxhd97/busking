@@ -1,10 +1,23 @@
+
+
+
+
+
+
+
 import React, { useState, useEffect } from "react";
+import { Logout } from '../Components/TokenSave';
 import ReMap from "../Components/ReMap";
 import styled from "styled-components";
 import { _teamServer } from "../service/team";
 import { _userRoom } from "../service/room";
 import { Link } from "react-router-dom";
 
+
+let currentPos =[]; //props로 전달해줄 버스커의 현재위치값
+let savePos = [] //해당위치를 계속 저장해주는 배열
+let juen
+let item =false;
 let pos2 = []; //props로 전달해줄 버스커의 현재위치값
 
 const Costainer = styled.div`
@@ -49,6 +62,20 @@ const MapText2 = styled.p`
   margin-top: 387px;
 `;
 
+const MapText3 = styled.p`
+  text-align: center;
+  font-size: 13.5px;
+  color: white;
+  margin-top: 385px;
+`;
+
+const MapText4 = styled.p`
+  text-align: center;
+  font-size: 13.5px;
+  color: white;
+  margin-top: 432px;
+`;
+
 const Span3 = styled.p`
   text-align: center;
   margin: 0;
@@ -64,7 +91,11 @@ const CraetRoom = styled(Link)`
 `;
 
 const BuskingMange = styled(Link)`
-  margin-left: 48px;
+  color: white;
+  text-decoration-line: none;
+`;
+const BuskingMange2 = styled(Link)`
+  margin-left: 47px;
   color: white;
   text-decoration-line: none;
 `;
@@ -116,17 +147,78 @@ function Home() {
   navigator.geolocation.getCurrentPosition((position) => {
     let pos = [];
     let lat = position.coords.latitude;
-    let lon = position.coords.longitude;
-    pos.push(`${lat},${lon}`);
-    pos2 = [...pos];
-    // console.log(pos2);
-  });
+    let lon = position.coords.longitude;      
+    juen = `${lat},${lon}`;
+    pos.push(
+      {"pos": `${lat}/${lon}`,"teamName": localStorage.getItem('teamname')});
+    currentPos = [...pos];
+  })
+  const [statePos,setPos] = useState([]) //홈에서 map 으로 pos정보를 주기위한 state 단 map에서는 props임
+  useEffect(() => {
+    console.log(statePos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e)));
+    let saveName = savePos.map(e => e.teamName)
+    let pushName = statePos.map(e => e.teamName).join("")
+    if(saveName.includes(pushName) === true) {
+      savePos.splice(savePos.indexOf(pushName),1)
+      console.log('중복');
+    } else {
+      savePos = [...savePos,...statePos]
+      console.log('안중복');
+    }
+    console.log(savePos);
+  },[statePos])
+
+  
+
+  const startRomm = async() => {
+    try {
+      const res = await _userRoom.creatRoom({
+        roomName: "1번팀의 방",
+        teamName: "1번팀",
+        latIng: juen
+      })
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const removeRoom = async () => {
+    try {
+      const res = await _userRoom.deleteRoom({
+        roomName: "1번팀의 방",
+        teamName: "1번팀",
+      })
+      console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  // const startBusK = async() => {
+  //   try {
+  //     const res = await _teamServer.postOnAir({
+  //       teamName: localStorage.getItem('teamname')
+  //     })
+  //     if(res.data.data === false) {
+  //       alert('방송종료')
+  //     }else {
+  //       alert('방송시작!');
+  //     }
+  //     item = !item;
+  //     console.log(res);
+  //   let lon = position.coords.longitude;
+  //   pos.push(`${lat},${lon}`);
+  //   pos2 = [...pos];
+  //   // console.log(pos2);
+  // });
   const [pos20, setPos2] = useState([]);
   const [text, setText] = useState("");
   const [item, setitem] = useState(false);
   const [manage, setmanage] = useState(false);
   const [userName, setUserName] = useState("");
   const [onAirURL, setOnAirURL] = useState("");
+  const [teamName, setTeamName] = useState("");
 
   const startBus = () => {
     setPos2(pos2);
@@ -138,18 +230,14 @@ function Home() {
       const res = await _teamServer.postOnAir({
         teamName: localStorage.getItem("teamname"),
       });
-      alert("방송시작!");
+      if(res.data.data === false) {
+        alert('방송종료')
+      }else {
+        alert('방송시작!');
+      }
       setmanage(!manage);
     } catch (error) {
       console.log(error);
-    }
-  };
-
-  const haveTeam = () => {
-    if (localStorage.getItem("teamname") === "null") {
-      teamBoolean = false;
-    } else {
-      teamBoolean = true;
     }
   };
 
@@ -169,10 +257,9 @@ function Home() {
       } catch (error) {
         console.log(error);
       }
-      setitem(!item);
+      setitem(true);
     }
   };
-  haveTeam();
   const getOnAirURL = async () => {
     try {
       const res = await _teamServer.searchTeam(
@@ -198,7 +285,7 @@ function Home() {
     <>
       <ReMap pos3={pos20} />
       <Costainer>
-        {!teamBoolean && (
+        {userName != "null" && localStorage.getItem("teamname") == "null" && (
           <>
             <Span1>팀을 생성해야 버스킹을 시작할 수 있습니다.</Span1>
             <Btn>
@@ -210,8 +297,10 @@ function Home() {
             <Title1>BUSKiNG hELPER</Title1>
           </>
         )}
-        <>
-          {!item && teamBoolean && onAirURL === null && (
+
+        {userName != "null" &&
+          localStorage.getItem("teamname") !== "null" &&
+          onAirURL == null && (
             <>
               <Span3>
                 버스킹을 시작하려면<br></br>제목을 설정해야합니다!
@@ -230,37 +319,39 @@ function Home() {
               <Title1>BUSKiNG hELPER</Title1>
             </>
           )}
-          {(item || onAirURL !== null) && { userName } !== null && (
+
+        {userName != "null" &&
+          localStorage.getItem("teamname") !== "null" &&
+          onAirURL != null && (
             <>
+              
               <StartBtn onClick={(startBus, startBusK)}>
                 {!manage && startBusKing} 
                 {manage && endBusKing}
               </StartBtn>
-
               <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
-              <BuskingMange
-                to={`/buskingmanage/${text}}/${localStorage.getItem(
-                  "teamname"
+              <BuskingMange2
+                to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
+                  localStorage.getItem("teamname")
                 )}`}
               >
                 ⎧BUSKiNG MANAGEMENT⎭
-              </BuskingMange>
-
-              <MapText2>[ 버스커들이 당신을 기다리는 장소 ]</MapText2>
+              </BuskingMange2>
+              <MapText3>[ 버스커들이 당신을 기다리는 장소 ]</MapText3>
               <Title1>BUSKiNG hELPER</Title1>
             </>
           )}
 
-          {userName === "null" && (
-            <>
-              <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
-              <Title1>BUSKiNG hELPER</Title1>
-            </>
-          )}
+        {userName == "null" && (
+          <>
+            <Span3>버스킹을 시작하려면 로그인을 해주세요!</Span3>
+            <MapText4>[ 버스커들이 당신을 기다리는 장소 ]</MapText4>
+            <Title1>BUSKiNG hELPER</Title1>
+          </>
+        )}
 
-          <br />
-          <br />
-        </>
+        <br />
+        <br />
       </Costainer>
     </>
   );

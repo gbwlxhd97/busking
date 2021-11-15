@@ -25,7 +25,11 @@ const Title = styled.div`
   padding-right: 10px;
 `;
 
-const Reservation = styled.div``;
+const Reservation = styled.div`
+  overflow: auto;
+
+  margin-left: 10px;
+`;
 
 const RLink = styled(Link)`
   color: white;
@@ -71,6 +75,31 @@ const Table = styled.table`
   border-collapse: collapse;
 `;
 
+const P = styled.p`
+  margin-left: 35px;
+  background-color: #282828;
+  border: none;
+  color: white;
+  font-size: 16px;
+`;
+
+const DeleteBtn = styled.button`
+  margin-top: 10px;
+  margin-left: 10px;
+`;
+
+const RadioBox = styled.input`
+  margin-left: 10px;
+`;
+
+const RSection =styled.div`
+  max-height: 120px;
+  overflow: auto;
+`;
+
+const Span = styled.span`
+  margin-left: 10px;
+`;
 class UserRoom extends React.Component {
   state = {
     teamInfo: {},
@@ -83,6 +112,8 @@ class UserRoom extends React.Component {
     roomName: "",
     teamName: "",
     musicArr: null,
+    radioBtn: false,
+    radioInfo: {},
   };
 
   getSong = async () => {
@@ -161,8 +192,24 @@ class UserRoom extends React.Component {
     });
   };
 
+  check = async (e) => {
+    try {
+      const res = await _musicServer.getSong(e.target.value);
+      const {
+        data: { data },
+      } = res;
+      this.setState({
+        radioBtn: true,
+        radioInfo: data,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   render() {
-    const { musicsInfo, teamInfo, click, musicArr } = this.state;
+    const { radioBtn, radioInfo, musicsInfo, teamInfo, click, musicArr } =
+      this.state;
 
     return (
       <Container>
@@ -172,40 +219,53 @@ class UserRoom extends React.Component {
             🎵 {teamInfo.teamName} 방
           </Title>
         </Section>
-
+        <Btn>
+          <RLink to={`/reservation/${teamInfo.teamName}`}>
+            ⎧노래 예약하러가기 ᐳ
+          </RLink>
+        </Btn>
         <Section>
           <Reservation>
-            <Btn onClick={this.openTable}>⎧예약 노래 보기 ᐳ</Btn>
-            {click ? (
-              <Table>
-                <thead>
-                  <tr>
-                    <Th>No.</Th>
-                    <Th>Singer</Th>
-                    <Th>Music</Th>
-                  </tr>
-                </thead>
-                <Tbody>
-                  {musicArr.map((e, index) => (
-                    <tr key={e.id}>
-                      <Td>{index + 1}</Td>
-                      <Td>{e.title}</Td>
-                      <Td>{e.singer}</Td>
-                    </tr>
-                  ))}
-                </Tbody>
-              </Table>
-            ) : (
-              <div></div>
+            {!radioBtn &&
+              musicsInfo.map((song, index) => (
+                <div key={song.id}>
+                  {index === 0 && (
+                    <>
+                      <Lyrics
+                        lyrics={musicsInfo[0].lyrics}
+                        singer={musicsInfo[0].singer}
+                        img={musicsInfo[0].profileImgURL}
+                        title={musicsInfo[0].title}
+                      />
+                    </>
+                  )}
+                </div>
+              ))}
+            {radioBtn && (
+              <Lyrics
+                lyrics={radioInfo.lyrics}
+                singer={radioInfo.singer}
+                img={radioInfo.profileImgURL}
+                title={radioInfo.title}
+              />
             )}
-            <Btn>
-              <RLink to={`/reservation/${teamInfo.teamName}`}>
-                ⎧노래 예약하러가기 ᐳ
-              </RLink>
-            </Btn>
           </Reservation>
+          <P>⎧예약 노래된 노래</P>
+          <RSection>
+          {musicsInfo.map((song, index) => (
+            <div key={index}>
+              <RadioBox
+                type="radio"
+                name="platform"
+                value={song.title}
+                onChange={this.check}
+              />
+              <Span>{song.title}</Span> -
+              <Span>{song.singer}</Span>
+            </div>
+          ))}
+          </RSection>
         </Section>
-
       </Container>
     );
   }
