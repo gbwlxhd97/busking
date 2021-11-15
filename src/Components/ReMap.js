@@ -10,6 +10,7 @@ let test3;
 let t1;
 let t2;
 let intro = []
+let savePositions = []
 let posArr = []
 //밑에는 home.js에서 props로 각 사용자별 위치값을 [{}] 형태로 넣어주는 위치데이터
 var buskerPositions = [
@@ -28,6 +29,7 @@ let real
 let real2
 let real3
 function ReMap(props) {
+    console.log(savePositions);
     let currentPos = [];
     let savePosData = [];
     let res
@@ -215,7 +217,18 @@ const getRoom = async () => {
     try {
         const res = await _userRoom.getRoom();
         const {data:{data}} = res
-        console.log(data.map(e => e.latIng).join(",").split(","));
+        let a = data.map(e => e.latIng)
+        a.pop()
+        let b = a.join(" ").split(",");
+        savePositions.push({
+            "lat": b[0],
+            "lon": b[1]
+        })
+        
+        console.log(savePositions.map(e => parseFloat(e.lat)));
+        // console.log(Object.assign({},savePositions));
+        // console.log(a.join(",").split(",").map(parseFloat)); //소수 자리수 계산하기.
+        console.log(savePositions);
     } catch (error) {
         console.log(error);
     }
