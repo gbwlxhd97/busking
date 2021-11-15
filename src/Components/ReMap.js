@@ -46,18 +46,18 @@ function ReMap(props) {
         console.log(tes1);
     },[]);
     useEffect(() => {
-        // console.log(pospos);
-        console.log(props.posData);
-        // savePosData = [...savePosData,...pospos]
-        console.log(savePosData);
-        if(pospos.length >0) {
-            res = pospos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e))
-            // console.log(res.map(e => new kakao.maps.LatLng(e)));
-            real = res
-            real2 = real[0]
-            real3 = real[1]
-        } 
-        console.log(real2);
+        // // console.log(pospos);
+        // console.log(props.posData);
+        // // savePosData = [...savePosData,...pospos]
+        // console.log(savePosData);
+        // // if(pospos.length >0) {
+        //     res = pospos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e))
+        //     // console.log(res.map(e => new kakao.maps.LatLng(e)));
+        //     real = res
+        //     real2 = real[0]
+        //     real3 = real[1]
+        // // } 
+        // console.log(real2);
         
     })
     var positionss = [

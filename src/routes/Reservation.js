@@ -7,9 +7,20 @@ import Loader from "../Components/Loader";
 import Message from "../Components/Message";
 import styled from "styled-components";
 
+
 const Container = styled.div`
+  margin: 8px;
+  font-size: 17px;
   color: white;
 `;
+
+const Musics = styled.div`
+  margin-top: 15px;
+`
+
+const Music = styled.div`
+  margin: 10px 0;
+`
 
 const Form = styled.form`
   display: flex;
@@ -18,7 +29,7 @@ const Form = styled.form`
   width: 100%;
 `;
 const Input = styled.input`
-  padding: 0 5px;
+  padding: 0 6px;
   border-radius: 7px;
   width: 60%;
 `;
@@ -37,6 +48,24 @@ const Div = styled.div`
 `;
 const ReserveBtn = styled.button`
   float: right;
+  margin-top: 30px;
+  padding: 3px 5px;
+  border-radius: 10px;
+  background-color: white;
+  background-color: #ffc314;
+  &:hover {
+    background-color: black;
+    color: white;
+  }
+`;
+const Img = styled.img`
+  vertical-align: middle;
+  width: 90px;
+  height: 90px;
+  margin-right: 10px;
+`;
+
+const PostBtn = styled.button`
   margin-top: 12px;
   padding: 3px 5px;
   border-radius: 10px;
@@ -45,12 +74,6 @@ const ReserveBtn = styled.button`
     background-color: black;
     color: white;
   }
-`;
-
-const Img = styled.img`
-  vertical-align: middle;
-  width: 100px;
-  height: 100px;
 `;
 
 class Reservation extends React.Component {
@@ -62,6 +85,11 @@ class Reservation extends React.Component {
     loading: false,
     songList: [],
     error: null,
+
+    title: "",
+    singer: "",
+    profileImgURL: "",
+    lyrics: "",
   };
 
   componentDidMount() {
@@ -80,6 +108,7 @@ class Reservation extends React.Component {
         data: { data },
       } = res;
       var URL = data.onAirURL.split("/");
+      console.log(URL);
       this.setState({
         roomName: URL[4],
         teamName: URL[5],
@@ -93,14 +122,19 @@ class Reservation extends React.Component {
 
   postReservateMusic = async () => {
     const { roomName, teamName } = this.state;
+    console.log(this.postArray);
     try {
-      var res = await _userRoom.postMusic({
+      const res = await _userRoom.postMusic({
         roomName: roomName,
         teamName: teamName,
+        userNickname: localStorage.getItem("username"),
+        title: this.postArray[0],
+        singer: this.postArray[1],
       });
     } catch (error) {
       console.log(error);
     }
+    this.postArray = [];
   };
 
   handleSearch = (event) => {
@@ -150,28 +184,15 @@ class Reservation extends React.Component {
       searchTerm: value,
     });
   };
-
-  MusicList = (musicInfo) => {
-    console.log(musicInfo[0], musicInfo[1]);
-    return (
-      <div>
-        {musicInfo[0]}-{musicInfo[1]}
-      </div>
-    );
-  };
-
-  reservationBtn = () => {
-    localStorage.getItem("username")
-      ? console.log("예약 성공")
-      : alert("이용할 수 없는 사용자입니다.");
-  };
-  musicBox = []
-  musicId
-  musicTitle
   
+  musicArray = [];
+  postArray = [];
   render() {
-    // console.log(this.musicBox);
+    {
+      console.log(localStorage.getItem("teamname"));
+    }
     let { songList, loading, error } = this.state;
+    console.log(localStorage.getItem("teamname"));
     return (
       <Container>
         <Form onSubmit={this.handleSearch}>
@@ -189,17 +210,53 @@ class Reservation extends React.Component {
             {songList.length > 0 && songList && (
               <>
                 <Div>
-                  <Section title="음악리스트">
+                  <Section title="음악리스트">
+                    <Musics>
                     {songList.map((song) => (
-                      <div className="musicList" key={song.id}>
+                      <Music className="musicList" key={song.id}>
                         <Img src={song.profileImgURL} alt="profile"></Img>
-                        <span id="title">{song.title}</span>-
-                        <span id="singer">{song.singer}</span>
-                        <ReserveBtn onClick={this.reservationBtn,() => {this.musicBox.push({"title":song.title,"singer":song.singer,"index":song.length}); console.log(this.musicBox);}}>
+                        <span id="title">{song.title}</span> - <span id="singer">{song.singer}</span>
+                        <ReserveBtn
+                          onClick={
+                            (this.reservationBtn,
+                            () => {
+                              if (localStorage.getItem("username") == null) {
+                                alert("로그인 후 이용가능합니다")
+                              } else {
+                              if (this.musicArray.length === 0) {
+                                this.musicArray.push(song.title, song.singer);
+                                this.postArray.push(song.title, song.singer);
+                                this.postReservateMusic();
+                              } else {
+                                if (this.musicArray.length === 4) {
+                                  alert("최대 2개까지 예약이 가능합니다.");
+                                } else {
+                                  if (
+                                    this.musicArray.includes(song.title) ===
+                                    true
+                                  ) {
+                                    alert("이미 넣으신 노래 입니다.");
+                                  } else {
+                                    this.musicArray.push(
+                                      song.title,
+                                      song.singer
+                                    );
+                                    this.postArray.push(
+                                      song.title,
+                                      song.singer
+                                    );
+                                    this.postReservateMusic();
+                                  }
+                                }
+                              }}
+                            })
+                          }
+                        >
                           예약하기
                         </ReserveBtn>
-                      </div>
+                      </Music>
                     ))}
+                    </Musics>
                   </Section>
                 </Div>
               </>

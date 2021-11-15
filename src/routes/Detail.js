@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { _userServer } from "../service/user";
 import { Link } from "react-router-dom";
+import { _teamServer } from "../service/team";
 const Container = styled.div`
   margin-left: 15%;
   background-color: white;
@@ -48,21 +49,37 @@ const UserImg = styled.img`
   border-radius: 50%;
 `;
 
+const Buttons = styled.div`
+  margin-right: 56.250px;
+  display: flex;
+  justify-content: space-between;
+`
+
+
 const Btn = styled.button`
-  width: auto;
-  height: auto;
-  padding: 7px;
-  margin-top: 5px;
-  margin-left: 5px;
-  border: none;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
-  border-radius: 5px;
-  background-color: white;
+  font-size: 14px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  background-color: #ffc314;
   &:active {
     background-color: gray;
   }
 `;
+
+const ResetBtn = styled.button`
+font-size: 14px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  background-color: #ffc314;
+  &:active {
+    background-color: gray;
+  }
+`;
+
+const Reset = styled(Link)`
+  text-decoration: none;
+  color: black;
+`
 
 const SLink = styled(Link)`
   color: black;
@@ -82,6 +99,9 @@ export default class extends React.Component {
     value: "",
     duplicateCheck: false,
     change: false,
+    teamName: "",
+    roomName: "",
+    teamBoolean: false,
   };
   onClick = () => {
     this.setState({
@@ -146,8 +166,7 @@ export default class extends React.Component {
         const fixData = await _userServer.putUserDetail({
           oldNickname: nickName,
           nickname: this.state.userNickname,
-          profileImgURL:
-            "https://blog.kakaocdn.net/dn/bke9cp/btq6zCmm4gR/BvSVvMAoZfGBA8ykfXw4gk/img.jpg",
+          profileImgURL: this.state.userImgUrl,
           introduce: this.state.introduce,
         });
         alert("정보 수정 완료");
@@ -189,6 +208,7 @@ export default class extends React.Component {
         params: { nickName },
       },
     } = this.props;
+
     try {
       const info = await _userServer.getUserDetail(nickName);
       let {
@@ -211,17 +231,67 @@ export default class extends React.Component {
         loading: false,
       });
     }
+
+    if (localStorage.getItem("teamname") !== "null") {
+      this.getRoomInfo();
+      this.setState({
+        teamBoolean: !this.state.teamBoolean,
+      });
+    }
   }
 
+  getRoomInfo = async () => {
+    try {
+      const res = await _teamServer.searchTeam(
+        localStorage.getItem("teamname")
+      );
+      let {
+        data: { data },
+      } = res;
+      this.setState({
+        teamName: data.onAirURL.split("/")[5],
+        roomName: data.onAirURL.split("/")[4],
+      });
+    } catch (error) {
+      this.setState({ error: "응애" });
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
+  };
+
+  imgSelete = (e) => {
+    console.log(e)
+/*     this.setState = ({
+      userImgUrl: e.target.value,
+    }); */
+  };
   render() {
     const now = new Date(); // 현재 날짜 및 시간
     var year = now.getFullYear();
-    const { btnClick, userNickname, birthday, gender, userImgUrl, introduce } =
-      this.state;
+    const {
+      btnClick,
+      userNickname,
+      birthday,
+      gender,
+      userImgUrl,
+      introduce,
+      teamName,
+      roomName,
+      teamBoolean,
+    } = this.state;
     return (
       <Container>
         <ImgSection>
-          <UserImg src={userImgUrl} />
+          {btnClick === true ? (
+            <UserImg src={userImgUrl} />
+          ) : (
+            <>
+              <UserImg src={userImgUrl} />
+              <input type="file" onChange={this.imgSelete} />
+            </>
+          )}
         </ImgSection>
 
         <DetailSectionList>
@@ -235,7 +305,7 @@ export default class extends React.Component {
             </Details>
           ) : (
             <Details>
-              <form>
+              <div>
                 nickname:
                 <br />
                 <Input
@@ -245,7 +315,7 @@ export default class extends React.Component {
                   placeholder={userNickname}
                 />
                 <Btn onClick={this.dupleicateClick}>중복 체크</Btn>
-              </form>
+              </div>
             </Details>
           )}
 
@@ -259,7 +329,7 @@ export default class extends React.Component {
             </Details>
           ) : (
             <Details>
-              <form>
+              <div>
                 introduce:
                 <br />
                 <Input
@@ -268,7 +338,7 @@ export default class extends React.Component {
                   onChange={this.introChange}
                   placeholder={introduce}
                 />
-              </form>
+              </div>
             </Details>
           )}
 
@@ -288,19 +358,35 @@ export default class extends React.Component {
             <Span>{gender}</Span>
           </Details>
 
-          {btnClick === true ? (
+          
+        </DetailSectionList>
+
+        <Buttons>
+        {btnClick === true ? (
             <>
               <Btn onClick={this.onClick}>정보 수정</Btn>
-              <Btn>
-                <SLink to={`/buskingmanage/${userNickname}`}>공연 관리</SLink>
-              </Btn>
+              {teamBoolean && (
+                <Btn>
+                  <SLink to={`/buskingmanage/${roomName}/${teamName}`}>
+                    공연 관리
+                  </SLink>
+                </Btn>
+              )}
             </>
           ) : (
             <Btn onClick={this.offClick} onClick={this.handleFix}>
               수정 완료
             </Btn>
           )}
-        </DetailSectionList>
+          {localStorage.getItem("teamname") !== "null" && (
+          <ResetBtn>
+            <Reset to={`/creatteam/${localStorage.getItem("username")}`}>
+              팀이름변경
+            </Reset>
+          </ResetBtn>
+        )}
+        </Buttons>
+        
       </Container>
     );
   }

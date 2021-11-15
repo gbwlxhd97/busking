@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Home from "../routes/Home";
-import Login from "../routes/Login";
+import Login from "../routes/Login"
 import SignUp from "../routes/SignUp";
 import SearchUser from "../routes/SearchUser";
 import Reservation from "../routes/Reservation";
@@ -11,6 +11,7 @@ import LoginHeader from "../Components/LoginHeader";
 import UserRoom from "../routes/UserRoom";
 import BuskingMange from "../routes/BuskingManage";
 import "../routes/Home.css";
+import CreatTeam from "../routes/CreatTeam";
 
 
 export default () => (
@@ -29,7 +30,9 @@ export default () => (
       <Route path="/userdetail/:nickName" exact component={Detail} />
       <Route path="/searchuser" exact component={SearchUser} />
       <Route path="/userroom/:teamName" exact component={UserRoom} />
-      <Route path="/buskingmanage/:nickName" exact component={BuskingMange} />
+      <Route path="/buskingmanage/:roomName/:teamName" exact component={BuskingMange} />
+      <Route path="/creatteam/:nickName" exact component={CreatTeam}/>
     </>
   </Router>
 );
+
