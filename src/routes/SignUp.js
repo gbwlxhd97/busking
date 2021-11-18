@@ -83,7 +83,7 @@ function Sign() {
         birthday: values.birthday,
         gender: values.gender,
       });
-      console.log(res);
+      // console.log(res);
       if (res.data === 409) {
         alert("해당 아이디는 혹은 닉네임이 중복됩니다.");
         return;

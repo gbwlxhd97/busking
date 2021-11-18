@@ -216,6 +216,7 @@ function Home() {
   const [text, setText] = useState("");
   const [item, setitem] = useState(false);
   const [manage, setmanage] = useState(false);
+  const [checkOn,setCheckOn] = useState()
   const [userName, setUserName] = useState("");
   const [onAirURL, setOnAirURL] = useState("");
   const [teamName, setTeamName] = useState("");
@@ -233,8 +234,12 @@ function Home() {
       });
       if(res.data.data === false) {
         alert('방송종료')
+        // window.location.reload()
+        setCheckOn(false)
       }else {
         alert('방송시작!');
+        // window.location.reload()
+        setCheckOn(true)
       }
       setmanage(!manage);
     } catch (error) {
@@ -282,9 +287,11 @@ function Home() {
       getOnAirURL();
     }
   }, []);
+  
+
   return (
     <>
-      <ReMap pos3={pos20} />
+      <ReMap pos3={pos20}  />
       <Costainer>
         {userName != "null" && localStorage.getItem("teamname") == "null" && (
           <>
@@ -327,9 +334,11 @@ function Home() {
             <>
               
               <StartBtn onClick={(startBus, startBusK)}>
-                {startBusKing}
+                {checkOn   && endBusKing}
+                {!checkOn  && startBusKing}
               </StartBtn>
-              <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
+              {!checkOn && <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>}
+              {checkOn && <Span1>버스킹을 종료하시려면 위를 눌러주세요.</Span1>}
               <BuskingMange2
                 to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
                   localStorage.getItem("teamname")

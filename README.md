@@ -1,19 +1,18 @@
-# 2021 융소 공모전. 버스킹 웹뷰 프로젝트
+# 2021 융소 공모전. 버스킹 웹뷰 & 웹뷰 어플리케이션 프로젝트
 
-### 화면 뷰 필수기능
+## Web Deploy : https://focused-ride-b1185f.netlify.app/
 
-- [ ] Home
-- [ ] Login & Sign Up
-- [ ] Listener / Lyrics & View
+## android downUrl : https://expo.dev/artifacts/9661e5ec-78ce-4036-9c94-af73e154957e
 
-### 화면 뷰 세부기능
-
-- [ ] Reservation
+## ios downUrl : https://expo.dev/artifacts/4140913f-6aa5-4b42-a3c5-c7d536f1083f
 
 ### 메인 화면 개발 일지
 
-08-29: 카카오 api 를 이용하여 지도 생성
-내 위치 다른사람 위치 표시
+- [O] 현재 나의 위치를 지도에 표시해둠.
+- [O] 버스킹 방송을 진행한 팀들의 위치를 지도에 표시
+- [O] 버스킹 방송을 진행하고 있는 팀을 검색
+- [O] 버스킹을 진행하고 있는 노래의 가사와 노래 제목을 관람객들이 볼 수 있음
+- [O] 노래를 예약할 수 있고 예약된 곡을 취소할 수 있음.
 
 ### 폴더 구조 설명
 
