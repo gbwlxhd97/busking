@@ -52,9 +52,9 @@ function ReMap(props) {
             latlng: new kakao.maps.LatLng(real2, real3)
         }
     ]
-    useEffect(() => {
-        setPosPos(props.posData)
-    })
+    // useEffect(() => {
+    //     setPosPos(props.posData)
+    // })
 
     // team api
     const getTeam = async () => {
@@ -169,7 +169,6 @@ function setBuskerMarker(map) {
 
 setBuskerMarker(map) 
     },[tes1])
-    
     return (
         <div id="myMap" 
             style={{
