@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { _userServer } from "../service/user";
 import { Link } from "react-router-dom";
 import { _teamServer } from "../service/team";
+
+
 const Container = styled.div`
   margin-left: 15%;
   background-color: white;
@@ -283,6 +285,7 @@ export default class extends React.Component {
     } = this.state;
     return (
       <Container>
+        {console.log(this.props)}
         <ImgSection>
           {btnClick === true ? (
             <UserImg src={userImgUrl} />
@@ -386,7 +389,6 @@ export default class extends React.Component {
           </ResetBtn>
         )}
         </Buttons>
-        
       </Container>
     );
   }

@@ -272,7 +272,6 @@ function Home() {
             <Title1>BUSKiNG hELPER</Title1>
           </>
         )}
-
         <br />
         <br />
       </Costainer>

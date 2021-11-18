@@ -158,7 +158,7 @@ class SearchUser extends React.Component {
             placeholder="버스커를 검색해주세요"
             onChange={this.updateTerm}
           />
-          {this.state.loading ? (
+          { this.state.loading ? (
             <div>
               <br />
               <Span2>🎵 버스커 검색 결과</Span2>
