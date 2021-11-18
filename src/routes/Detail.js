@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { _userServer } from "../service/user";
 import { Link } from "react-router-dom";
 import { _teamServer } from "../service/team";
+var QRCode = require('qrcode.react');
 const Container = styled.div`
   margin-left: 15%;
   background-color: white;
@@ -66,6 +67,24 @@ const Btn = styled.button`
   }
 `;
 
+const QRBtn = styled.span`
+  display: inline-block;
+  width: 80px;
+  left: 50%;
+  top: 67%;
+  position: absolute;
+  transform: translate(-50%,0);
+  /* width: 50px;
+  height: 40px; */
+  font-size: 14px;
+  padding: 6px 7px;
+  border-radius: 8px;
+  background-color: #ffc314;
+  &:active {
+    background-color: gray;
+  }
+`;
+
 const ResetBtn = styled.button`
 font-size: 14px;
   padding: 6px 7px;
@@ -86,6 +105,10 @@ const SLink = styled(Link)`
   text-decoration-line: none;
 `;
 
+const QrContainer = styled.div`
+  margin-left: 20px;
+`;
+
 export default class extends React.Component {
   state = {
     userNickname: "",
@@ -102,13 +125,18 @@ export default class extends React.Component {
     teamName: "",
     roomName: "",
     teamBoolean: false,
+    QRBoolean:false
   };
   onClick = () => {
     this.setState({
       btnClick: !this.state.btnClick,
     });
   };
-
+  QRView =()=>{
+    this.setState({
+      QRBoolean:!this.state.QRBoolean
+    })
+  }
   offClick = () => {
     if (this.state.duplicateCheck === false) {
       alert("중복 체크를 해주세요");
@@ -293,7 +321,7 @@ export default class extends React.Component {
             </>
           )}
         </ImgSection>
-
+            
         <DetailSectionList>
           {btnClick === true ? (
             <Details>
@@ -386,6 +414,12 @@ export default class extends React.Component {
           </ResetBtn>
         )}
         </Buttons>
+            <QRBtn onClick={this.QRView}>
+            {this.state.QRBoolean ? "QR제거버튼" : "QR생성버튼"}
+            </QRBtn>
+            {this.state.QRBoolean && 
+            <QRCode value="https://focused-ride-b1185f.netlify.app/userroom/1번팀" />
+            }
         
       </Container>
     );
