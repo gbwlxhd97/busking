@@ -113,6 +113,8 @@ class Reservation extends React.Component {
         roomName: URL[4],
         teamName: URL[5],
       });
+      console.log(this.state);
+      console.log(URL);
     } catch (error) {
       console.log(error);
     }
@@ -143,6 +145,7 @@ class Reservation extends React.Component {
     }
   };
 
+  saveMusicData = [];
   searchByTerm = async () => {
     const { searchTerm } = this.state;
     this.setState({
@@ -153,12 +156,14 @@ class Reservation extends React.Component {
       let {
         data: { data },
       } = res;
+      // console.log(data);
       this.setState({
         songList: data,
       });
       if (res.data.status === 204) {
         throw new Error("catch");
       }
+      console.log(this.state.songList);
     } catch (error) {
       this.setState({
         error:
@@ -245,7 +250,8 @@ class Reservation extends React.Component {
                                 }
                               }}
                             })
-                          }
+                          //,() => {alert('예약성공');window.location.href= `/userdetail/${localStorage.getItem("username")}`}
+                        }
                         >
                           예약하기
                         </ReserveBtn>
