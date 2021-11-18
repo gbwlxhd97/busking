@@ -128,7 +128,7 @@ class UserRoom extends React.Component {
           musicsInfo: this.state.musicsInfo.concat(data),
         });
       } catch (error) {
-        this.setState({ error: "응애" });
+        this.setState({ error: "에러" });
       } finally {
         this.setState({
           loading: false,
@@ -153,9 +153,9 @@ class UserRoom extends React.Component {
         teamName: data.onAirURL.split("/")[5],
         roomName: data.onAirURL.split("/")[4],
       });
-      console.log(this.state.teamName, this.state.roomName);
+      // console.log(this.state.teamName, this.state.roomName);
     } catch (error) {
-      this.setState({ error: "응애" });
+      this.setState({ error: "에러" });
     } finally {
       this.setState({
         loading: false,

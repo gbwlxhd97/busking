@@ -132,6 +132,7 @@ class BuskingMange extends React.Component {
       });
     } catch (error) {
       console.log(error);
+      console.log("어디서 캐치 되나");
     }
   };
 

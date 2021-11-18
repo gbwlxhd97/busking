@@ -250,7 +250,8 @@ class Reservation extends React.Component {
                                 }
                               }}
                             })
-                          }
+                          //,() => {alert('예약성공');window.location.href= `/userdetail/${localStorage.getItem("username")}`}
+                        }
                         >
                           예약하기
                         </ReserveBtn>

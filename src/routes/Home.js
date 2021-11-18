@@ -155,17 +155,17 @@ function Home() {
   })
   const [statePos,setPos] = useState([]) //홈에서 map 으로 pos정보를 주기위한 state 단 map에서는 props임
   useEffect(() => {
-    console.log(statePos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e)));
+    // console.log(statePos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e)));
     let saveName = savePos.map(e => e.teamName)
     let pushName = statePos.map(e => e.teamName).join("")
     if(saveName.includes(pushName) === true) {
       savePos.splice(savePos.indexOf(pushName),1)
-      console.log('중복');
+      // console.log('중복');
     } else {
       savePos = [...savePos,...statePos]
-      console.log('안중복');
+      // console.log('안중복');
     }
-    console.log(savePos);
+    // console.log(savePos);
   },[statePos])
 
   
@@ -216,6 +216,7 @@ function Home() {
   const [text, setText] = useState("");
   const [item, setitem] = useState(false);
   const [manage, setmanage] = useState(false);
+  const [checkOn,setCheckOn] = useState()
   const [userName, setUserName] = useState("");
   const [onAirURL, setOnAirURL] = useState("");
   const [teamName, setTeamName] = useState("");
@@ -232,8 +233,12 @@ function Home() {
       });
       if(res.data.data === false) {
         alert('방송종료')
+        // window.location.reload()
+        setCheckOn(false)
       }else {
         alert('방송시작!');
+        // window.location.reload()
+        setCheckOn(true)
       }
       setmanage(!manage);
     } catch (error) {
@@ -281,9 +286,11 @@ function Home() {
       getOnAirURL();
     }
   }, []);
+  
+
   return (
     <>
-      <ReMap pos3={pos20} />
+      <ReMap pos3={pos20}  />
       <Costainer>
         {userName != "null" && localStorage.getItem("teamname") == "null" && (
           <>
@@ -329,7 +336,8 @@ function Home() {
                 {!manage && startBusKing} 
                 {manage && endBusKing}
               </StartBtn>
-              <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>
+              {!checkOn && <Span1>버스킹을 시작하시려면 위를 눌러주세요.</Span1>}
+              {checkOn && <Span1>버스킹을 종료하시려면 위를 눌러주세요.</Span1>}
               <BuskingMange2
                 to={`/buskingmanage/${String(onAirURL.split("/")[4])}/${String(
                   localStorage.getItem("teamname")

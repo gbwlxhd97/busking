@@ -15,7 +15,7 @@ let posArr = []
 //밑에는 home.js에서 props로 각 사용자별 위치값을 [{}] 형태로 넣어주는 위치데이터
 var buskerPositions = [
     {
-        latlng: new kakao.maps.LatLng(37.497535461505684, 127.02948149502778),
+        latlng: new kakao.maps.LatLng(36.994053, 127.147577),
     },
     {
         latlng: new kakao.maps.LatLng(38.49671536281186, 127.03020491448352),
@@ -39,28 +39,14 @@ function ReMap(props) {
     const [pospos,setPosPos] = useState([])
     const [tes1,setTes1] = useState(burkerImgSave)
     
+
     //api Hooks
     useEffect(() => {
         getUser();
         getTeam();
         getRoom();
-        console.log(tes1);
     },[]);
-    useEffect(() => {
-        // // console.log(pospos);
-        // console.log(props.posData);
-        // // savePosData = [...savePosData,...pospos]
-        // console.log(savePosData);
-        // // if(pospos.length >0) {
-        //     res = pospos.map(item => item.pos).join(',').split(',').map(e => parseFloat(e))
-        //     // console.log(res.map(e => new kakao.maps.LatLng(e)));
-        //     real = res
-        //     real2 = real[0]
-        //     real3 = real[1]
-        // // } 
-        // console.log(real2);
-        
-    })
+
     var positionss = [
         {
             latlng: new kakao.maps.LatLng(real2, real3)
@@ -75,10 +61,10 @@ function ReMap(props) {
         try {
             const res =await _teamServer.getAllTeam()
             const {data: {data}} =res;
-            console.log(data);
+            // console.log(data);
             const on = data.filter(e => e.onAir === true) //방송킨사람
             intro = on
-            console.log(on);
+            // console.log(on);
             burkerImgSave = [...on.map(e => e.leader.userDetail)]
             setTes1(burkerImgSave)
         
@@ -122,8 +108,7 @@ function ReMap(props) {
         };
         const map = new kakao.maps.Map(container, options);
         setKakaoMap(map)
-
-
+        
 // 마커이미지의 주소와, 크기, 옵션으로 마커 이미지를 생성하여 리턴하는 함수입니다
 function createMarkerImage(src, size, options) {
     var markerImage = new kakao.maps.MarkerImage(src, size, options);
@@ -153,12 +138,12 @@ createBuskerData()
 //버스커들 정보를 만들어서 각 함수(ex: 이미지,소개글 ...)에 전달해주는 함수
 function createBuskerData() {
     let iwRemoveable = true; //x버튼
-    console.log(tes1);
+    // console.log(tes1);
     for(let i=0; i <tes1.length; i++) {
         let imageSize = new kakao.maps.Size(30, 36),
             imageOptions = {   
-                spriteOrigin: new kakao.maps.Point(10, 36),    
-                spriteSize: new kakao.maps.Size(50, 98)  
+                spriteOrigin: new kakao.maps.Point(5, 32),    
+                spriteSize: new kakao.maps.Size(50, 128)  
             };       
     
         let infowindow = new kakao.maps.InfoWindow({
@@ -181,6 +166,7 @@ function setBuskerMarker(map) {
     }   
 }
 //최종적으로 지도에 이미지를 뿌려줌
+
 setBuskerMarker(map) 
     },[tes1])
     
@@ -206,7 +192,7 @@ const getUser = async() => {
     try {
         const res = await _userServer.getAllUser();
         const {data: {data}} =res;
-        console.log(data);
+        // console.log(data);
     } catch (error) {
         console.log(error);
     }
@@ -220,14 +206,16 @@ const getRoom = async () => {
         a.pop()
         let b = a.join(" ").split(",");
         savePositions.push({
+            "name": localStorage.getItem('username'),
             "lat": b[0],
             "lon": b[1]
         })
         
-        console.log(savePositions.map(e => parseFloat(e.lat)));
+        // console.log(savePositions.map(e => parseFloat(e.lat)));
         // console.log(Object.assign({},savePositions));
         // console.log(a.join(",").split(",").map(parseFloat)); //소수 자리수 계산하기.
-        console.log(savePositions);
+        // console.log(savePositions);
+        
     } catch (error) {
         console.log(error);
     }
