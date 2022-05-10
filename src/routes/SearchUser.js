@@ -183,7 +183,6 @@ class SearchUser extends React.Component {
           ): null
         }
         
-        {/* 원래 기존의값 */}
         { !this.state.active &&
         <div>
               <br />

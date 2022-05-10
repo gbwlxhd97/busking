@@ -179,9 +179,6 @@ class BuskingMange extends React.Component {
               img={radioInfo.profileImgURL}
               title={radioInfo.title}
             />
-            <Btn onClick={this.turnOff}>
-              <Link to="/">방송끄기</Link>
-            </Btn>
           </>
         )}
 

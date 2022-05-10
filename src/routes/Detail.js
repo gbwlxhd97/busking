@@ -70,12 +70,10 @@ const Btn = styled.button`
 const QRBtn = styled.span`
   display: inline-block;
   width: 80px;
-  left: 50%;
-  top: 67%;
+  left: 265px;
+  top: 730px;
   position: absolute;
   transform: translate(-50%,0);
-  /* width: 50px;
-  height: 40px; */
   font-size: 14px;
   padding: 6px 7px;
   border-radius: 8px;
