@@ -17,7 +17,7 @@
 
 ## 팀원 소개   
 | `프론트`이지원 | `프론트`유영하 | `프론트`이채린 | `프론트`김동주 | `백엔드`고지훈 |
-|------|------|------|------|------|------|
+|------|------|------|------|------|
 | <img style="width:200px; height:200px" src = "https://github.com/gbwlxhd97.png"> | <img style="width:200px; height:200px" src = "https://github.com/ryuyh2000.png"> | <img style="width:200px; height:200px" src = "https://github.com/Lee-chaerin.png"> | <img style="width:200px; height:200px" src = "https://github.com/kdj38245.png"> | <img style="width:200px; height:200px" src = "https://github.com/emibgo2.png"> |
 | [gbwlxhd97](https://github.com/gbwlxhd97) | [ryuyh2000](https://github.com/ryuyh2000) | [Lee-chaerin](https://github.com/Lee-chaerin) | [kdj38245](https://github.com/kdj38245) | [emibgo2](https://github.com/emibgo2) 
 
