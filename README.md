@@ -29,6 +29,7 @@
 - React Native(WebView)
 - Styled-components
 - Axios
+- Netlify
 ```
 
 ### ***backend***
@@ -38,6 +39,7 @@
 - JPA
 - MySQL
 - JWT
+- Heroku
 ```
 
 ### 메인 화면 개발 일지
